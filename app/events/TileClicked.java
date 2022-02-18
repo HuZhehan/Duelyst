@@ -32,7 +32,7 @@ public class TileClicked implements EventProcessor{
 		if (gameState.something == true) {
 			// do some logic
 			if (gameState.tile[tilex][tiley].getUnit()!=null);{
-				BasicCommands.addPlayer1Notification(out, "occupied", 2);
+				BasicCommands.addPlayer1Notification(out, gameState.tile[tilex][tiley].getUnit().toString(), 2);
 			}
 		}
 		

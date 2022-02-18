@@ -53,4 +53,8 @@ public class Avatar extends Unit{
 		this.getOwner().setHealth(health);
 	}
 	
+	public String toString() {
+		return "Avatar";
+	}
+	
 }

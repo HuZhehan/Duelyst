@@ -49,7 +49,6 @@ public class Unit implements UnitAction{
 		this.attackable = true;
 		this.dead = false;
 		this.owner = null;
-		this.tile = null;
 		
 		this.id = id;
 		this.animation = UnitAnimationType.idle;
@@ -67,8 +66,7 @@ public class Unit implements UnitAction{
 		this.attackable = true;
 		this.dead = false;
 		this.owner = null;
-		this.tile = null;
-		
+
 		this.id = id;
 		this.animation = UnitAnimationType.idle;
 		
@@ -86,7 +84,6 @@ public class Unit implements UnitAction{
 		this.attackable = true;
 		this.dead = false;
 		this.owner = null;
-		this.tile = null;
 		
 		this.id = id;
 		this.animation = animation;
@@ -123,24 +120,14 @@ public class Unit implements UnitAction{
 	public void setOwner(Player owner) {
 		this.owner = owner;
 	}
-	public Tile getTile() {
-		return tile;
-	}
-	public void setTile(Tile tile) {
-		this.tile = tile;
-	}
 	
 	// @author Zhehan Hu
-	public void move(ActorRef out, Tile destination) {
-		//if (this.getTile()!=null) {
-		//	this.getTile().setUnit(null);
-		//	this.setTile(null);
-		//}
+	public void move(ActorRef out, Tile origin, Tile destination) {
+		origin.setUnit(null);
 		BasicCommands.moveUnitToTile(out, this, destination);
 		try {Thread.sleep(6000);} catch (InterruptedException e) {e.printStackTrace();}
 		this.setPositionByTile(destination);
-		//destination.setUnit(this);
-		//this.setTile(destination);
+		destination.setUnit(this);
 	}
 	// @author Zhehan Hu
 	public void attack(ActorRef out, Unit target) {
@@ -163,6 +150,10 @@ public class Unit implements UnitAction{
 	// @author Zhehan Hu
 	public void die(ActorRef out) {
 		
+	}
+	
+	public String toString() {
+		return "Unit";
 	}
 	
 	public int getId() {

@@ -243,6 +243,7 @@ public class CommandDemo {
 		BasicCommands.drawCard(out, hailstone_golem, 1, 1);
 		try {Thread.sleep(2000);} catch (InterruptedException e) {e.printStackTrace();}
 
+		
 		// deleteCard [1]
 		BasicCommands.addPlayer1Notification(out, "deleteCard", 2);
 		BasicCommands.deleteCard(out, 1);

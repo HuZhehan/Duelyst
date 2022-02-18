@@ -57,7 +57,7 @@ public class Initalize implements EventProcessor{
 		gameState.aiPlayer.drawCard(out,3,-1);
 				
 		//test	
-		humanAvatar.move(out, gameState.tile[6][2]);
+		humanAvatar.move(out, gameState.tile[1][2], gameState.tile[6][2]);
 		humanAvatar.attack(out, aiAvatar);
 		
 		gameState.gameInitalised = true;
