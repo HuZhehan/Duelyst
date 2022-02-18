@@ -12,6 +12,7 @@ import demo.CommandDemo;
 import structures.GameState;
 import structures.basic.BetterUnit;
 import structures.basic.Card;
+import structures.basic.EffectAnimation;
 import structures.basic.Player;
 import structures.basic.Tile;
 import structures.basic.Unit;
@@ -55,7 +56,7 @@ public class Initalize implements EventProcessor{
 		gameState.humanPlayer.drawCard(out,3,0);
 		gameState.aiPlayer.drawCard(out,3,-1);
 				
-		//test
+		//test	
 		humanAvatar.move(out, gameState.tile[6][2]);
 		humanAvatar.attack(out, aiAvatar);
 		

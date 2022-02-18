@@ -4,6 +4,7 @@ package events;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import akka.actor.ActorRef;
+import commands.BasicCommands;
 import structures.GameState;
 
 /**
@@ -30,6 +31,9 @@ public class TileClicked implements EventProcessor{
 		
 		if (gameState.something == true) {
 			// do some logic
+			if (gameState.tile[tilex][tiley].getUnit()!=null);{
+				BasicCommands.addPlayer1Notification(out, "occupied", 2);
+			}
 		}
 		
 	}

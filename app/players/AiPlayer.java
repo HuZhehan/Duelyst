@@ -11,6 +11,7 @@ import structures.basic.Unit;
 import utils.BasicObjectBuilders;
 import utils.OrderedCardLoader;
 import utils.StaticConfFiles;
+import utils.UnitLoader;
 
 /**
  * @author Zhehan Hu, 
@@ -25,6 +26,7 @@ public class AiPlayer extends Player {
 	public AiPlayer(int health, int mana) {
 		super();
 		this.deck = OrderedCardLoader.getPlayer2Cards();
+		this.army = UnitLoader.getPlayer2Units();
 	}
 	
 	/**
