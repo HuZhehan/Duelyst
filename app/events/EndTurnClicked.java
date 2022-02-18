@@ -20,7 +20,14 @@ public class EndTurnClicked implements EventProcessor{
 
 	@Override
 	public void processEvent(ActorRef out, GameState gameState, JsonNode message) {
-		
+		if (gameState.gameInitalised==true) {
+			gameState.Round++;
+			int mana = gameState.Round + 1;
+			gameState.humanPlayer.setMana(out, mana);
+			gameState.humanPlayer.drawCard(out, 1, 0);
+			gameState.aiPlayer.setMana(out, mana);
+			gameState.aiPlayer.drawCard(out, 1, -1);
+		}
 	}
 
 }

@@ -50,7 +50,7 @@ public class GameActor extends AbstractActor {
 	public GameActor(ActorRef out) {
 
 		this.out = out; // save this, so we can send commands to the front-end later
-
+		
 		// create class instances to respond to the various events that we might recieve
 		eventProcessors = new HashMap<String,EventProcessor>();
 		eventProcessors.put("initalize", new Initalize());
