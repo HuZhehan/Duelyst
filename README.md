@@ -1,3 +1,2 @@
-# ITSD-CARD-GAME
+# ITSDTeamProject-0
 
-IT+ Teams Project
