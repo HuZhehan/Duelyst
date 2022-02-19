@@ -25,6 +25,7 @@ public class GameState {
 	
 	public HumanPlayer humanPlayer = new HumanPlayer();
 	public AiPlayer aiPlayer = new AiPlayer();
+	public Player player = humanPlayer; // current player
 	
 	public Tile[][] tile = new Tile[9][5];
 	

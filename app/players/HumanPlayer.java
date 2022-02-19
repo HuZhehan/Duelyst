@@ -1,11 +1,16 @@
 package players;
 
+import java.util.List;
+
 import akka.actor.ActorRef;
 import commands.BasicCommands;
 import structures.GameState;
 import structures.basic.Card;
 import structures.basic.Player;
+import structures.basic.Unit;
+import utils.BasicObjectBuilders;
 import utils.OrderedCardLoader;
+import utils.StaticConfFiles;
 import utils.UnitLoader;
 
 /** 
@@ -13,24 +18,19 @@ import utils.UnitLoader;
  */
 
 public class HumanPlayer extends Player {
-	
+		
 	public HumanPlayer() {
 		super();
-		this.name = "HumanPlayer";
-		this.deck = OrderedCardLoader.getPlayer1Cards();
-		this.army = UnitLoader.getPlayer1Units();
+		name = "HumanPlayer";
+		deck = OrderedCardLoader.getPlayer1Cards();
+		army = UnitLoader.getPlayer1Units();
 	}
 	public HumanPlayer(int health, int mana) {
-		super();
-		this.health = health;
-		this.mana = mana;
-		this.name = "HumanPlayer";
-		this.deck = OrderedCardLoader.getPlayer1Cards();
-		this.army = UnitLoader.getPlayer1Units();
+		super(health, mana);
 	}
 	/** 
 	 * @author Zhehan Hu,
-	 * @drawCard() - player draw card method
+	 * @drawCard() - player draw card
 	 * @param n - number of card to draw
 	 * @param mode - animation type
 	 */
@@ -71,5 +71,12 @@ public class HumanPlayer extends Player {
 		this.mana = mana;
 		BasicCommands.setPlayer1Mana(out, this);
 		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+	}
+	public void useSpellCard(ActorRef out, GameState gameState, int id, Unit unit) {
+		for (Card c : hand) {
+			if (c.getId()==id) {
+				
+			}
+		}
 	}
 }

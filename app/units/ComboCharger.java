@@ -23,39 +23,25 @@ import structures.basic.UnitAnimationType;
  *
  */
 
-public class HumanAvatar extends Unit{
+public class ComboCharger extends Unit{
 	// @author Student Zhehan Hu
 	
-	public HumanAvatar() {
+	public ComboCharger() {
 		super();
-		maxHealth = 20;
-		health = 20;
-		attack = 2;
-		unitname = "HumanAvatar";
+		maxHealth = 3;
+		health = 3;
+		attack = 1;
+		unitname = "ComboCharger";
 		ownername = "HumanPlayer";
 	}
-	public HumanAvatar(int id, UnitAnimationSet animations, ImageCorrection correction) {
+	public ComboCharger(int id, UnitAnimationSet animations, ImageCorrection correction) {
 		super(id, animations, correction);
 	}
-	public HumanAvatar(int id, UnitAnimationSet animations, ImageCorrection correction, Tile currentTile) {
+	public ComboCharger(int id, UnitAnimationSet animations, ImageCorrection correction, Tile currentTile) {
 		super(id, animations, correction, currentTile);
 	}
-	public HumanAvatar(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations, ImageCorrection correction) {
+	public ComboCharger(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations, ImageCorrection correction) {
 		super(id, animation, position, animations, correction);
-	}
-	
-	public void setHealth(ActorRef out, GameState gameState, int health) {
-		if (health>20){
-			health = 20;
-		}
-		this.health = health;
-		BasicCommands.setUnitHealth(out, this, health);
-		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
-		if (this.health<0) {
-			this.die(out, gameState);
-		}
-		BasicCommands.addPlayer1Notification(out, "setHumanHealth", 2);
-		gameState.humanPlayer.setHealth(out, gameState, health);
 	}
 	
 }

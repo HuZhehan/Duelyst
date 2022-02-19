@@ -6,16 +6,12 @@ import java.util.List;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import akka.actor.ActorRef;
+import cards.*;
 import commands.BasicCommands;
 import demo.CheckMoveLogic;
 import demo.CommandDemo;
 import structures.GameState;
-import structures.basic.BetterUnit;
-import structures.basic.Card;
-import structures.basic.EffectAnimation;
-import structures.basic.Player;
-import structures.basic.Tile;
-import structures.basic.Unit;
+import structures.basic.*;
 import structures.basic.UnitAnimationType;
 import units.HumanAvatar;
 import utils.BasicObjectBuilders;
@@ -57,6 +53,10 @@ public class Initalize implements EventProcessor{
 		gameState.tile[1][2].setUnit(humanAvatar);
 		humanAvatar.move(out, gameState, gameState.tile[6][2]);
 		humanAvatar.attack(out, gameState, aiAvatar);
+		Card card1 = BasicObjectBuilders.loadCard(StaticConfFiles.c_truestrike, 14, Truestrike.class);
+		card1.content(out,gameState, gameState.tile[7][2]);
+		Card card2 = BasicObjectBuilders.loadCard(StaticConfFiles.c_comodo_charger, 0, ComboCharger.class);
+		card2.content(out,gameState, gameState.tile[7][1]);
 		
 		gameState.gameInitalised = true;
 		gameState.something = true;

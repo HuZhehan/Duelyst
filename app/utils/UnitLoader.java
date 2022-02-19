@@ -16,7 +16,7 @@ public class UnitLoader {
 		
 		List<Unit> army = new ArrayList<Unit>();
 		army.add(BasicObjectBuilders.loadUnit(StaticConfFiles.humanAvatar, 100, HumanAvatar.class));
-		army.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_comodo_charger, 0, Unit.class));
+		army.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_comodo_charger, 0, ComboCharger.class));
 		army.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_pureblade_enforcer, 1, Unit.class));
 		army.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_fire_spitter, 2, Unit.class));
 		army.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_silverguard_knight, 3, Unit.class));
@@ -28,7 +28,7 @@ public class UnitLoader {
 		army.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_hailstone_golem, 9, Unit.class));
 		army.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_silverguard_knight, 10, Unit.class));
 		army.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_fire_spitter, 11, Unit.class));
-		army.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_comodo_charger, 12, Unit.class));
+		army.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_comodo_charger, 12, ComboCharger.class));
 		army.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_pureblade_enforcer, 13, Unit.class));
 		//units.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_truestrike, 14, Unit.class));
 		army.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_azure_herald, 15, Unit.class));

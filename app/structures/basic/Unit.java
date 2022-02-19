@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import akka.actor.ActorRef;
 import commands.BasicCommands;
 import structures.GameState;
+import units.UnitAction;
 import utils.BasicObjectBuilders;
 
 /**
@@ -22,77 +23,53 @@ import utils.BasicObjectBuilders;
  *
  */
 public class Unit implements UnitAction{
-
-	@JsonIgnore
-	protected static ObjectMapper mapper = new ObjectMapper(); // Jackson Java Object Serializer, is used to read java objects from a file
+	
 	// @author Student Zhehan Hu
 	protected int maxHealth;
 	protected int health;
 	protected int attack;
 	protected boolean moveable;
 	protected boolean attackable;
+	protected boolean summoned;
 	protected boolean dead;
-	protected String name;
-	protected String owner;
-	//
+	protected String unitname;
+	protected String ownername;
+	
+	@JsonIgnore
+	protected static ObjectMapper mapper = new ObjectMapper(); // Jackson Java Object Serializer, is used to read java objects from a file
 	protected int id;
 	protected UnitAnimationType animation;
 	protected Position position;
 	protected UnitAnimationSet animations;
 	protected ImageCorrection correction;
 	
-	public Unit() {}
+	public Unit() {
+		moveable = true;
+		attackable = true;
+		summoned = false;
+		dead = false;
+	}
 	
 	public Unit(int id, UnitAnimationSet animations, ImageCorrection correction) {
-		super();
-		this.maxHealth = 20;
-		this.health = 20;
-		this.attack = 2;
-		this.moveable = true;
-		this.attackable = true;
-		this.dead = false;
-		this.name = "Unit";
-		this.owner = null;
-		
+		this();
 		this.id = id;
 		this.animation = UnitAnimationType.idle;
-		
 		position = new Position(0,0,0,0);
 		this.correction = correction;
 		this.animations = animations;
 	}
 	
 	public Unit(int id, UnitAnimationSet animations, ImageCorrection correction, Tile currentTile) {
-		super();
-		this.maxHealth = 20;
-		this.health = 20;
-		this.attack = 2;
-		this.moveable = true;
-		this.attackable = true;
-		this.dead = false;
-		this.name = "Unit";
-		this.owner = null;
-		
+		this();
 		this.id = id;
 		this.animation = UnitAnimationType.idle;
-		
 		position = new Position(currentTile.getXpos(),currentTile.getYpos(),currentTile.getTilex(),currentTile.getTiley());
 		this.correction = correction;
 		this.animations = animations;
 	}
 	
-	public Unit(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations,
-			ImageCorrection correction) {
-		super();
-		this.maxHealth = 20;
-		this.health = 20;
-		this.attack = 2;
-		this.moveable = true;
-		this.attackable = true;
-		this.dead = false;
-		this.name = "Unit";
-		this.owner = null;
-		
+	public Unit(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations, ImageCorrection correction) {
+		this();
 		this.id = id;
 		this.animation = animation;
 		this.position = position;
@@ -101,7 +78,7 @@ public class Unit implements UnitAction{
 	}
 	// @author Student Zhehan Hu
 	public String getName() {
-		return name;
+		return unitname;
 	}
 	public int getMaxHealth(){
 		return maxHealth;
@@ -126,10 +103,19 @@ public class Unit implements UnitAction{
 		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
 	}
 	public String getOwner() {
-		return owner;
+		return ownername;
 	}
 	public void setOwner(String owner) {
-		this.owner = owner;
+		this.ownername = owner;
+	}
+	public Player getPlayer(ActorRef out, GameState gameState) {
+		if (ownername == "HumanPlayer") {
+			return gameState.humanPlayer;
+		}
+		if (ownername == "AiPlayer") {
+			return gameState.aiPlayer;
+		}
+		return null;
 	}
 	// @author Student Zhehan Hu
 	public void move(ActorRef out, GameState gameState, Tile destination) {
@@ -144,6 +130,8 @@ public class Unit implements UnitAction{
 		// add unit to destination tile
 		this.setPositionByTile(destination);
 		destination.setUnit(this);
+		// update states
+		this.moveable = false;
 	}
 	// @author Student Zhehan Hu
 	public void attack(ActorRef out, GameState gameState, Unit target) {
@@ -159,12 +147,30 @@ public class Unit implements UnitAction{
 		if (target.getHealth()>0) {
 			target.counterAttack(out, gameState, this);
 		}
+		/*
+		// re-draw unit, otherwise animation stops
+		int x = this.getPosition().getTilex();
+		int y = this.getPosition().getTiley();
+		Tile tile = gameState.tile[x][y];
+		BasicCommands.drawUnit(out, this, tile);
+		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+		*/
 	}
 	public void counterAttack(ActorRef out, GameState gameState, Unit target) {
+		// play animation
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.attack);
 		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+		// update states
 		int hp = target.getHealth() - attack;
 		target.setHealth(out, gameState, hp);
+		/*
+		// re-draw unit, otherwise animation stops
+		int x = this.getPosition().getTilex();
+		int y = this.getPosition().getTiley();
+		Tile tile = gameState.tile[x][y];
+		BasicCommands.drawUnit(out, this, tile);
+		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+		*/
 	}
 	public void die(ActorRef out, GameState gameState) {
 		

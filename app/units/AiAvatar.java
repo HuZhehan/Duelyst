@@ -24,37 +24,24 @@ import structures.basic.UnitAnimationType;
  */
 
 public class AiAvatar extends Unit{
+	// @author Student Zhehan Hu
 	
 	public AiAvatar() {
 		super();
-		this.maxHealth = 20;
-		this.health = 20;
-		this.attack = 2;
-		this.name = "AiAvatar";
+		maxHealth = 20;
+		health = 20;
+		attack = 2;
+		unitname = "AiAvatar";
+		ownername = "AiPlayer";
 	}
 	public AiAvatar(int id, UnitAnimationSet animations, ImageCorrection correction) {
-		super();
-		this.maxHealth = 20;
-		this.health = 20;
-		this.attack = 2;
-		this.name = "AiAvatar";
+		super(id, animations, correction);
 	}
-	
 	public AiAvatar(int id, UnitAnimationSet animations, ImageCorrection correction, Tile currentTile) {
-		super();
-		this.maxHealth = 20;
-		this.health = 20;
-		this.attack = 2;
-		this.name = "AiAvatar";
+		super(id, animations, correction, currentTile);
 	}
-	
-	public AiAvatar(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations,
-			ImageCorrection correction) {
-		super();
-		this.maxHealth = 20;
-		this.health = 20;
-		this.attack = 2;
-		this.name = "AiAvatar";
+	public AiAvatar(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations, ImageCorrection correction) {
+		super(id, animation, position, animations, correction);
 	}
 	
 	public void setHealth(ActorRef out, GameState gameState, int health) {

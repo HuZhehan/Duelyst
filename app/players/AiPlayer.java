@@ -1,10 +1,14 @@
 package players;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import akka.actor.ActorRef;
 import commands.BasicCommands;
 import structures.GameState;
 import structures.basic.Card;
 import structures.basic.Player;
+import structures.basic.Unit;
 import utils.OrderedCardLoader;
 import utils.UnitLoader;
 
@@ -16,17 +20,12 @@ public class AiPlayer extends Player {
 	
 	public AiPlayer() {
 		super();
-		this.name = "AiPlayer";
-		this.deck = OrderedCardLoader.getPlayer2Cards();
-		this.army = UnitLoader.getPlayer2Units();
+		name = "AiPlayer";
+		deck = OrderedCardLoader.getPlayer2Cards();
+		army = UnitLoader.getPlayer2Units();
 	}
 	public AiPlayer(int health, int mana) {
-		super();
-		this.health = health;
-		this.mana = mana;
-		this.name = "AiPlayer";
-		this.deck = OrderedCardLoader.getPlayer2Cards();
-		this.army = UnitLoader.getPlayer2Units();
+		super(health, mana);
 	}
 	/**
 	 * @author Zhehan Hu, 
