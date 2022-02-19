@@ -23,10 +23,10 @@ public class EndTurnClicked implements EventProcessor{
 		if (gameState.gameInitalised==true) {
 			gameState.Round++;
 			int mana = gameState.Round + 1;
-			gameState.humanPlayer.setMana(out, mana);
-			gameState.humanPlayer.drawCard(out, 1, 0);
-			gameState.aiPlayer.setMana(out, mana);
-			gameState.aiPlayer.drawCard(out, 1, -1);
+			gameState.humanPlayer.setMana(out, gameState, mana);
+			gameState.humanPlayer.drawCard(out, gameState, 1, 0);
+			gameState.aiPlayer.setMana(out, gameState, mana);
+			gameState.aiPlayer.drawCard(out, gameState, 1, -1);
 		}
 	}
 

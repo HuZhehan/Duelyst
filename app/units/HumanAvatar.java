@@ -2,6 +2,7 @@ package units;
 
 import akka.actor.ActorRef;
 import commands.BasicCommands;
+import structures.GameState;
 import structures.basic.ImageCorrection;
 import structures.basic.Position;
 import structures.basic.Tile;
@@ -22,25 +23,41 @@ import structures.basic.UnitAnimationType;
  *
  */
 
-public class Avatar extends Unit{
+public class HumanAvatar extends Unit{
 	
-	public Avatar() {
+	public HumanAvatar() {
 		super();
+		this.maxHealth = 20;
+		this.health = 20;
+		this.attack = 2;
+		this.name = "HumanAvatar";
 	}
-	public Avatar(int id, UnitAnimationSet animations, ImageCorrection correction) {
+	public HumanAvatar(int id, UnitAnimationSet animations, ImageCorrection correction) {
 		super();
+		this.maxHealth = 20;
+		this.health = 20;
+		this.attack = 2;
+		this.name = "HumanAvatar";
 	}
 	
-	public Avatar(int id, UnitAnimationSet animations, ImageCorrection correction, Tile currentTile) {
+	public HumanAvatar(int id, UnitAnimationSet animations, ImageCorrection correction, Tile currentTile) {
 		super();
+		this.maxHealth = 20;
+		this.health = 20;
+		this.attack = 2;
+		this.name = "HumanAvatar";
 	}
 	
-	public Avatar(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations,
+	public HumanAvatar(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations,
 			ImageCorrection correction) {
 		super();
+		this.maxHealth = 20;
+		this.health = 20;
+		this.attack = 2;
+		this.name = "HumanAvatar";
 	}
 	
-	public void setHealth(ActorRef out, int health) {
+	public void setHealth(ActorRef out, GameState gameState, int health) {
 		if (health>20){
 			health = 20;
 		}
@@ -48,13 +65,10 @@ public class Avatar extends Unit{
 		BasicCommands.setUnitHealth(out, this, health);
 		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
 		if (this.health<0) {
-			this.die(out);
+			this.die(out, gameState);
 		}
-		this.getOwner().setHealth(health);
-	}
-	
-	public String toString() {
-		return "Avatar";
+		BasicCommands.addPlayer1Notification(out, "setHumanHealth", 2);
+		gameState.humanPlayer.setHealth(out, gameState, health);
 	}
 	
 }

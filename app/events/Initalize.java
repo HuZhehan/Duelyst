@@ -17,7 +17,7 @@ import structures.basic.Player;
 import structures.basic.Tile;
 import structures.basic.Unit;
 import structures.basic.UnitAnimationType;
-import units.Avatar;
+import units.HumanAvatar;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
 
@@ -43,22 +43,20 @@ public class Initalize implements EventProcessor{
 		gameState.createBoard(out);
 		
 		// set player
-		gameState.humanPlayer.setHealth(out, 20);
-		Unit humanAvatar = gameState.humanPlayer.createUnit(out, StaticConfFiles.humanAvatar, 0, gameState.tile[1][2], Avatar.class);
+		Unit humanAvatar = gameState.humanPlayer.summon(out, gameState, 100, gameState.tile[1][2]);
 
 		// set enemy
-		gameState.aiPlayer.setHealth(out, 20);
-		Unit aiAvatar = gameState.aiPlayer.createUnit(out, StaticConfFiles.aiAvatar, 20, gameState.tile[7][2], Avatar.class);
-		
+		Unit aiAvatar = gameState.aiPlayer.summon(out, gameState, 200, gameState.tile[7][2]);
 		
 		
 		// draw card
-		gameState.humanPlayer.drawCard(out,3,0);
-		gameState.aiPlayer.drawCard(out,3,-1);
+		gameState.humanPlayer.drawCard(out, gameState, 3, 0);
+		gameState.aiPlayer.drawCard(out, gameState, 3, -1);
 				
 		//test	
-		humanAvatar.move(out, gameState.tile[1][2], gameState.tile[6][2]);
-		humanAvatar.attack(out, aiAvatar);
+		gameState.tile[1][2].setUnit(humanAvatar);
+		humanAvatar.move(out, gameState, gameState.tile[6][2]);
+		humanAvatar.attack(out, gameState, aiAvatar);
 		
 		gameState.gameInitalised = true;
 		gameState.something = true;

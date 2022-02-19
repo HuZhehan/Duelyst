@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import akka.actor.ActorRef;
 import commands.BasicCommands;
+import structures.GameState;
 import utils.BasicObjectBuilders;
 
 /**
@@ -24,14 +25,15 @@ public class Unit implements UnitAction{
 
 	@JsonIgnore
 	protected static ObjectMapper mapper = new ObjectMapper(); // Jackson Java Object Serializer, is used to read java objects from a file
-	// editor Zhehan hu
+	// @author Student Zhehan Hu
+	protected int maxHealth;
 	protected int health;
 	protected int attack;
 	protected boolean moveable;
 	protected boolean attackable;
 	protected boolean dead;
-	protected Player owner;
-	protected Tile tile;
+	protected String name;
+	protected String owner;
 	//
 	protected int id;
 	protected UnitAnimationType animation;
@@ -43,11 +45,13 @@ public class Unit implements UnitAction{
 	
 	public Unit(int id, UnitAnimationSet animations, ImageCorrection correction) {
 		super();
-		this.health = 0;
-		this.attack = 0;
+		this.maxHealth = 20;
+		this.health = 20;
+		this.attack = 2;
 		this.moveable = true;
 		this.attackable = true;
 		this.dead = false;
+		this.name = "Unit";
 		this.owner = null;
 		
 		this.id = id;
@@ -60,13 +64,15 @@ public class Unit implements UnitAction{
 	
 	public Unit(int id, UnitAnimationSet animations, ImageCorrection correction, Tile currentTile) {
 		super();
-		this.health = 0;
-		this.attack = 0;
+		this.maxHealth = 20;
+		this.health = 20;
+		this.attack = 2;
 		this.moveable = true;
 		this.attackable = true;
 		this.dead = false;
+		this.name = "Unit";
 		this.owner = null;
-
+		
 		this.id = id;
 		this.animation = UnitAnimationType.idle;
 		
@@ -78,11 +84,13 @@ public class Unit implements UnitAction{
 	public Unit(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations,
 			ImageCorrection correction) {
 		super();
-		this.health = 0;
-		this.attack = 0;
+		this.maxHealth = 20;
+		this.health = 20;
+		this.attack = 2;
 		this.moveable = true;
 		this.attackable = true;
 		this.dead = false;
+		this.name = "Unit";
 		this.owner = null;
 		
 		this.id = id;
@@ -91,67 +99,77 @@ public class Unit implements UnitAction{
 		this.animations = animations;
 		this.correction = correction;
 	}
-	
-	// @author Zhehan Hu
+	// @author Student Zhehan Hu
+	public String getName() {
+		return name;
+	}
+	public int getMaxHealth(){
+		return maxHealth;
+	}
 	public int getHealth(){
 		return health;
 	}
-	public void setHealth(ActorRef out, int health) {
+	public void setHealth(ActorRef out, GameState gameState, int health) {
 		this.health = health;
 		BasicCommands.setUnitHealth(out, this, health);
 		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
 		if (this.health<0) {
-			this.die(out);
+			this.die(out, gameState);
 		}
 	}
-	// @author Zhehan Hu
 	public int getAttack() {
 		return attack;
 	}
-	public void setAttack(ActorRef out, int attack) {
+	public void setAttack(ActorRef out, GameState gameState, int attack) {
 		this.attack = attack;
 		BasicCommands.setUnitAttack(out, this, attack);
 		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
 	}
-	// @author Zhehan Hu
-	public Player getOwner() {
+	public String getOwner() {
 		return owner;
 	}
-	public void setOwner(Player owner) {
+	public void setOwner(String owner) {
 		this.owner = owner;
 	}
-	
-	// @author Zhehan Hu
-	public void move(ActorRef out, Tile origin, Tile destination) {
+	// @author Student Zhehan Hu
+	public void move(ActorRef out, GameState gameState, Tile destination) {
+		// remove unit from old tile
+		int x = this.getPosition().getTilex();
+		int y = this.getPosition().getTiley();
+		Tile origin = gameState.tile[x][y];
 		origin.setUnit(null);
+		// play animation
 		BasicCommands.moveUnitToTile(out, this, destination);
 		try {Thread.sleep(6000);} catch (InterruptedException e) {e.printStackTrace();}
+		// add unit to destination tile
 		this.setPositionByTile(destination);
 		destination.setUnit(this);
 	}
-	// @author Zhehan Hu
-	public void attack(ActorRef out, Unit target) {
+	// @author Student Zhehan Hu
+	public void attack(ActorRef out, GameState gameState, Unit target) {
+		// play animation
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.attack);
-		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+		// update states
 		int hp = target.getHealth() - attack;
-		target.setHealth(out, hp);
-		if (target.getHealth()>0) {
-			target.counterAttack(out,this);
-		}
+		target.setHealth(out, gameState, hp);
 		this.moveable = false;
 		this.attackable = false;
+		// counter-attack
+		if (target.getHealth()>0) {
+			target.counterAttack(out, gameState, this);
+		}
 	}
-	public void counterAttack(ActorRef out, Unit target) {
+	public void counterAttack(ActorRef out, GameState gameState, Unit target) {
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.attack);
-		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
 		int hp = target.getHealth() - attack;
-		target.setHealth(out, hp);
+		target.setHealth(out, gameState, hp);
 	}
-	// @author Zhehan Hu
-	public void die(ActorRef out) {
+	public void die(ActorRef out, GameState gameState) {
 		
 	}
-	
+	//
 	public String toString() {
 		return "Unit";
 	}
