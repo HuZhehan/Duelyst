@@ -42,6 +42,7 @@ public class AiPlayer extends Player {
 				Card card = deck.get(0);
 				deck.remove(0);
 				hand.add(card);
+				card.setOwner(this.getName());
 				// max 6 cards due to UI limitation, discard
 				if (hand.size()==7) {
 					discard(out, gameState, 6);

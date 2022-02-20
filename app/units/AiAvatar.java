@@ -54,7 +54,7 @@ public class AiAvatar extends Unit{
 		if (this.health<0) {
 			this.die(out, gameState);
 		}
-		BasicCommands.addPlayer1Notification(out, "setAiHealth", 2);
+		//BasicCommands.addPlayer1Notification(out, "setAiHealth", 2);
 		gameState.aiPlayer.setHealth(out, gameState, health);
 	}
 	

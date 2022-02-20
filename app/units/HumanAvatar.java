@@ -54,7 +54,7 @@ public class HumanAvatar extends Unit{
 		if (this.health<0) {
 			this.die(out, gameState);
 		}
-		BasicCommands.addPlayer1Notification(out, "setHumanHealth", 2);
+		//BasicCommands.addPlayer1Notification(out, "setHumanHealth", 2);
 		gameState.humanPlayer.setHealth(out, gameState, health);
 	}
 	

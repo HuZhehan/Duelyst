@@ -32,8 +32,7 @@ public class Initalize implements EventProcessor{
 	@Override
 	// edited by @Zhehan Hu
 	public void processEvent(ActorRef out, GameState gameState, JsonNode message) {
-		// hello this is a change
-		BasicCommands.addPlayer1Notification(out, "start initalization", 20);
+		BasicCommands.addPlayer1Notification(out, "initalization", 2);
 		
 		// 
 		gameState.createBoard(out);
@@ -57,11 +56,17 @@ public class Initalize implements EventProcessor{
 		//Card card2 = BasicObjectBuilders.loadCard(StaticConfFiles.c_comodo_charger, 0, ComboCharger.class);
 		//card2.act(out,gameState, gameState.tile[7][1]);
 		
-		gameState.gameInitalised = true;
+		
 		//gameState.something = true;
 		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
-		BasicCommands.addPlayer1Notification(out, "initalization done", 20);
+		gameState.gameInitalised = true;
 		
+		// update
+		gameState.Round++;
+
+		//player start new turn
+		BasicCommands.addPlayer1Notification(out, "Round"+Integer.toString(gameState.Round), 2);
+		gameState.humanPlayer.setMana(out, gameState, gameState.Round + 1);
 		
 		//CommandDemo.executeDemo(out); // this executes the command demo, comment out this when implementing your solution
 		//CheckMoveLogic.executeDemo(out);

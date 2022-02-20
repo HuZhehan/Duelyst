@@ -48,6 +48,10 @@ public class Card implements CardAction{
 	public String getOwner() {
 		return ownername;
 	}
+	public void setOwner(String ownername) {
+		this.ownername = ownername;
+		
+	}
 	public int getId() {
 		return id;
 	}
@@ -78,5 +82,7 @@ public class Card implements CardAction{
 	public void setBigCard(BigCard bigCard) {
 		this.bigCard = bigCard;
 	}
+
+
 
 }

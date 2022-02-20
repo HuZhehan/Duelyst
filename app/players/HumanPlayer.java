@@ -43,6 +43,7 @@ public class HumanPlayer extends Player {
 				Card card = deck.get(0);
 				deck.remove(0);
 				hand.add(card);
+				card.setOwner(this.getName());
 				BasicCommands.drawCard(out, card, hand.size(), mode);
 				try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
 				// max 6 cards due to UI limitation, discard

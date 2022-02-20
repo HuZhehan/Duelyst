@@ -43,5 +43,6 @@ public class SpellCard extends Card{
 	 * @param tile - where to play affect
 	 */
 	public void content(ActorRef out, GameState gameState, Tile tile) {
+		
 	}
 }

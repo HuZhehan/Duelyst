@@ -39,8 +39,8 @@ public class GameState {
 			for (int j=0;j<5;j++) {
 				tile[i][j] = BasicObjectBuilders.loadTile(i, j);
 					BasicCommands.drawTile(out, tile[i][j], 0);
-					try {Thread.sleep(10);} catch (InterruptedException e) {e.printStackTrace();}
 			}
+			try {Thread.sleep(10);} catch (InterruptedException e) {e.printStackTrace();}
 		}
 	}
 	
@@ -50,11 +50,18 @@ public class GameState {
 		previousUnit = null;
 		for (int i=0;i<9;i++) {
 			for (int j=0;j<5;j++) {
-					BasicCommands.drawTile(out, tile[i][j], 0);
-					try {Thread.sleep(10);} catch (InterruptedException e) {e.printStackTrace();}
+				BasicCommands.drawTile(out, tile[i][j], 0);
 			}
+			try {Thread.sleep(10);} catch (InterruptedException e) {e.printStackTrace();}
+		}
+		
+		for (Card c : humanPlayer.hand) {
+			BasicCommands.drawCard(out, c, humanPlayer.hand.indexOf(c)+1, 0);
+		}
+		try {Thread.sleep(10);} catch (InterruptedException e) {e.printStackTrace();
 		}
 	}
+	
 
 
 	
