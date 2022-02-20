@@ -35,21 +35,18 @@ public class Card implements CardAction{
 		this.miniCard = miniCard;
 		this.bigCard = bigCard;
 	}
-	public boolean prompt() {
+	public String getType() {
+		return type;
+	}
+	public boolean prompt(ActorRef out, GameState gameState, Tile tile) {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	public void content(ActorRef out, GameState gameState, Tile tile) {
+	public void act(ActorRef out, GameState gameState, Tile tile) {
 		// TODO Auto-generated method stub
 	}
-	public Player getPlayer(ActorRef out, GameState gameState) {
-		if (ownername == "HumanPlayer") {
-			return gameState.humanPlayer;
-		}
-		if (ownername == "AiPlayer") {
-			return gameState.aiPlayer;
-		}
-		return null;
+	public String getOwner() {
+		return ownername;
 	}
 	public int getId() {
 		return id;
@@ -82,9 +79,4 @@ public class Card implements CardAction{
 		this.bigCard = bigCard;
 	}
 
-	@Override
-	public boolean prompt(ActorRef out, GameState gameState, Tile tile) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 }

@@ -27,10 +27,21 @@ public class UnitCard extends Card{
 		if (tile.getUnit()!=null) {
 			return false;
 		}
+		int x = tile.getTilex();
+		int y = tile.getTiley();
+		for (int i=0;i<9;i++) {
+			for (int j=0;j<5;j++) {
+				if (Math.abs(x-i)<=1 && Math.abs(y-j)<=1) {
+					Tile t = gameState.tile[i][j];
+					if(t.getUnit()!=null && t.getUnit().getOwner()==this.getOwner())
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 	
-	public void content(ActorRef out, GameState gameState, Tile tile) {
+	public void act(ActorRef out, GameState gameState, Tile tile) {
 		gameState.humanPlayer.summon(out, gameState, id, tile);
 	}
 }

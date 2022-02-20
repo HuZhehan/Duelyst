@@ -1,11 +1,11 @@
 package cards;
 
 import akka.actor.ActorRef;
+import commands.BasicCommands;
 import structures.GameState;
-import structures.basic.BigCard;
-import structures.basic.Card;
-import structures.basic.MiniCard;
-import structures.basic.Tile;
+import structures.basic.*;
+import utils.BasicObjectBuilders;
+import utils.StaticConfFiles;
 
 public class SpellCard extends Card{
 	
@@ -18,13 +18,17 @@ public class SpellCard extends Card{
 		super(id, cardname, manacost, miniCard, bigCard);
 	}
 	public boolean prompt(ActorRef out, GameState gameState, Tile tile) {
-		if (gameState.humanPlayer.getMana()<manacost){
+		if (gameState.player.getMana()<manacost){
 			return false;
 		}
-		if (tile.getUnit()!=null){
+		if (tile.getUnit()==null){
 			return false;
 		}
-
-		return true;
+		if (tile.getUnit().getOwner()!=this.getOwner()){
+			return true;
+		}
+		return false;
+	}
+	public void act(ActorRef out, GameState gameState, Tile tile) {
 	}
 }

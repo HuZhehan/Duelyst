@@ -11,7 +11,6 @@ public class ComboCharger extends UnitCard{
 	
 	public ComboCharger() {
 		super();
-		cardname = "ComboCharger";
 		manacost = 1;
 		ownername = "HumanPlayer";
 	}

@@ -7,6 +7,7 @@ import commands.BasicCommands;
 import structures.GameState;
 import structures.basic.Card;
 import structures.basic.Player;
+import structures.basic.Tile;
 import structures.basic.Unit;
 import utils.BasicObjectBuilders;
 import utils.OrderedCardLoader;
@@ -46,10 +47,32 @@ public class HumanPlayer extends Player {
 				try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
 				// max 6 cards due to UI limitation, discard
 				if (hand.size()==7) {
-					hand.remove(6);
-					BasicCommands.deleteCard(out, 7);
-					try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+					discard(out, gameState, 6);
 				}
+			}
+		}
+	}
+	public void discard(ActorRef out, GameState gameState, int index) {
+		hand.remove(index);
+		BasicCommands.deleteCard(out, index+1);
+		try {Thread.sleep(10);} catch (InterruptedException e) {e.printStackTrace();}
+		// refresh
+		BasicCommands.deleteCard(out, hand.size()+1);
+		for (Card c : hand) {
+			BasicCommands.drawCard(out, c, hand.indexOf(c)+1, 0);
+		}
+		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+	}
+	
+	public void useCard(ActorRef out, GameState gameState, int id, Tile tile) {
+		for (Card c : hand) {
+			if (c.getId()==id) {
+				int index = this.hand.indexOf(c);
+				int mana = this.getMana() - c.getManacost();
+				this.setMana(out, gameState, mana);
+				this.discard(out, gameState, index);
+				c.act(out, gameState, tile);
+				break;
 			}
 		}
 	}

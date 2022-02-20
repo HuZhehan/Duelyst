@@ -50,8 +50,14 @@ public class Player implements PlayerAction{
 	public void setHealth(int health) {
 		this.health = health;
 	}
+	public void setHealth(ActorRef out, GameState gameState, int health) {
+		this.health = health;
+	}
 	public int getMana() {
 		return mana;
+	}
+	public void setMana(ActorRef out, GameState gameState, int mana) {
+		this.mana = mana;
 	}
 	public void setMana(int mana) {
 		this.mana = mana;
@@ -86,9 +92,14 @@ public class Player implements PlayerAction{
 	public String getName() {
 		return name;
 	}
-	public void useCard() {
-
+	public void useCard(ActorRef out, GameState gameState, int id, Tile tile) {
 	}
-	
-	
+	private void drawCard(ActorRef out, GameState gameState, int index) {
+		// TODO Auto-generated method stub
+		
+	}
+	private void discard(ActorRef out, GameState gameState, int index) {
+		// TODO Auto-generated method stub
+		
+	}
 }

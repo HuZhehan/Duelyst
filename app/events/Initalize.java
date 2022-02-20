@@ -50,16 +50,15 @@ public class Initalize implements EventProcessor{
 		gameState.aiPlayer.drawCard(out, gameState, 3, -1);
 				
 		//test	
-		gameState.tile[1][2].setUnit(humanAvatar);
-		humanAvatar.move(out, gameState, gameState.tile[6][2]);
-		humanAvatar.attack(out, gameState, aiAvatar);
-		Card card1 = BasicObjectBuilders.loadCard(StaticConfFiles.c_truestrike, 14, Truestrike.class);
-		card1.content(out,gameState, gameState.tile[7][2]);
-		Card card2 = BasicObjectBuilders.loadCard(StaticConfFiles.c_comodo_charger, 0, ComboCharger.class);
-		card2.content(out,gameState, gameState.tile[7][1]);
+		//humanAvatar.move(out, gameState, gameState.tile[6][2]);
+		//humanAvatar.attack(out, gameState, aiAvatar);
+		//Card card1 = BasicObjectBuilders.loadCard(StaticConfFiles.c_truestrike, 14, Truestrike.class);
+		//card1.act(out,gameState, gameState.tile[7][2]);
+		//Card card2 = BasicObjectBuilders.loadCard(StaticConfFiles.c_comodo_charger, 0, ComboCharger.class);
+		//card2.act(out,gameState, gameState.tile[7][1]);
 		
 		gameState.gameInitalised = true;
-		gameState.something = true;
+		//gameState.something = true;
 		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 		BasicCommands.addPlayer1Notification(out, "initalization done", 20);
 		

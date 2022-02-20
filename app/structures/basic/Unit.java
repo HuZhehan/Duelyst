@@ -137,6 +137,10 @@ public class Unit implements UnitAction{
 	public void attack(ActorRef out, GameState gameState, Unit target) {
 		// play animation
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.attack);
+		BasicCommands.playUnitAnimation(out, target, UnitAnimationType.hit);
+		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
+		BasicCommands.playUnitAnimation(out, target, UnitAnimationType.idle);
 		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
 		// update states
 		int hp = target.getHealth() - attack;
@@ -147,30 +151,18 @@ public class Unit implements UnitAction{
 		if (target.getHealth()>0) {
 			target.counterAttack(out, gameState, this);
 		}
-		/*
-		// re-draw unit, otherwise animation stops
-		int x = this.getPosition().getTilex();
-		int y = this.getPosition().getTiley();
-		Tile tile = gameState.tile[x][y];
-		BasicCommands.drawUnit(out, this, tile);
-		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
-		*/
 	}
 	public void counterAttack(ActorRef out, GameState gameState, Unit target) {
 		// play animation
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.attack);
+		BasicCommands.playUnitAnimation(out, target, UnitAnimationType.hit);
+		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
+		BasicCommands.playUnitAnimation(out, target, UnitAnimationType.idle);
 		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
 		// update states
 		int hp = target.getHealth() - attack;
 		target.setHealth(out, gameState, hp);
-		/*
-		// re-draw unit, otherwise animation stops
-		int x = this.getPosition().getTilex();
-		int y = this.getPosition().getTiley();
-		Tile tile = gameState.tile[x][y];
-		BasicCommands.drawUnit(out, this, tile);
-		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
-		*/
 	}
 	public void die(ActorRef out, GameState gameState) {
 		

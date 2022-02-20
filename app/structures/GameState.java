@@ -2,10 +2,10 @@ package structures;
 
 import akka.actor.ActorRef;
 import commands.BasicCommands;
+import events.PreviousEvent;
 import players.AiPlayer;
 import players.HumanPlayer;
-import structures.basic.Player;
-import structures.basic.Tile;
+import structures.basic.*;
 import utils.BasicObjectBuilders;
 
 /**
@@ -19,7 +19,6 @@ public class GameState {
 
 	
 	public boolean gameInitalised = false;
-	public boolean something = false;
 	
 	public int Round = 0;
 	
@@ -29,6 +28,10 @@ public class GameState {
 	
 	public Tile[][] tile = new Tile[9][5];
 	
+	public PreviousEvent previousEvent = PreviousEvent.normal;
+	public Card previousCard = null;
+	public Unit previousUnit = null;
+	
 	public GameState() {}
 	
 	public void createBoard(ActorRef out) {
@@ -36,6 +39,19 @@ public class GameState {
 			for (int j=0;j<5;j++) {
 				tile[i][j] = BasicObjectBuilders.loadTile(i, j);
 					BasicCommands.drawTile(out, tile[i][j], 0);
+					try {Thread.sleep(10);} catch (InterruptedException e) {e.printStackTrace();}
+			}
+		}
+	}
+	
+	public void clear(ActorRef out) {
+		previousEvent = PreviousEvent.normal;
+		previousCard = null;
+		previousUnit = null;
+		for (int i=0;i<9;i++) {
+			for (int j=0;j<5;j++) {
+					BasicCommands.drawTile(out, tile[i][j], 0);
+					try {Thread.sleep(10);} catch (InterruptedException e) {e.printStackTrace();}
 			}
 		}
 	}

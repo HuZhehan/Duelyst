@@ -14,6 +14,6 @@ public interface PlayerAction {
 	 */
 	public Unit summon(ActorRef out, GameState gameState, int id, Tile tile);
 	public String getName();
-	public void useCard();
+	public void useCard(ActorRef out, GameState gameState, int id, Tile tile);
 	
 }
