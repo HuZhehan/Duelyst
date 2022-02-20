@@ -41,8 +41,8 @@ public class Entropic_decay extends SpellCard{
 		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 		BasicCommands.playUnitAnimation(out, unit, UnitAnimationType.death);
 		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
-		unit.setHealth(out, gameState, 0);
-		unit.setAttack(out, gameState, 0);
+		//unit.setHealth(out, gameState, 0);
+		//unit.setAttack(out, gameState, 0);
 		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
 		BasicCommands.deleteUnit(out, unit);
 		

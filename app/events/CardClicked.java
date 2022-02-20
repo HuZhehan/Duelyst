@@ -25,14 +25,20 @@ public class CardClicked implements EventProcessor{
 
 	@Override
 	public void processEvent(ActorRef out, GameState gameState, JsonNode message) {
-		
+		// show info anyhow
 		int handPosition = message.get("position").asInt();
 		Card card = gameState.player.hand.get(handPosition-1);
 		BasicCommands.addPlayer1Notification(out, card.getCardname(), 2);
-		if (gameState.gameInitalised == true) {
-		//if((gameState.previousEvent==PreviousEvent.cardClicked&&gameState.previousCard!=card)||gameState.previousEvent!=PreviousEvent.cardClicked) {
-			gameState.clear(out);
-			BasicCommands.drawCard(out, card, handPosition, 1);		
+		
+		// should be human's turn
+		if (gameState.gameInitalised==true&&gameState.player==gameState.humanPlayer) {
+			// clear board and hand
+			if((gameState.previousEvent==PreviousEvent.cardClicked&&gameState.previousCard!=card)||gameState.previousEvent==PreviousEvent.unitClicked) {
+				gameState.clear(out);
+			}
+			// highlight chosen card
+			BasicCommands.drawCard(out, card, handPosition, 1);	
+			// highlight valid tile
 			for (int i=0;i<9;i++) {
 				for (int j=0;j<5;j++) {
 					Tile t = gameState.tile[i][j];
@@ -47,9 +53,9 @@ public class CardClicked implements EventProcessor{
 					}	
 				}
 			}
+			gameState.previousEvent = PreviousEvent.cardClicked;
+			gameState.previousCard = card;
 		}
-		gameState.previousEvent = PreviousEvent.cardClicked;
-		gameState.previousCard = card;
 
 	}
 

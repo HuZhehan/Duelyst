@@ -50,6 +50,6 @@ public class SundropElixir extends SpellCard{
 		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 		BasicCommands.playUnitAnimation(out, unit, UnitAnimationType.idle);
 		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
-		unit.setHealth(out, gameState, hp);
+		//unit.setHealth(out, gameState, hp);
 	}
 }

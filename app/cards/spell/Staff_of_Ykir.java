@@ -41,6 +41,6 @@ public class Staff_of_Ykir extends SpellCard{
 		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 		BasicCommands.playUnitAnimation(out, unit, UnitAnimationType.idle);
 		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
-		unit.setAttack(out, gameState, hp);
+		//unit.setAttack(out, gameState, hp);
 	}
 }

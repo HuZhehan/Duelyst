@@ -29,23 +29,37 @@ public class TileClicked implements EventProcessor{
 		int tilex = message.get("tilex").asInt();
 		int tiley = message.get("tiley").asInt();
 		Tile tile = gameState.tile[tilex ][tiley];
-		// do some logic
+		// show info anyhow
 		if (tile.getUnit()!=null) {
 			BasicCommands.addPlayer1Notification(out, gameState.tile[tilex][tiley].getUnit().getName(), 2);
 		}
-		
-		// click a card then a valid tile: use card
-		if(gameState.previousEvent==PreviousEvent.cardClicked) {
-			if (gameState.previousCard.prompt(out, gameState, tile)==true) {
-				int id = gameState.previousCard.getId();
-				gameState.player.useCard(out, gameState, id, tile);
-				gameState.clear(out);
+		// should be human's turn
+		if (gameState.gameInitalised==true&&gameState.player==gameState.humanPlayer) {
+			// click a card then a valid tile: use card
+			if(gameState.previousEvent==PreviousEvent.cardClicked) {
+				if (gameState.previousCard.prompt(out, gameState, tile)==true) {
+					int id = gameState.previousCard.getId();
+					gameState.player.useCard(out, gameState, id, tile);
+					gameState.clear(out);
+				}
 			}
-		}
-		
-		// click a unit then a valid tile: move or attack
-		if(gameState.previousEvent==PreviousEvent.unitClicked) {
 			
+			// click a unit then a valid tile: move or attack
+			if(gameState.previousEvent==PreviousEvent.unitClicked) {
+				// enemy unit on tile, attack
+				if (tile.getUnit()!=null) {
+					// attack
+				}
+				// empty tile, move
+				if (tile.getUnit()==null) {
+					// move
+				}
+			}
+			// click another friend unit, highlight valid tile, mark previous event
+			if(tile.getUnit()!=null&&tile.getUnit().getOwner()=="HumanPlayer") {
+				gameState.previousEvent = PreviousEvent.unitClicked;
+				gameState.previousUnit = tile.getUnit();
+			}
 		}
 	}
 }

@@ -12,8 +12,8 @@ public interface UnitAction {
 	public int getMaxHealth();
 	public int getHealth();
 	public int getAttack();
-	public void setHealth(ActorRef out, GameState gameState, int health);
-	public void setAttack(ActorRef out, GameState gameState, int attack);
+	public void setHealth(int health);
+	public void setAttack(int attack);
 	public void setOwner(String owner);
 	public void move(ActorRef out, GameState gameState, Tile destination);
 	public void attack(ActorRef out, GameState gameState, Unit target);

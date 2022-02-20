@@ -5,6 +5,5 @@ public enum PreviousEvent {
 	unitCardClicked,
 	unitClicked,
 	cardClicked,
-	normal, 
 	endTurnClicked,
 }

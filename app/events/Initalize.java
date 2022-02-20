@@ -39,9 +39,13 @@ public class Initalize implements EventProcessor{
 		
 		// set player
 		Unit humanAvatar = gameState.humanPlayer.summon(out, gameState, 100, gameState.tile[1][2]);
+		BasicCommands.setPlayer1Mana(out, gameState.humanPlayer);
+		BasicCommands.setPlayer1Health(out, gameState.humanPlayer);
 
 		// set enemy
 		Unit aiAvatar = gameState.aiPlayer.summon(out, gameState, 200, gameState.tile[7][2]);
+		BasicCommands.setPlayer2Mana(out, gameState.aiPlayer);
+		BasicCommands.setPlayer2Health(out, gameState.aiPlayer);
 		
 		
 		// draw card
@@ -66,7 +70,8 @@ public class Initalize implements EventProcessor{
 
 		//player start new turn
 		BasicCommands.addPlayer1Notification(out, "Round"+Integer.toString(gameState.Round), 2);
-		gameState.humanPlayer.setMana(out, gameState, gameState.Round + 1);
+		gameState.humanPlayer.setMana(gameState.Round + 1);
+		BasicCommands.setPlayer1Mana(out, gameState.humanPlayer);
 		
 		//CommandDemo.executeDemo(out); // this executes the command demo, comment out this when implementing your solution
 		//CheckMoveLogic.executeDemo(out);

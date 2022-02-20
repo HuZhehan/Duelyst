@@ -10,7 +10,9 @@ import structures.basic.Card;
 import structures.basic.Player;
 import structures.basic.Tile;
 import structures.basic.Unit;
+import utils.BasicObjectBuilders;
 import utils.OrderedCardLoader;
+import utils.StaticConfFiles;
 import utils.UnitLoader;
 
 /**
@@ -28,11 +30,12 @@ public class AiPlayer extends Player {
 	public AiPlayer(int health, int mana) {
 		super(health, mana);
 	}
+
 	/**
+	 * draw card method
 	 * @author Zhehan Hu, 
-	 * @drawCard() - player draw card method
 	 * @param n - number of card to draw
-	 * @param mode - animation type, not used
+	 * @param mode - animation type
 	 */
 	public void drawCard(ActorRef out, GameState gameState, int n, int mode) {
 		for (int i=0;i<n;i++) {
@@ -50,38 +53,29 @@ public class AiPlayer extends Player {
 			}
 		}
 	}
+	/**
+	 *
+	 * @author Student Zhehan Hu
+	 * @param
+	 */
 	public void discard(ActorRef out, GameState gameState, int index) {
 		hand.remove(index);
 	}
+	/**
+	 *
+	 * @author Student Zhehan Hu
+	 * @param
+	 */
 	public void useCard(ActorRef out, GameState gameState, int id, Tile tile) {
 		for (Card c : hand) {
 			if (c.getId()==id) {
 				int index = this.hand.indexOf(c);
 				int mana = this.getMana() - c.getManacost();
-				this.setMana(out, gameState, mana);
+				this.setMana(mana);
+				BasicCommands.setPlayer2Mana(out, this);
 				this.discard(out, gameState, index);
 				c.content(out, gameState, tile);
-				
 			}
 		}
-	}
-	public void setHealth(ActorRef out, GameState gameState, int health) {
-		if (health>20) {
-			health = 20;
-		}
-		this.health = health;
-		BasicCommands.setPlayer2Health(out, this);
-		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
-		if (this.health<0) {
-			//placeholder
-		}
-	}
-	public void setMana(ActorRef out, GameState gameState, int mana) {
-		if (mana>9) {
-			mana = 9;
-		}
-		this.mana = mana;
-		BasicCommands.setPlayer2Mana(out, this);
-		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
 	}
 }

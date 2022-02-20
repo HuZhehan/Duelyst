@@ -44,29 +44,75 @@ public class Player implements PlayerAction{
 		this.health = health;
 		this.mana = mana;
 	}
-	public int getHealth() {
-		return health;
+	// @author Student Zhehan Hu
+	public String getName() {
+		return name;
 	}
-	public void setHealth(int health) {
-		this.health = health;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public void setHealth(ActorRef out, GameState gameState, int health) {
-		this.health = health;
+	/** 
+	 * @author Zhehan Hu,
+	 * @drawCard() - player draw card
+	 * @param n - number of card to draw
+	 * @param mode - animation type
+	 */
+	public void drawCard(ActorRef out, GameState gameState, int n, int mode) {
+		for (int i=0;i<n;i++) {
+			if (deck.size()==0) {
+				//placeholder
+			}else {
+				Card card = deck.get(0);
+				deck.remove(0);
+				hand.add(card);
+				card.setOwner(this.getName());
+				BasicCommands.drawCard(out, card, hand.size(), mode);
+				try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+				// max 6 cards due to UI limitation, discard
+				if (hand.size()==7) {
+					discard(out, gameState, 6);
+				}
+			}
+		}
 	}
-	public int getMana() {
-		return mana;
+	/**
+	 * 
+	 * @author Student Zhehan Hu
+	 * @param
+	 */
+	public void discard(ActorRef out, GameState gameState, int index) {
+		hand.remove(index);
+		BasicCommands.deleteCard(out, index+1);
+		try {Thread.sleep(10);} catch (InterruptedException e) {e.printStackTrace();}
+		// refresh
+		BasicCommands.deleteCard(out, hand.size()+1);
+		for (Card c : hand) {
+			BasicCommands.drawCard(out, c, hand.indexOf(c)+1, 0);
+		}
+		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
 	}
-	public void setMana(ActorRef out, GameState gameState, int mana) {
-		this.mana = mana;
-	}
-	public void setMana(int mana) {
-		this.mana = mana;
+	/**
+	 * 
+	 * @author Student Zhehan Hu
+	 * @param
+	 */
+	public void useCard(ActorRef out, GameState gameState, int id, Tile tile) {
+		for (Card c : hand) {
+			if (c.getId()==id) {
+				int index = this.hand.indexOf(c);
+				int mana = this.getMana() - c.getManacost();
+				this.setMana(mana);
+				BasicCommands.setPlayer1Mana(out, this);
+				this.discard(out, gameState, index);
+				c.content(out, gameState, tile);
+				break;
+			}
+		}
 	}
 	/**
 	 *summon a unit according to id
 	 * @author Student Zhehan Hu
-	 * @param configFile, name of unit, not used
-	 * @param id, unit.id = card.id
+	 * @param unit id
 	 * @param tile, where to summon
 	 */
 	public Unit summon(ActorRef out, GameState gameState, int id, Tile tile) {
@@ -78,28 +124,26 @@ public class Player implements PlayerAction{
 				u.setOwner(this.getName());
 				// play animation
 				BasicCommands.playEffectAnimation(out, BasicObjectBuilders.loadEffect(StaticConfFiles.f1_summon), tile);
-				try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
 				BasicCommands.drawUnit(out, u, tile);
 				try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
-				// update states
-				u.setAttack(out, gameState, u.getAttack());
-				u.setHealth(out, gameState, u.getMaxHealth());
+				BasicCommands.setUnitAttack(out, u, u.getAttack());
+				BasicCommands.setUnitHealth(out, u, u.getMaxHealth());
+				try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
 				return u;
 			}
 		}
 		return null;
 	}
-	public String getName() {
-		return name;
+	public int getHealth() {
+		return health;
 	}
-	public void useCard(ActorRef out, GameState gameState, int id, Tile tile) {
+	public void setHealth(int health) {
+		this.health = health;
 	}
-	private void drawCard(ActorRef out, GameState gameState, int index) {
-		// TODO Auto-generated method stub
-		
+	public int getMana() {
+		return mana;
 	}
-	private void discard(ActorRef out, GameState gameState, int index) {
-		// TODO Auto-generated method stub
-		
+	public void setMana(int mana) {
+		this.mana = mana;
 	}
 }

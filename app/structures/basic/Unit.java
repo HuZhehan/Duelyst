@@ -20,7 +20,7 @@ import utils.BasicObjectBuilders;
  * 
  * @author Dr. Richard McCreadie
  * @editor Student Zhehan Hu
- *
+ * 
  */
 public class Unit implements UnitAction{
 	
@@ -80,42 +80,60 @@ public class Unit implements UnitAction{
 	public String getName() {
 		return unitname;
 	}
+	public void setName(String unitname) {
+		this.unitname = unitname;
+	}
 	public int getMaxHealth(){
 		return maxHealth;
+	}
+	public void setMaxHealth(int maxHealth){
+		this.maxHealth = maxHealth;
 	}
 	public int getHealth(){
 		return health;
 	}
-	public void setHealth(ActorRef out, GameState gameState, int health) {
-		this.health = health;
-		BasicCommands.setUnitHealth(out, this, health);
-		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
-		if (this.health<0) {
-			this.die(out, gameState);
+	public void setHealth(int health) {
+		if (health>this.maxHealth){
+			health = this.maxHealth;
 		}
+		this.health = health;
 	}
 	public int getAttack() {
 		return attack;
 	}
-	public void setAttack(ActorRef out, GameState gameState, int attack) {
+	public void setAttack(int attack) {
 		this.attack = attack;
-		BasicCommands.setUnitAttack(out, this, attack);
-		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
 	}
 	public String getOwner() {
 		return ownername;
 	}
-	public void setOwner(String owner) {
-		this.ownername = owner;
+	public void setOwner(String ownername) {
+		this.ownername = ownername;
 	}
-	public Player getPlayer(ActorRef out, GameState gameState) {
-		if (ownername == "HumanPlayer") {
-			return gameState.humanPlayer;
+	// @author Student Zhehan Hu
+	public void takeDamage(ActorRef out, GameState gameState, int damage) {
+		// update states
+		int hp = this.health - damage;
+		this.setHealth(hp);
+		// play animation
+		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.hit);
+		BasicCommands.setUnitHealth(out, this, health);
+		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
+		// check death
+		if (this.health<=0) {
+			this.die(out, gameState);
 		}
-		if (ownername == "AiPlayer") {
-			return gameState.aiPlayer;
-		}
-		return null;
+	}
+	// @author Student Zhehan Hu
+	public void takeHeal(ActorRef out, GameState gameState, int heal) {
+		// update states
+		this.setHealth(this.health + heal);
+		// play animation
+		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.channel);
+		BasicCommands.setUnitHealth(out, this, health);
+		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
 	}
 	// @author Student Zhehan Hu
 	public void move(ActorRef out, GameState gameState, Tile destination) {
@@ -137,14 +155,10 @@ public class Unit implements UnitAction{
 	public void attack(ActorRef out, GameState gameState, Unit target) {
 		// play animation
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.attack);
-		BasicCommands.playUnitAnimation(out, target, UnitAnimationType.hit);
 		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
-		BasicCommands.playUnitAnimation(out, target, UnitAnimationType.idle);
-		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
 		// update states
-		int hp = target.getHealth() - attack;
-		target.setHealth(out, gameState, hp);
+		target.takeDamage(out, gameState, this.attack);
 		this.moveable = false;
 		this.attackable = false;
 		// counter-attack
@@ -152,24 +166,17 @@ public class Unit implements UnitAction{
 			target.counterAttack(out, gameState, this);
 		}
 	}
+	// @author Student Zhehan Hu
 	public void counterAttack(ActorRef out, GameState gameState, Unit target) {
 		// play animation
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.attack);
-		BasicCommands.playUnitAnimation(out, target, UnitAnimationType.hit);
 		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
-		BasicCommands.playUnitAnimation(out, target, UnitAnimationType.idle);
-		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
 		// update states
-		int hp = target.getHealth() - attack;
-		target.setHealth(out, gameState, hp);
+		target.takeDamage(out, gameState, this.attack);
 	}
 	public void die(ActorRef out, GameState gameState) {
 		
-	}
-	//
-	public String toString() {
-		return "Unit";
 	}
 	
 	public int getId() {
@@ -218,6 +225,4 @@ public class Unit implements UnitAction{
 	public void setPositionByTile(Tile tile) {
 		position = new Position(tile.getXpos(),tile.getYpos(),tile.getTilex(),tile.getTiley());
 	}
-	
-	
 }

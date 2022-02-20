@@ -28,7 +28,7 @@ public class GameState {
 	
 	public Tile[][] tile = new Tile[9][5];
 	
-	public PreviousEvent previousEvent = PreviousEvent.normal;
+	public PreviousEvent previousEvent = null;
 	public Card previousCard = null;
 	public Unit previousUnit = null;
 	
@@ -45,16 +45,18 @@ public class GameState {
 	}
 	
 	public void clear(ActorRef out) {
-		previousEvent = PreviousEvent.normal;
+		// clear states
+		previousEvent = null;
 		previousCard = null;
 		previousUnit = null;
+		// clear board
 		for (int i=0;i<9;i++) {
 			for (int j=0;j<5;j++) {
 				BasicCommands.drawTile(out, tile[i][j], 0);
 			}
 			try {Thread.sleep(10);} catch (InterruptedException e) {e.printStackTrace();}
 		}
-		
+		// clear card
 		for (Card c : humanPlayer.hand) {
 			BasicCommands.drawCard(out, c, humanPlayer.hand.indexOf(c)+1, 0);
 		}

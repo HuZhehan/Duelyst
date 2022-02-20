@@ -24,7 +24,6 @@ import structures.basic.UnitAnimationType;
  */
 
 public class AiAvatar extends Unit{
-	// @author Student Zhehan Hu
 	
 	public AiAvatar() {
 		super();
@@ -44,18 +43,35 @@ public class AiAvatar extends Unit{
 		super(id, animation, position, animations, correction);
 	}
 	
-	public void setHealth(ActorRef out, GameState gameState, int health) {
-		if (health>20){
-			health = 20;
-		}
-		this.health = health;
+	// @author Student Zhehan Hu
+	public void takeDamage(ActorRef out, GameState gameState, int damage) {
+		// update states
+		int hp = this.health - damage;
+		this.setHealth(hp);
+		gameState.aiPlayer.setHealth(hp);
+		// play animation
+		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.hit);
 		BasicCommands.setUnitHealth(out, this, health);
+		BasicCommands.setPlayer2Health(out, gameState.aiPlayer);;
 		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
-		if (this.health<0) {
+		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
+		// check death
+		if (this.health<=0) {
 			this.die(out, gameState);
+			// game end
 		}
-		//BasicCommands.addPlayer1Notification(out, "setAiHealth", 2);
-		gameState.aiPlayer.setHealth(out, gameState, health);
+	}
+	// @author Student Zhehan Hu
+	public void takeHeal(ActorRef out, GameState gameState, int heal) {
+		// update states
+		this.setHealth(this.health + heal);
+		gameState.aiPlayer.setHealth(this.health + heal);
+		// play animation
+		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.channel);
+		BasicCommands.setUnitHealth(out, this, health);
+		BasicCommands.setPlayer2Health(out, gameState.aiPlayer);;
+		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
 	}
 	
 }

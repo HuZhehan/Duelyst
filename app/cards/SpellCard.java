@@ -23,7 +23,7 @@ public class SpellCard extends Card{
 		super(id, cardname, manacost, miniCard, bigCard);
 	}
 	/** 
-	 * @method prompt() check if this card play affect on this tile, return true if tile is valid
+	 * @method prompt() check if this card play can affect on this tile, return true if tile is valid
 	 * @param tile - tile to check
 	 */
 	public boolean prompt(ActorRef out, GameState gameState, Tile tile) {

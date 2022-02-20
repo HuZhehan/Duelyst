@@ -44,18 +44,35 @@ public class HumanAvatar extends Unit{
 		super(id, animation, position, animations, correction);
 	}
 	
-	public void setHealth(ActorRef out, GameState gameState, int health) {
-		if (health>20){
-			health = 20;
-		}
-		this.health = health;
+	// @author Student Zhehan Hu
+	public void takeDamage(ActorRef out, GameState gameState, int damage) {
+		// update states
+		int hp = this.health - damage;
+		this.setHealth(hp);
+		gameState.humanPlayer.setHealth(hp);
+		// play animation
+		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.hit);
 		BasicCommands.setUnitHealth(out, this, health);
+		BasicCommands.setPlayer1Health(out, gameState.humanPlayer);;
 		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
-		if (this.health<0) {
+		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
+		// check death
+		if (this.health<=0) {
 			this.die(out, gameState);
+			// game end
 		}
-		//BasicCommands.addPlayer1Notification(out, "setHumanHealth", 2);
-		gameState.humanPlayer.setHealth(out, gameState, health);
+	}
+	// @author Student Zhehan Hu
+	public void takeHeal(ActorRef out, GameState gameState, int heal) {
+		// update states
+		this.setHealth(this.health + heal);
+		gameState.humanPlayer.setHealth(this.health + heal);
+		// play animation
+		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.channel);
+		BasicCommands.setUnitHealth(out, this, health);
+		BasicCommands.setPlayer1Health(out, gameState.humanPlayer);;
+		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
 	}
 	
 }
