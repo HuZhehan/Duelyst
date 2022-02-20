@@ -1,6 +1,7 @@
-package cards;
+package cards.unit;
 
 import akka.actor.ActorRef;
+import cards.UnitCard;
 import commands.BasicCommands;
 import structures.GameState;
 import structures.basic.*;

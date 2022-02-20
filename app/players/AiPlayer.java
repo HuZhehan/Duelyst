@@ -59,7 +59,7 @@ public class AiPlayer extends Player {
 				int mana = this.getMana() - c.getManacost();
 				this.setMana(out, gameState, mana);
 				this.discard(out, gameState, index);
-				c.act(out, gameState, tile);
+				c.content(out, gameState, tile);
 				
 			}
 		}

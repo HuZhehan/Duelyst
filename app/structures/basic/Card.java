@@ -42,7 +42,7 @@ public class Card implements CardAction{
 		// TODO Auto-generated method stub
 		return false;
 	}
-	public void act(ActorRef out, GameState gameState, Tile tile) {
+	public void content(ActorRef out, GameState gameState, Tile tile) {
 		// TODO Auto-generated method stub
 	}
 	public String getOwner() {

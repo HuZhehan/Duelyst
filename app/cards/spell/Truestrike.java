@@ -1,6 +1,7 @@
-package cards;
+package cards.spell;
 
 import akka.actor.ActorRef;
+import cards.SpellCard;
 import commands.BasicCommands;
 import structures.GameState;
 import structures.basic.*;
@@ -19,7 +20,7 @@ public class Truestrike extends SpellCard{
 		super(id, cardname, manacost, miniCard, bigCard);
 	}
 	
-	public void act(ActorRef out, GameState gameState, Tile tile) {
+	public void content(ActorRef out, GameState gameState, Tile tile) {
 		Unit unit = tile.getUnit();
 		int hp = unit.getHealth() - 2;
 		BasicCommands.playEffectAnimation(out, BasicObjectBuilders.loadEffect(StaticConfFiles.f1_inmolation), tile);

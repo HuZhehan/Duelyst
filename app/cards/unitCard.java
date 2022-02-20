@@ -9,6 +9,12 @@ import structures.basic.MiniCard;
 import structures.basic.Tile;
 import utils.BasicObjectBuilders;
 
+
+/** 
+ * a super class of spell card
+ * @author Zhehan Hu,
+ */
+
 public class UnitCard extends Card{
 	
 	public UnitCard() {
@@ -20,6 +26,10 @@ public class UnitCard extends Card{
 		super(id, cardname, manacost, miniCard, bigCard);
 	}
 	
+	/** 
+	 * @method prompt() check if this card can summon unit on this tile, return true if tile is valid
+	 * @param tile - tile to check
+	 */
 	public boolean prompt(ActorRef out, GameState gameState, Tile tile) {
 		if (gameState.player.getMana()<manacost){
 			return false;
@@ -40,8 +50,11 @@ public class UnitCard extends Card{
 		}
 		return false;
 	}
-	
-	public void act(ActorRef out, GameState gameState, Tile tile) {
+	/** 
+	 * @method content()- summon a unit (whose id = this card's id) on a tile
+	 * @param tile - where to summon 
+	 */
+	public void content(ActorRef out, GameState gameState, Tile tile) {
 		gameState.humanPlayer.summon(out, gameState, id, tile);
 	}
 }
