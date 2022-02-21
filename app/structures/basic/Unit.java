@@ -202,6 +202,4 @@ public class Unit implements UnitAction{
 	public void setPositionByTile(Tile tile) {
 		position = new Position(tile.getXpos(),tile.getYpos(),tile.getTilex(),tile.getTiley());
 	}
-	
-	
 }

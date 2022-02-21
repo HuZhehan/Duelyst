@@ -44,7 +44,7 @@ public class Initalize implements EventProcessor{
 		
 		// set player
 		gameState.humanPlayer.setHealth(out, 20);
-		Unit humanAvatar = gameState.humanPlayer.createUnit(out, StaticConfFiles.humanAvatar, 0, gameState.tile[1][2], Avatar.class);
+		Unit humanAvatar = gameState.humanPlayer.createUnit(out, StaticConfFiles.humanAvatar, 0, gameState.tile[3][3], Avatar.class);
 
 		// set enemy
 		gameState.aiPlayer.setHealth(out, 20);
@@ -57,8 +57,9 @@ public class Initalize implements EventProcessor{
 		gameState.aiPlayer.drawCard(out,3,-1);
 				
 		//test	
-		humanAvatar.move(out, gameState.tile[1][2], gameState.tile[6][2]);
-		humanAvatar.attack(out, aiAvatar);
+		gameState.tile[3][3].setUnit(humanAvatar);
+//		humanAvatar.move(out, gameState.tile[1][2], gameState.tile[6][2]);
+//		humanAvatar.attack(out, aiAvatar);
 		
 		gameState.gameInitalised = true;
 		gameState.something = true;
