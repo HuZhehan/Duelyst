@@ -118,7 +118,7 @@ public class Unit implements UnitAction{
 		// play animation
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.hit);
 		BasicCommands.setUnitHealth(out, this, health);
-		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
 		// check death
 		if (this.health<=0) {
@@ -147,7 +147,7 @@ public class Unit implements UnitAction{
 		destination.setUnit(this);
 		// play animation
 		BasicCommands.moveUnitToTile(out, this, destination);
-		try {Thread.sleep(6000);} catch (InterruptedException e) {e.printStackTrace();}
+		try {Thread.sleep(10);} catch (InterruptedException e) {e.printStackTrace();}
 		// update states
 		this.moveable = false;
 	}
@@ -187,6 +187,7 @@ public class Unit implements UnitAction{
 		}
 		if (this.moveable==true&&this.attackable==true){
 			return this.checkMoveAttack(out, gameState, tile);
+
 		}
 		if (this.moveable==false&&this.attackable==true){
 			return this.checkAttack(out, gameState, tile);
@@ -195,8 +196,8 @@ public class Unit implements UnitAction{
 	}
 	public boolean checkMoveAttack(ActorRef out, GameState gameState, Tile tile) {
 		// tile is empty, check if unit can move to
-		if (this.checkMove(out, gameState, tile)==true) {
-			return true;
+		if(tile.getUnit()==null) {
+		 return this.checkMove(out, gameState, tile);
 		}
 		// tile has enemy check if unit can attack
 		if(tile.getUnit()!=null&&tile.getUnit().getOwner()!=this.getOwner()) {
@@ -217,7 +218,12 @@ public class Unit implements UnitAction{
 		}
 		return false; 
 	}
+	//
 	public boolean checkMove(ActorRef out, GameState gameState, Tile tile) {
+		// tile is not empty, return false
+		if(tile.getUnit()!=null) {
+		 return false;
+		}
 		// coordinate of tile to check
 		int x = tile.getTilex();
 		int y = tile.getTiley();
@@ -253,6 +259,10 @@ public class Unit implements UnitAction{
 		return false;
 	}
 	public boolean checkAttack(ActorRef out, GameState gameState, Tile tile) {
+		// tile is empty or is friend unit, return false
+		if(tile.getUnit()==null||tile.getUnit().getOwner()==this.getOwner()) {
+		 return false;
+		}
 		// coordinate of tile to check
 		int x = tile.getTilex();
 		int y = tile.getTiley();
@@ -264,7 +274,7 @@ public class Unit implements UnitAction{
 		//   o o o
 		//   o x o
 		//   o o o
-		if (tile.getUnit()==null && Math.pow((x-m),2)+Math.pow(y-n,2)<=2) {
+		if (Math.pow((x-m),2)+Math.pow(y-n,2)<=2) {
 			return true;
 		}
 		return false;

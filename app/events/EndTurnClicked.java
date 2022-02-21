@@ -24,7 +24,9 @@ public class EndTurnClicked implements EventProcessor{
 	@Override
 	public void processEvent(ActorRef out, GameState gameState, JsonNode message) {
 		// should be human's turn
-		if (gameState.gameInitalised==true&&gameState.player==gameState.humanPlayer) {
+		if (gameState.gameInitalised==true&&gameState.player==gameState.humanPlayer&&gameState.previousEvent != PreviousEvent.block) {
+			// block player's click
+			gameState.previousEvent = PreviousEvent.block;
 			//player end turn
 			gameState.clear(out);
 			gameState.humanPlayer.setMana(0);
@@ -55,9 +57,10 @@ public class EndTurnClicked implements EventProcessor{
 			for (Unit u:gameState.humanPlayer.army) {
 				u.enableMoveAttack();
 			}
-			}
+			gameState.previousEvent = null;
+		}
 
 		
-			gameState.previousEvent = PreviousEvent.endTurnClicked;
+			//gameState.previousEvent = PreviousEvent.endTurnClicked;
 	}
 }

@@ -31,7 +31,7 @@ public class CardClicked implements EventProcessor{
 		BasicCommands.addPlayer1Notification(out, card.getCardname(), 2);
 		
 		// should be human's turn
-		if (gameState.gameInitalised==true&&gameState.player==gameState.humanPlayer) {
+		if (gameState.gameInitalised==true&&gameState.player==gameState.humanPlayer&&gameState.previousEvent != PreviousEvent.block) {
 			// clear board and hand
 			if((gameState.previousEvent==PreviousEvent.cardClicked&&gameState.previousCard!=card)||gameState.previousEvent==PreviousEvent.unitClicked) {
 				gameState.clear(out);
@@ -43,10 +43,12 @@ public class CardClicked implements EventProcessor{
 				for (int j=0;j<5;j++) {
 					Tile t = gameState.tile[i][j];
 					if (card.check(out, gameState, t)==true) {
-						if(card.getType()=="UnitCard") {
+						// empty tile or friend tile, highlight with white
+						if(t.getUnit()==null || t.getUnit().getOwner()==card.getOwner()) {
 							BasicCommands.drawTile(out, t, 1);
 						}
-						if(card.getType()=="SpellCard") {
+						// enemy tile, highlight with red
+						else if(t.getUnit()!=null && t.getUnit().getOwner()!=card.getOwner()) {
 							BasicCommands.drawTile(out, t, 2);
 						}
 						try {Thread.sleep(10);} catch (InterruptedException e) {e.printStackTrace();}

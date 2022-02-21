@@ -31,10 +31,10 @@ public class TileClicked implements EventProcessor{
 		Tile tile = gameState.tile[tilex ][tiley];
 		// show info anyhow
 		if (tile.getUnit()!=null) {
-			BasicCommands.addPlayer1Notification(out, gameState.tile[tilex][tiley].getUnit().getName(), 2);
+			BasicCommands.addPlayer1Notification(out, tile.getUnit().getName(), 2);
 		}
 		// should be human's turn
-		if (gameState.gameInitalised==true&&gameState.player==gameState.humanPlayer) {
+		if (gameState.gameInitalised==true&&gameState.player==gameState.humanPlayer&&gameState.previousEvent != PreviousEvent.block) {
 			// click a card then a valid tile: use card
 			if(gameState.previousEvent==PreviousEvent.cardClicked) {
 				if (gameState.previousCard.check(out, gameState, tile)==true) {
@@ -43,22 +43,9 @@ public class TileClicked implements EventProcessor{
 					gameState.clear(out);
 				}
 			}
-			
-			// click a unit then a valid tile: move or attack
-			if(gameState.previousEvent==PreviousEvent.unitClicked) {
-				// enemy unit on tile, attack
-				if (tile.getUnit()!=null) {
-					// attack
-				}
-				// empty tile, move
-				if (tile.getUnit()==null) {
-					// move
-					gameState.previousUnit.move(out, gameState, tile);
-					gameState.clear(out);
-				}
-			}
 			// click another friend unit, highlight valid tile, mark previous event
-			if(tile.getUnit()!=null&&tile.getUnit().getOwner()=="HumanPlayer") {
+			else if(tile.getUnit()!=null&&tile.getUnit().getOwner()=="HumanPlayer") {
+				gameState.clear(out);
 				Unit unit = tile.getUnit();
 				// highlight valid tile
 				for (int i=0;i<9;i++) {
@@ -70,7 +57,7 @@ public class TileClicked implements EventProcessor{
 								BasicCommands.drawTile(out, t, 1);
 							}
 							// valid tile has enemy, highlight with red
-							if(t.getUnit()!=null&&t.getUnit().getName()!=tile.getUnit().getOwner()) {
+							else if(t.getUnit()!=null && t.getUnit().getName()!=tile.getUnit().getOwner()) {
 								BasicCommands.drawTile(out, t, 2);
 							}
 							try {Thread.sleep(10);} catch (InterruptedException e) {e.printStackTrace();}
@@ -81,6 +68,25 @@ public class TileClicked implements EventProcessor{
 				gameState.previousEvent = PreviousEvent.unitClicked;
 				gameState.previousUnit = unit;
 			}
+			
+			// click a unit then a valid tile: move or attack
+			else if(gameState.previousEvent==PreviousEvent.unitClicked) {
+				if (gameState.previousUnit.check(out, gameState, tile) == true){
+					// empty tile, move
+					if (tile.getUnit()==null) {
+						// move
+						gameState.previousUnit.move(out, gameState, tile);
+						gameState.clear(out);
+					}
+					// enemy unit on tile, attack
+					else if (tile.getUnit()!=null) {
+						// attack
+					}
+
+				}
+
+			}
+
 		}
 	}
 }
