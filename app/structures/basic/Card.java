@@ -38,7 +38,7 @@ public class Card implements CardAction{
 	public String getType() {
 		return type;
 	}
-	public boolean prompt(ActorRef out, GameState gameState, Tile tile) {
+	public boolean check(ActorRef out, GameState gameState, Tile tile) {
 		// TODO Auto-generated method stub
 		return false;
 	}

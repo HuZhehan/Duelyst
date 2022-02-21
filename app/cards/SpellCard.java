@@ -26,7 +26,7 @@ public class SpellCard extends Card{
 	 * @method prompt() check if this card play can affect on this tile, return true if tile is valid
 	 * @param tile - tile to check
 	 */
-	public boolean prompt(ActorRef out, GameState gameState, Tile tile) {
+	public boolean check(ActorRef out, GameState gameState, Tile tile) {
 		if (gameState.player.getMana()<manacost){
 			return false;
 		}

@@ -54,7 +54,7 @@ public class HumanAvatar extends Unit{
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.hit);
 		BasicCommands.setUnitHealth(out, this, health);
 		BasicCommands.setPlayer1Health(out, gameState.humanPlayer);;
-		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
 		// check death
 		if (this.health<=0) {

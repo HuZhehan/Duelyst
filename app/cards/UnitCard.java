@@ -30,21 +30,24 @@ public class UnitCard extends Card{
 	 * @method prompt() check if this card can summon unit on this tile, return true if tile is valid
 	 * @param tile - tile to check
 	 */
-	public boolean prompt(ActorRef out, GameState gameState, Tile tile) {
+	public boolean check(ActorRef out, GameState gameState, Tile tile) {
 		if (gameState.player.getMana()<manacost){
 			return false;
 		}
 		if (tile.getUnit()!=null) {
 			return false;
 		}
+		// coordinate of tile to check
 		int x = tile.getTilex();
 		int y = tile.getTiley();
 		for (int i=0;i<9;i++) {
 			for (int j=0;j<5;j++) {
-				if (Math.abs(x-i)<=1 && Math.abs(y-j)<=1) {
-					Tile t = gameState.tile[i][j];
-					if(t.getUnit()!=null && t.getUnit().getOwner()==this.getOwner())
-					return true;
+				// if tile has friend tile in range, its valid to summon unit
+				if (Math.pow((x-i),2)+Math.pow(y-j,2)<=2) {
+					Tile friendTile = gameState.tile[i][j];
+					if(friendTile.getUnit()!=null && friendTile.getUnit().getOwner()==this.getOwner()) {
+						return true;
+					}
 				}
 			}
 		}

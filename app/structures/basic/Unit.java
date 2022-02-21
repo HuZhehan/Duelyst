@@ -118,7 +118,7 @@ public class Unit implements UnitAction{
 		// play animation
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.hit);
 		BasicCommands.setUnitHealth(out, this, health);
-		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
 		// check death
 		if (this.health<=0) {
@@ -142,12 +142,12 @@ public class Unit implements UnitAction{
 		int y = this.getPosition().getTiley();
 		Tile origin = gameState.tile[x][y];
 		origin.setUnit(null);
-		// play animation
-		BasicCommands.moveUnitToTile(out, this, destination);
-		try {Thread.sleep(6000);} catch (InterruptedException e) {e.printStackTrace();}
 		// add unit to destination tile
 		this.setPositionByTile(destination);
 		destination.setUnit(this);
+		// play animation
+		BasicCommands.moveUnitToTile(out, this, destination);
+		try {Thread.sleep(6000);} catch (InterruptedException e) {e.printStackTrace();}
 		// update states
 		this.moveable = false;
 	}
@@ -174,6 +174,100 @@ public class Unit implements UnitAction{
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
 		// update states
 		target.takeDamage(out, gameState, this.attack);
+	}
+	// @author Student Zhehan Hu
+	public void enableMoveAttack() {
+		this.moveable = true;
+		this.attackable = true;
+	}
+	// @author Student Zhehan Hu
+	public boolean check(ActorRef out, GameState gameState, Tile tile) {
+		if (this.attackable==false) {
+			return false;
+		}
+		if (this.moveable==true&&this.attackable==true){
+			return this.checkMoveAttack(out, gameState, tile);
+		}
+		if (this.moveable==false&&this.attackable==true){
+			return this.checkAttack(out, gameState, tile);
+		}
+		return false; 
+	}
+	public boolean checkMoveAttack(ActorRef out, GameState gameState, Tile tile) {
+		// tile is empty, check if unit can move to
+		if (this.checkMove(out, gameState, tile)==true) {
+			return true;
+		}
+		// tile has enemy check if unit can attack
+		if(tile.getUnit()!=null&&tile.getUnit().getOwner()!=this.getOwner()) {
+			// coordinate of tile to check
+			int x = tile.getTilex();
+			int y = tile.getTiley();
+			// for any springBoard tile where can attack, check if there exists springBoard unit can move to,  .
+			for (int i=0;i<9;i++) {
+				for (int j=0;j<5;j++) {
+					if (Math.pow((x-i),2)+Math.pow(y-j,2)<=2) {
+						Tile SpringBoard = gameState.tile[i][j];
+						if(this.checkMove(out, gameState, SpringBoard)==true) {	
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false; 
+	}
+	public boolean checkMove(ActorRef out, GameState gameState, Tile tile) {
+		// coordinate of tile to check
+		int x = tile.getTilex();
+		int y = tile.getTiley();
+		// coordinate of unit position
+		int m = this.getPosition().getTilex();
+		int n = this.getPosition().getTiley();
+
+		// if tile is empty and is in unit's move range, it may be valid to move
+		//   o o o
+		//   o x o
+		//   o o o
+		if (tile.getUnit()==null && Math.pow((x-m),2)+Math.pow(y-n,2)<=2) {
+			return true;
+		}
+		//     o
+		//   x x x 
+		// o x x x o
+		//   x x x  
+		//     o
+		if (tile.getUnit()==null && Math.pow((x-m),2)+Math.pow(y-n,2)==4) {
+			// check no enemy block between unit and tile
+			//     o
+			//   x e x
+			// o e x e o
+			//   x e x
+			//     o
+			Tile blockTile = gameState.tile[(x+m)/2][(y+n)/2];
+			if (blockTile.getUnit()!=null&&blockTile.getUnit().getOwner()!=this.getOwner()){
+				return false;
+			}
+			return true;
+		}
+		return false;
+	}
+	public boolean checkAttack(ActorRef out, GameState gameState, Tile tile) {
+		// coordinate of tile to check
+		int x = tile.getTilex();
+		int y = tile.getTiley();
+		// coordinate of unit tile
+		int m = this.getPosition().getTilex();
+		int n = this.getPosition().getTiley();
+
+		// if tile has enemy and is in unit's attack range, it may be valid to attack
+		//   o o o
+		//   o x o
+		//   o o o
+		if (tile.getUnit()==null && Math.pow((x-m),2)+Math.pow(y-n,2)<=2) {
+			return true;
+		}
+		return false;
 	}
 	public void die(ActorRef out, GameState gameState) {
 		

@@ -42,7 +42,7 @@ public class CardClicked implements EventProcessor{
 			for (int i=0;i<9;i++) {
 				for (int j=0;j<5;j++) {
 					Tile t = gameState.tile[i][j];
-					if (card.prompt(out, gameState, t)==true) {
+					if (card.check(out, gameState, t)==true) {
 						if(card.getType()=="UnitCard") {
 							BasicCommands.drawTile(out, t, 1);
 						}

@@ -20,7 +20,7 @@ public class SundropElixir extends SpellCard{
 		super(id, cardname, manacost, miniCard, bigCard);
 	}
 	
-	public boolean prompt(ActorRef out, GameState gameState, Tile tile) {
+	public boolean check(ActorRef out, GameState gameState, Tile tile) {
 		if (gameState.player.getMana()<manacost){
 			return false;
 		}

@@ -92,24 +92,6 @@ public class Player implements PlayerAction{
 		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
 	}
 	/**
-	 * 
-	 * @author Student Zhehan Hu
-	 * @param
-	 */
-	public void useCard(ActorRef out, GameState gameState, int id, Tile tile) {
-		for (Card c : hand) {
-			if (c.getId()==id) {
-				int index = this.hand.indexOf(c);
-				int mana = this.getMana() - c.getManacost();
-				this.setMana(mana);
-				BasicCommands.setPlayer1Mana(out, this);
-				this.discard(out, gameState, index);
-				c.content(out, gameState, tile);
-				break;
-			}
-		}
-	}
-	/**
 	 *summon a unit according to id
 	 * @author Student Zhehan Hu
 	 * @param unit id
@@ -134,6 +116,24 @@ public class Player implements PlayerAction{
 		}
 		return null;
 	}
+	/**
+	 * 
+	 * @author Student Zhehan Hu
+	 * @param
+	 */
+	public void useCard(ActorRef out, GameState gameState, int id, Tile tile) {
+		for (Card c : hand) {
+			if (c.getId()==id) {
+				int index = this.hand.indexOf(c);
+				int mana = this.getMana() - c.getManacost();
+				this.setMana(mana);
+				BasicCommands.setPlayer1Mana(out, this);
+				this.discard(out, gameState, index);
+				c.content(out, gameState, tile);
+				break;
+			}
+		}
+	}
 	public int getHealth() {
 		return health;
 	}
@@ -144,6 +144,12 @@ public class Player implements PlayerAction{
 		return mana;
 	}
 	public void setMana(int mana) {
+		if (mana>9) {
+			mana = 9;
+		}
+		if (mana<0) {
+			mana = 0;
+		}
 		this.mana = mana;
 	}
 }

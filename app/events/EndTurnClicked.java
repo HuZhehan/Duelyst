@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import akka.actor.ActorRef;
 import commands.BasicCommands;
 import structures.GameState;
+import structures.basic.Card;
+import structures.basic.Unit;
 
 /**
  * Indicates that the user has clicked an object on the game canvas, in this case
@@ -50,10 +52,12 @@ public class EndTurnClicked implements EventProcessor{
 			gameState.player = gameState.humanPlayer;
 			gameState.humanPlayer.setMana(gameState.Round+1);
 			BasicCommands.setPlayer1Mana(out, gameState.humanPlayer);
+			for (Unit u:gameState.humanPlayer.army) {
+				u.enableMoveAttack();
+			}
+			}
 
 		
 			gameState.previousEvent = PreviousEvent.endTurnClicked;
-	}
-
 	}
 }

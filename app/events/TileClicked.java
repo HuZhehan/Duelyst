@@ -37,7 +37,7 @@ public class TileClicked implements EventProcessor{
 		if (gameState.gameInitalised==true&&gameState.player==gameState.humanPlayer) {
 			// click a card then a valid tile: use card
 			if(gameState.previousEvent==PreviousEvent.cardClicked) {
-				if (gameState.previousCard.prompt(out, gameState, tile)==true) {
+				if (gameState.previousCard.check(out, gameState, tile)==true) {
 					int id = gameState.previousCard.getId();
 					gameState.player.useCard(out, gameState, id, tile);
 					gameState.clear(out);
@@ -53,12 +53,33 @@ public class TileClicked implements EventProcessor{
 				// empty tile, move
 				if (tile.getUnit()==null) {
 					// move
+					gameState.previousUnit.move(out, gameState, tile);
+					gameState.clear(out);
 				}
 			}
 			// click another friend unit, highlight valid tile, mark previous event
 			if(tile.getUnit()!=null&&tile.getUnit().getOwner()=="HumanPlayer") {
+				Unit unit = tile.getUnit();
+				// highlight valid tile
+				for (int i=0;i<9;i++) {
+					for (int j=0;j<5;j++) {
+						Tile t = gameState.tile[i][j];
+						if (unit.check(out, gameState, t)==true) {
+							// valid tile is empty, highlight with white
+							if(t.getUnit()==null) {
+								BasicCommands.drawTile(out, t, 1);
+							}
+							// valid tile has enemy, highlight with red
+							if(t.getUnit()!=null&&t.getUnit().getName()!=tile.getUnit().getOwner()) {
+								BasicCommands.drawTile(out, t, 2);
+							}
+							try {Thread.sleep(10);} catch (InterruptedException e) {e.printStackTrace();}
+						}	
+					}
+				}
+			
 				gameState.previousEvent = PreviousEvent.unitClicked;
-				gameState.previousUnit = tile.getUnit();
+				gameState.previousUnit = unit;
 			}
 		}
 	}
