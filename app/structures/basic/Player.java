@@ -7,6 +7,7 @@ import akka.actor.ActorRef;
 import commands.BasicCommands;
 import utils.BasicObjectBuilders;
 import utils.OrderedCardLoader;
+import utils.StaticConfFiles;
 
 /**
  * A basic representation of of the Player. A player
@@ -16,12 +17,13 @@ import utils.OrderedCardLoader;
  * @editor Student Zhehan Hu
  */
 public class Player implements PlayerAction{
-
-	protected int health;
-	protected int mana;
+	// editor Zhehan hu
 	public List<Card> deck;
 	public List<Card> hand;
-	public List<Unit> units;
+	public List<Unit> army;
+	//
+	protected int health;
+	protected int mana;
 	
 	public Player() {
 		super();
@@ -29,7 +31,7 @@ public class Player implements PlayerAction{
 		this.mana = 0;
 		this.deck = new ArrayList<Card>();
 		this.hand = new ArrayList<Card>();
-		this.units = new ArrayList<Unit>();
+		this.army = new ArrayList<Unit>();
 	}
 	public Player(int health, int mana) {
 		super();
@@ -37,7 +39,7 @@ public class Player implements PlayerAction{
 		this.mana = mana;
 		this.deck = new ArrayList<Card>();
 		this.hand = new ArrayList<Card>();
-		this.units = new ArrayList<Unit>();
+		this.army = new ArrayList<Unit>();
 	}
 	public int getHealth() {
 		return health;
@@ -55,8 +57,10 @@ public class Player implements PlayerAction{
 	public Unit createUnit(ActorRef out, String configFile, int id, Tile tile, Class<? extends Unit> classType) {
 		Unit unit = BasicObjectBuilders.loadUnit(configFile, id, classType);
 		unit.setPositionByTile(tile); 
-		unit.setPlayer(this);
-		//units.add(unit);
+		//unit.setTile(tile);
+		//tile.setUnit(unit);
+		unit.setOwner(this);
+		BasicCommands.playEffectAnimation(out, BasicObjectBuilders.loadEffect(StaticConfFiles.f1_summon), tile);
 		BasicCommands.drawUnit(out, unit, tile);
 		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
 		unit.setAttack(out, 2);

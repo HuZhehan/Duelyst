@@ -50,7 +50,11 @@ public class Avatar extends Unit{
 		if (this.health<0) {
 			this.die(out);
 		}
-		this.getPlayer().setHealth(health);
+		this.getOwner().setHealth(health);
+	}
+	
+	public String toString() {
+		return "Avatar";
 	}
 	
 }

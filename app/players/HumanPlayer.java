@@ -7,6 +7,7 @@ import commands.BasicCommands;
 import structures.basic.Card;
 import structures.basic.Player;
 import utils.OrderedCardLoader;
+import utils.UnitLoader;
 
 /** 
  * @author Zhehan Hu, 
@@ -21,6 +22,7 @@ public class HumanPlayer extends Player {
 	public HumanPlayer(int health, int mana) {
 		super();
 		this.deck = OrderedCardLoader.getPlayer2Cards();
+		this.army = UnitLoader.getPlayer1Units();
 	}
 	/** 
 	 * @drawCard() - player draw card method

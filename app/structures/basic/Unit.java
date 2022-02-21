@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import akka.actor.ActorRef;
 import commands.BasicCommands;
+import utils.BasicObjectBuilders;
 
 /**
  * This is a representation of a Unit on the game board.
@@ -23,14 +24,15 @@ public class Unit implements UnitAction{
 
 	@JsonIgnore
 	protected static ObjectMapper mapper = new ObjectMapper(); // Jackson Java Object Serializer, is used to read java objects from a file
-	
-	protected int health = 0;
-	protected int attack = 0;
-	protected boolean moveable = true;
-	protected boolean attackable = true;
-	protected boolean die = false;
-	protected Player player = null;
-	
+	// editor Zhehan hu
+	protected int health;
+	protected int attack;
+	protected boolean moveable;
+	protected boolean attackable;
+	protected boolean dead;
+	protected Player owner;
+	protected Tile tile;
+	//
 	protected int id;
 	protected UnitAnimationType animation;
 	protected Position position;
@@ -41,6 +43,13 @@ public class Unit implements UnitAction{
 	
 	public Unit(int id, UnitAnimationSet animations, ImageCorrection correction) {
 		super();
+		this.health = 0;
+		this.attack = 0;
+		this.moveable = true;
+		this.attackable = true;
+		this.dead = false;
+		this.owner = null;
+		
 		this.id = id;
 		this.animation = UnitAnimationType.idle;
 		
@@ -51,6 +60,13 @@ public class Unit implements UnitAction{
 	
 	public Unit(int id, UnitAnimationSet animations, ImageCorrection correction, Tile currentTile) {
 		super();
+		this.health = 0;
+		this.attack = 0;
+		this.moveable = true;
+		this.attackable = true;
+		this.dead = false;
+		this.owner = null;
+
 		this.id = id;
 		this.animation = UnitAnimationType.idle;
 		
@@ -62,6 +78,13 @@ public class Unit implements UnitAction{
 	public Unit(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations,
 			ImageCorrection correction) {
 		super();
+		this.health = 0;
+		this.attack = 0;
+		this.moveable = true;
+		this.attackable = true;
+		this.dead = false;
+		this.owner = null;
+		
 		this.id = id;
 		this.animation = animation;
 		this.position = position;
@@ -91,17 +114,20 @@ public class Unit implements UnitAction{
 		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
 	}
 	// @author Zhehan Hu
-	public Player getPlayer() {
-		return player;
+	public Player getOwner() {
+		return owner;
 	}
-	public void setPlayer(Player player) {
-		this.player = player;
+	public void setOwner(Player owner) {
+		this.owner = owner;
 	}
+	
 	// @author Zhehan Hu
-	public void move(ActorRef out, Tile tile) {
-		BasicCommands.moveUnitToTile(out, this, tile);
-		this.setPositionByTile(tile);
+	public void move(ActorRef out, Tile origin, Tile destination) {
+		origin.setUnit(null);
+		BasicCommands.moveUnitToTile(out, this, destination);
 		try {Thread.sleep(6000);} catch (InterruptedException e) {e.printStackTrace();}
+		this.setPositionByTile(destination);
+		destination.setUnit(this);
 	}
 	// @author Zhehan Hu
 	public void attack(ActorRef out, Unit target) {
@@ -124,6 +150,10 @@ public class Unit implements UnitAction{
 	// @author Zhehan Hu
 	public void die(ActorRef out) {
 		
+	}
+	
+	public String toString() {
+		return "Unit";
 	}
 	
 	public int getId() {
