@@ -58,7 +58,7 @@ public class UnitLoader {
 		army.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_bloodshard_golem, 31, Unit.class));
 		//unitlist.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_staff_of_ykir, 32, Unit.class));
 		army.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_blaze_hound, 33, Unit.class));
-		army.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_windshrike, 34, Unit.class));
+		army.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_windshrike, 34, WindShrike.class));
 		army.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_pyromancer, 35, Unit.class));
 		army.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_serpenti, 36, Unit.class));
 		//unitlist.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_entropic_decay, 37, Unit.class));
