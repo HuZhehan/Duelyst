@@ -103,10 +103,10 @@ public class GameState {
 	public void gameEnd(ActorRef out) {
 		if (humanPlayer.getHealth()<=0) {
 			clear(out);
-			BasicCommands.addPlayer1Notification(out, "ai Wins!", 2);
+			BasicCommands.addPlayer1Notification(out, "ai Wins!", 10);
 		} else {
 			clear(out);
-			BasicCommands.addPlayer1Notification(out, "You Win!", 2);
+			BasicCommands.addPlayer1Notification(out, "You Win!", 10);
 		}
 	}
 	
