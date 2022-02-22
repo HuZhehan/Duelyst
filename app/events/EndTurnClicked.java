@@ -27,40 +27,23 @@ public class EndTurnClicked implements EventProcessor{
 		if (gameState.gameInitalised==true&&gameState.player==gameState.humanPlayer&&gameState.previousEvent != PreviousEvent.block) {
 			// block player's click
 			gameState.previousEvent = PreviousEvent.block;
+			
 			//player end turn
-			gameState.clear(out);
-			gameState.humanPlayer.setMana(0);
-			BasicCommands.setPlayer1Mana(out, gameState.humanPlayer);			
-			gameState.humanPlayer.drawCard(out, gameState, 1, 0);
-			
-			// ai start turn
-			BasicCommands.addPlayer1Notification(out, "ai Round", 20);
-			gameState.player = gameState.aiPlayer;
-			gameState.aiPlayer.setMana(gameState.Round + 1);
-			BasicCommands.setPlayer2Mana(out, gameState.aiPlayer);
-			try {Thread.sleep(2000);} catch (InterruptedException e) {e.printStackTrace();}
-			
-			//ai end turn
-			gameState.aiPlayer.setMana(0);
-			BasicCommands.setPlayer2Mana(out, gameState.aiPlayer);
-			gameState.aiPlayer.drawCard(out, gameState, 1, 0);
-			
-			
-			// update
-			gameState.Round++;
+			gameState.humanTurnEnd(out);
+
+			// ai's turn start
+			gameState.humanTurnStart(out);
+
+			//ai's turn end
+			gameState.aiTurnEnd(out);
 
 			//player start new turn
-			BasicCommands.addPlayer1Notification(out, "Round"+Integer.toString(gameState.Round), 2);
-			gameState.player = gameState.humanPlayer;
-			gameState.humanPlayer.setMana(gameState.Round+1);
-			BasicCommands.setPlayer1Mana(out, gameState.humanPlayer);
-			for (Unit u:gameState.humanPlayer.army) {
-				u.enableMoveAttack();
-			}
+			gameState.Round++;
+			gameState.humanTurnStart(out);
+			
+			// active player's click
 			gameState.previousEvent = null;
 		}
 
-		
-			//gameState.previousEvent = PreviousEvent.endTurnClicked;
 	}
 }

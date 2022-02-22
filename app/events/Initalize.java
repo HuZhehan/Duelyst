@@ -12,7 +12,6 @@ import demo.CheckMoveLogic;
 import demo.CommandDemo;
 import structures.GameState;
 import structures.basic.*;
-import structures.basic.UnitAnimationType;
 import units.HumanAvatar;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
@@ -38,12 +37,12 @@ public class Initalize implements EventProcessor{
 		gameState.createBoard(out);
 		
 		// set player
-		Unit humanAvatar = gameState.humanPlayer.summon(out, gameState, 100, gameState.tile[1][2]);
+		gameState.humanPlayer.summon(out, gameState, 100, gameState.tile[1][2]);
 		BasicCommands.setPlayer1Mana(out, gameState.humanPlayer);
 		BasicCommands.setPlayer1Health(out, gameState.humanPlayer);
 
 		// set enemy
-		Unit aiAvatar = gameState.aiPlayer.summon(out, gameState, 200, gameState.tile[7][2]);
+		gameState.aiPlayer.summon(out, gameState, 200, gameState.tile[7][2]);
 		BasicCommands.setPlayer2Mana(out, gameState.aiPlayer);
 		BasicCommands.setPlayer2Health(out, gameState.aiPlayer);
 		
@@ -65,14 +64,10 @@ public class Initalize implements EventProcessor{
 		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 		gameState.gameInitalised = true;
 		
-		// update
-		gameState.Round++;
 
 		//player start new turn
-		BasicCommands.addPlayer1Notification(out, "Round"+Integer.toString(gameState.Round), 2);
-		gameState.humanPlayer.setMana(gameState.Round + 1);
-		BasicCommands.setPlayer1Mana(out, gameState.humanPlayer);
-		
+		gameState.Round++;
+		gameState.humanTurnStart(out);
 		//CommandDemo.executeDemo(out); // this executes the command demo, comment out this when implementing your solution
 		//CheckMoveLogic.executeDemo(out);
 	}

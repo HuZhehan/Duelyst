@@ -36,17 +36,19 @@ public class TileClicked implements EventProcessor{
 		// should be human's turn
 		if (gameState.gameInitalised==true&&gameState.player==gameState.humanPlayer&&gameState.previousEvent != PreviousEvent.block) {
 			// click a card then a valid tile: use card
-			if(gameState.previousEvent==PreviousEvent.cardClicked) {
-				if (gameState.previousCard.check(out, gameState, tile)==true) {
-					int id = gameState.previousCard.getId();
-					gameState.player.useCard(out, gameState, id, tile);
+			if(gameState.previousEvent==PreviousEvent.cardClicked&&gameState.previousCard.check(out, gameState, tile)==true) {
+
+				int id = gameState.previousCard.getId();
+				gameState.player.useCard(out, gameState, id, tile);
+				gameState.clear(out);
+			
+			}
+			// click a friend unit, highlight valid tile
+			else if(tile.getUnit()!=null&&tile.getUnit().getOwner()=="HumanPlayer") {
+				Unit unit = tile.getUnit();
+				if((gameState.previousEvent==PreviousEvent.unitClicked&&gameState.previousUnit!=unit)||gameState.previousEvent==PreviousEvent.cardClicked) {
 					gameState.clear(out);
 				}
-			}
-			// click another friend unit, highlight valid tile, mark previous event
-			else if(tile.getUnit()!=null&&tile.getUnit().getOwner()=="HumanPlayer") {
-				gameState.clear(out);
-				Unit unit = tile.getUnit();
 				// highlight valid tile
 				for (int i=0;i<9;i++) {
 					for (int j=0;j<5;j++) {
@@ -64,12 +66,12 @@ public class TileClicked implements EventProcessor{
 						}	
 					}
 				}
-			
+				// previous event mark
 				gameState.previousEvent = PreviousEvent.unitClicked;
 				gameState.previousUnit = unit;
 			}
 			
-			// click a unit then a valid tile: move or attack
+			// previously click a unit then now click a valid tile: move or attack
 			else if(gameState.previousEvent==PreviousEvent.unitClicked) {
 				if (gameState.previousUnit.check(out, gameState, tile) == true){
 					// empty tile, move
@@ -81,6 +83,18 @@ public class TileClicked implements EventProcessor{
 					// enemy unit on tile, attack
 					else if (tile.getUnit()!=null) {
 						// attack
+						if (gameState.previousUnit.checkAttack(out, gameState, tile) == true){
+							gameState.previousUnit.attack(out, gameState, tile.getUnit());
+							gameState.clear(out);
+						}
+						// move-attack
+						else if (gameState.previousUnit.checkMoveAttack(out, gameState, tile) == true){
+							gameState.previousUnit.moveAttack(out, gameState, tile.getUnit());
+							gameState.clear(out);
+						}
+						else {
+							BasicCommands.addPlayer1Notification(out, "unitAction failure", 2);
+						}
 					}
 
 				}
