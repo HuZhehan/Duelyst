@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import akka.actor.ActorRef;
 import commands.BasicCommands;
+import events.PreviousEvent;
 import structures.GameState;
 import units.UnitAction;
 import utils.BasicObjectBuilders;
@@ -44,8 +45,8 @@ public class Unit implements UnitAction{
 	protected ImageCorrection correction;
 	
 	public Unit() {
-		moveable = true;
-		attackable = true;
+		moveable = false;
+		attackable = false;
 		summoned = false;
 		dead = false;
 	}
@@ -124,6 +125,7 @@ public class Unit implements UnitAction{
 		if (this.health<=0) {
 			this.die(out, gameState);
 		}
+		
 	}
 	// @author Student Zhehan Hu
 	public void takeHeal(ActorRef out, GameState gameState, int heal) {
@@ -134,6 +136,32 @@ public class Unit implements UnitAction{
 		BasicCommands.setUnitHealth(out, this, health);
 		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
+	}
+	// @author Student Zhehan Hu
+	public void moveAttack(ActorRef out, GameState gameState, Unit target) {
+		// move to a nearest tile
+		// coordinate of target
+		int x = target.getPosition().getTilex();
+		int y = target.getPosition().getTiley();
+		trytomove:
+		for (int i=0;i<9;i++) {
+			for (int j=0;j<5;j++) {
+				Tile SpringBoard = gameState.tile[i][j];
+				if (Math.pow((x-i),2)+Math.pow(y-j,2)<=2) {
+					if (this.checkMove(out, gameState, SpringBoard)==true) {
+						// gameState.previousEvent=PreviousEvent.block;
+						this.move(out, gameState, SpringBoard);
+						break trytomove;
+						// BasicCommands.addPlayer1Notification(out, "fail to find the path", 20);
+					}
+				}
+			}
+		}
+		// attack
+		//while (gameState.previousEvent==PreviousEvent.block) {
+			try {Thread.sleep(2000);} catch (InterruptedException e) {e.printStackTrace();}
+		//}
+		this.attack(out, gameState, target);
 	}
 	// @author Student Zhehan Hu
 	public void move(ActorRef out, GameState gameState, Tile destination) {
@@ -165,6 +193,7 @@ public class Unit implements UnitAction{
 		if (target.getHealth()>0) {
 			target.counterAttack(out, gameState, this);
 		}
+		
 	}
 	// @author Student Zhehan Hu
 	public void counterAttack(ActorRef out, GameState gameState, Unit target) {
@@ -174,7 +203,9 @@ public class Unit implements UnitAction{
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
 		// update states
 		target.takeDamage(out, gameState, this.attack);
+		
 	}
+
 	// @author Student Zhehan Hu
 	public void enableMoveAttack() {
 		this.moveable = true;
@@ -207,9 +238,12 @@ public class Unit implements UnitAction{
 			// for any springBoard tile where can attack, check if there exists springBoard unit can move to,  .
 			for (int i=0;i<9;i++) {
 				for (int j=0;j<5;j++) {
+					Tile SpringBoard = gameState.tile[i][j];
+					//   o o o
+					//   o x o
+					//   o o o
 					if (Math.pow((x-i),2)+Math.pow(y-j,2)<=2) {
-						Tile SpringBoard = gameState.tile[i][j];
-						if(this.checkMove(out, gameState, SpringBoard)==true) {	
+						if (this.checkMove(out, gameState, SpringBoard)==true) {
 							return true;
 						}
 					}
@@ -279,8 +313,22 @@ public class Unit implements UnitAction{
 		}
 		return false;
 	}
+	//RV
 	public void die(ActorRef out, GameState gameState) {
-		
+		// double checking unit has reached 0 health
+		if (this.health <= 0) {
+			// play animation
+			BasicCommands.playUnitAnimation(out, this, UnitAnimationType.death);
+			try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+			BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
+			// destroy Unit
+			this.dead = true;
+			int x = getPosition().getTilex();
+			int y = getPosition().getTiley();
+			gameState.tile[x][y].setUnit(null);
+			// end game
+			gameState.gameEnd(out);
+		}
 	}
 	
 	public int getId() {

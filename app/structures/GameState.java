@@ -65,7 +65,51 @@ public class GameState {
 	}
 
 	
+	public void humanTurnStart(ActorRef out) {
+		BasicCommands.addPlayer1Notification(out, "Round"+Integer.toString(Round), 2);
+		player = humanPlayer;
+		humanPlayer.setMana(Round+1);
+		BasicCommands.setPlayer1Mana(out, humanPlayer);
+		for (Unit u:humanPlayer.summoned) {
+			u.enableMoveAttack();
+		}
+	}
+	
+	public void humanTurnEnd(ActorRef out) {
+		clear(out);
+		humanPlayer.setMana(0);
+		BasicCommands.setPlayer1Mana(out, humanPlayer);			
+		humanPlayer.drawCard(out, this, 1, 0);
+	}
 
+	public void aiTurnStart(ActorRef out) {
+		BasicCommands.addPlayer1Notification(out, "ai's Round", 2);
+		player = aiPlayer;
+		aiPlayer.setMana(Round + 1);
+		BasicCommands.setPlayer2Mana(out, aiPlayer);
+		for (Unit u:aiPlayer.summoned) {
+			u.enableMoveAttack();
+		}
+		//try {Thread.sleep(2000);} catch (InterruptedException e) {e.printStackTrace();}
+		
+	}
+	
+	public void aiTurnEnd(ActorRef out) {
+		aiPlayer.setMana(0);
+		BasicCommands.setPlayer2Mana(out, aiPlayer);
+		aiPlayer.drawCard(out, this, 1, 0);
+	}
+	
+	public void gameEnd(ActorRef out) {
+		if (humanPlayer.getHealth()<=0) {
+			clear(out);
+			BasicCommands.addPlayer1Notification(out, "ai Wins!", 2);
+		} else {
+			clear(out);
+			BasicCommands.addPlayer1Notification(out, "You Win!", 2);
+		}
+	}
+	
 
 	
 	

@@ -27,6 +27,7 @@ public class Player implements PlayerAction{
 	public List<Card> deck;
 	public List<Card> hand;
 	public List<Unit> army;
+	public List<Unit> summoned;
 	
 	protected int health;
 	protected int mana;
@@ -34,7 +35,8 @@ public class Player implements PlayerAction{
 	public Player() {
 		deck = new ArrayList<Card>(20);
 		hand = new ArrayList<Card>(10);
-		army = new ArrayList<Unit>(10);
+		army = new ArrayList<Unit>(20);
+		summoned = new ArrayList<Unit>(10);
 		
 		this.health = 20;
 		this.mana = 0;
@@ -97,24 +99,25 @@ public class Player implements PlayerAction{
 	 * @param unit id
 	 * @param tile, where to summon
 	 */
-	public Unit summon(ActorRef out, GameState gameState, int id, Tile tile) {
+	public void summon(ActorRef out, GameState gameState, int id, Tile tile) {
 		for (Unit u : army) {
 			if (u.getId()==id) {
 				// update states
 				u.setPositionByTile(tile); 
-				tile.setUnit(u);
 				u.setOwner(this.getName());
+				tile.setUnit(u);
+				this.summoned.add(u);
+				this.army.remove(u);
 				// play animation
 				BasicCommands.playEffectAnimation(out, BasicObjectBuilders.loadEffect(StaticConfFiles.f1_summon), tile);
 				BasicCommands.drawUnit(out, u, tile);
 				try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
 				BasicCommands.setUnitAttack(out, u, u.getAttack());
 				BasicCommands.setUnitHealth(out, u, u.getMaxHealth());
-				try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
-				return u;
+				try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}				
+				break;
 			}
 		}
-		return null;
 	}
 	/**
 	 * 

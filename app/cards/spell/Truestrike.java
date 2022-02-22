@@ -23,9 +23,6 @@ public class Truestrike extends SpellCard{
 	public void content(ActorRef out, GameState gameState, Tile tile) {
 		Unit unit = tile.getUnit();
 		BasicCommands.playEffectAnimation(out, BasicObjectBuilders.loadEffect(StaticConfFiles.f1_inmolation), tile);
-		BasicCommands.playUnitAnimation(out, unit, UnitAnimationType.hit);
-		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
-		BasicCommands.playUnitAnimation(out, unit, UnitAnimationType.idle);
 		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
 		unit.takeDamage(out, gameState, 2);
 	}
