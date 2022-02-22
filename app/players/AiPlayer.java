@@ -2,8 +2,10 @@ package players;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import akka.actor.ActorRef;
 import commands.BasicCommands;
+import structures.GameState;
 import structures.basic.Card;
 import structures.basic.Player;
 import structures.basic.Tile;
@@ -21,44 +23,59 @@ public class AiPlayer extends Player {
 	
 	public AiPlayer() {
 		super();
-		this.deck = OrderedCardLoader.getPlayer2Cards();
+		name = "AiPlayer";
+		deck = OrderedCardLoader.getPlayer2Cards();
+		army = UnitLoader.getPlayer2Units();
 	}
 	public AiPlayer(int health, int mana) {
-		super();
-		this.deck = OrderedCardLoader.getPlayer2Cards();
-		this.army = UnitLoader.getPlayer2Units();
+		super(health, mana);
 	}
-	
+
 	/**
+	 * draw card method
 	 * @author Zhehan Hu, 
-	 * @drawCard() - player draw card method
 	 * @param n - number of card to draw
-	 * @param mode - animation type, not used
+	 * @param mode - animation type
 	 */
-	public void drawCard(ActorRef out, int n, int mode) {
+	public void drawCard(ActorRef out, GameState gameState, int n, int mode) {
 		for (int i=0;i<n;i++) {
-			// this.end
 			if (deck.size()==0) {
-			// placeholder
+				// placeholder
 			}else {
 				Card card = deck.get(0);
 				deck.remove(0);
 				hand.add(card);
+				card.setOwner(this.getName());
 				// max 6 cards due to UI limitation, discard
 				if (hand.size()==7) {
-					hand.remove(6);
+					discard(out, gameState, 6);
 				}
 			}
 		}
 	}
-	public void setHealth(ActorRef out, int health) {
-		this.health = health;
-		BasicCommands.setPlayer2Health(out, this);
-		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+	/**
+	 *
+	 * @author Student Zhehan Hu
+	 * @param
+	 */
+	public void discard(ActorRef out, GameState gameState, int index) {
+		hand.remove(index);
 	}
-	public void setMana(ActorRef out, int mana) {
-		this.mana = mana;
-		BasicCommands.setPlayer2Mana(out, this);
-		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+	/**
+	 *
+	 * @author Student Zhehan Hu
+	 * @param
+	 */
+	public void useCard(ActorRef out, GameState gameState, int id, Tile tile) {
+		for (Card c : hand) {
+			if (c.getId()==id) {
+				int index = this.hand.indexOf(c);
+				int mana = this.getMana() - c.getManacost();
+				this.setMana(mana);
+				BasicCommands.setPlayer2Mana(out, this);
+				this.discard(out, gameState, index);
+				c.content(out, gameState, tile);
+			}
+		}
 	}
 }

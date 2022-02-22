@@ -19,9 +19,10 @@ public class Tile {
 
 	@JsonIgnore
 	private static ObjectMapper mapper = new ObjectMapper(); // Jackson Java Object Serializer, is used to read java objects from a file
-	// @editor Zhehan hu
+	
+	// @author Student Zhehan Hu
 	Unit unit;
-	//
+	
 	List<String> tileTextures;
 	int xpos;
 	int ypos;
@@ -33,9 +34,7 @@ public class Tile {
 	public Tile() {}
 	
 	public Tile(String tileTexture, int xpos, int ypos, int width, int height, int tilex, int tiley) {
-		super();
-		this.unit = null;
-		
+		this();		
 		tileTextures = new ArrayList<String>(1);
 		tileTextures.add(tileTexture);
 		this.xpos = xpos;
@@ -47,9 +46,7 @@ public class Tile {
 	}
 	
 	public Tile(List<String> tileTextures, int xpos, int ypos, int width, int height, int tilex, int tiley) {
-		super();
-		this.unit = null;
-		
+		this();
 		this.tileTextures = tileTextures;
 		this.xpos = xpos;
 		this.ypos = ypos;
@@ -58,14 +55,14 @@ public class Tile {
 		this.tilex = tilex;
 		this.tiley = tiley;
 	}
-	// @editor Zhehan hu
+	// @author Student Zhehan Hu
 	public Unit getUnit() {
 		return unit;
 	}
-	public void setUnit(Unit holder) {
-		this.unit = holder;
+	public void setUnit(Unit unit) {
+		this.unit = unit;
 	}
-	//
+	
 	public List<String> getTileTextures() {
 		return tileTextures;
 	}

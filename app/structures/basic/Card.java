@@ -1,5 +1,8 @@
 package structures.basic;
 
+import akka.actor.ActorRef;
+import cards.CardAction;
+import structures.GameState;
 
 /**
  * This is the base representation of a Card which is rendered in the player's hand.
@@ -10,27 +13,45 @@ package structures.basic;
  * @author Dr. Richard McCreadie
  *
  */
-public class Card {
+public class Card implements CardAction{
 	
-	int id;
+	// @author Student Zhehan Hu
+	protected String type;
+	protected String ownername;
 	
-	String cardname;
-	int manacost;
-	
-	MiniCard miniCard;
-	BigCard bigCard;
+	protected int id;
+	protected String cardname;
+	protected int manacost;
+	protected MiniCard miniCard;
+	protected BigCard bigCard;
 	
 	public Card() {};
 	
 	public Card(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard) {
-		super();
+		this();
 		this.id = id;
 		this.cardname = cardname;
 		this.manacost = manacost;
 		this.miniCard = miniCard;
 		this.bigCard = bigCard;
 	}
-	
+	public String getType() {
+		return type;
+	}
+	public boolean check(ActorRef out, GameState gameState, Tile tile) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	public void content(ActorRef out, GameState gameState, Tile tile) {
+		// TODO Auto-generated method stub
+	}
+	public String getOwner() {
+		return ownername;
+	}
+	public void setOwner(String ownername) {
+		this.ownername = ownername;
+		
+	}
 	public int getId() {
 		return id;
 	}
@@ -62,5 +83,6 @@ public class Card {
 		this.bigCard = bigCard;
 	}
 
-	
+
+
 }
