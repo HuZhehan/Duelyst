@@ -313,8 +313,22 @@ public class Unit implements UnitAction{
 		}
 		return false;
 	}
+	//RV
 	public void die(ActorRef out, GameState gameState) {
-		
+		// double checking unit has reached 0 health
+		if (this.health <= 0) {
+			// play animation
+			BasicCommands.playUnitAnimation(out, this, UnitAnimationType.death);
+			try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+			BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
+			// destroy Unit
+			this.dead = true;
+			int x = getPosition().getTilex();
+			int y = getPosition().getTiley();
+			gameState.tile[x][y].setUnit(null);
+			// end game
+			gameState.gameEnd(out);
+		}
 	}
 	
 	public int getId() {

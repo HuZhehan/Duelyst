@@ -99,8 +99,16 @@ public class GameState {
 		aiPlayer.drawCard(out, this, 1, 0);
 	}
 	
+	public void gameEnd(ActorRef out) {
+		if (humanPlayer.getHealth()<=0) {
+			clear(out);
+			BasicCommands.addPlayer1Notification(out, "ai Wins!", 2);
+		} else {
+			clear(out);
+			BasicCommands.addPlayer1Notification(out, "You Win!", 2);
+		}
+	}
 	
-
 
 	
 	
