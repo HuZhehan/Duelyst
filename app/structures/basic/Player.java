@@ -62,7 +62,7 @@ public class Player implements PlayerAction{
 	public void drawCard(ActorRef out, GameState gameState, int n, int mode) {
 		for (int i=0;i<n;i++) {
 			if (deck.size()==0) {
-				//placeholder
+				gameState.gameEnd(out);
 			}else {
 				Card card = deck.get(0);
 				deck.remove(0);
@@ -73,9 +73,9 @@ public class Player implements PlayerAction{
 				// max 6 cards due to UI limitation, discard
 				if (hand.size()==7) {
 					discard(out, gameState, 6);
-				}
 			}
 		}
+	}
 	}
 	/**
 	 * 

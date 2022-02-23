@@ -19,6 +19,7 @@ public class GameState {
 
 	
 	public boolean gameInitalised = false;
+	public boolean gameOver = false;
 	
 	public int Round = 0;
 	
@@ -50,17 +51,22 @@ public class GameState {
 		previousCard = null;
 		previousUnit = null;
 		// clear board
-		for (int i=0;i<9;i++) {
-			for (int j=0;j<5;j++) {
-				BasicCommands.drawTile(out, tile[i][j], 0);
-			}
-			try {Thread.sleep(10);} catch (InterruptedException e) {e.printStackTrace();}
-		}
+		clearBoard(out);
 		// clear card
 		for (Card c : humanPlayer.hand) {
 			BasicCommands.drawCard(out, c, humanPlayer.hand.indexOf(c)+1, 0);
 		}
 		try {Thread.sleep(10);} catch (InterruptedException e) {e.printStackTrace();
+		}
+	}
+	
+	public void clearBoard(ActorRef out) {
+		// clear board
+		for (int i=0;i<9;i++) {
+			for (int j=0;j<5;j++) {
+				BasicCommands.drawTile(out, tile[i][j], 0);
+			}
+			try {Thread.sleep(10);} catch (InterruptedException e) {e.printStackTrace();}
 		}
 	}
 	
@@ -99,6 +105,26 @@ public class GameState {
 		aiPlayer.drawCard(out, this, 1, 0);
 	}
 	
+	// @author Student Reetu Varadhan
+	public void gameEnd(ActorRef out) {
+		if (humanPlayer.getHealth()<=0||humanPlayer.deck.size()==0) {
+			clear(out);
+			BasicCommands.addPlayer1Notification(out, "ai Wins!", 10);
+			gameOver = true;
+		} 
+		else if (aiPlayer.getHealth()<=0||aiPlayer.deck.size()==0){
+			clear(out);
+			BasicCommands.addPlayer1Notification(out, "You Win!", 10);
+			gameOver = true;
+		}
+		/*
+		else {
+			BasicCommands.addPlayer1Notification(out, "Fail to get Winner", 10);
+		}
+		*/
+		
+	}
+
 	
 
 

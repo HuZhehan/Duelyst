@@ -2,8 +2,6 @@ package players;
 
 import akka.actor.ActorRef;
 import structures.GameState;
-import structures.basic.Tile;
-import structures.basic.Unit;
 
 public interface PlayerAction {
 	/**

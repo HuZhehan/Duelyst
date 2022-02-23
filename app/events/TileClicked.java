@@ -34,8 +34,9 @@ public class TileClicked implements EventProcessor{
 			BasicCommands.addPlayer1Notification(out, tile.getUnit().getName(), 2);
 		}
 		// should be human's turn
-		if (gameState.gameInitalised==true&&gameState.player==gameState.humanPlayer&&gameState.previousEvent != PreviousEvent.block) {
+		if (gameState.gameInitalised==true&&gameState.player==gameState.humanPlayer&&gameState.previousEvent != PreviousEvent.block&&gameState.gameOver==false) {
 			// click a card then a valid tile: use card
+			// this comes first because we might use a card to heal friend unit, in this case we don't highlight the unit.
 			if(gameState.previousEvent==PreviousEvent.cardClicked&&gameState.previousCard.check(out, gameState, tile)==true) {
 
 				int id = gameState.previousCard.getId();
@@ -46,7 +47,7 @@ public class TileClicked implements EventProcessor{
 			// click a friend unit, highlight valid tile
 			else if(tile.getUnit()!=null&&tile.getUnit().getOwner()=="HumanPlayer") {
 				Unit unit = tile.getUnit();
-				if((gameState.previousEvent==PreviousEvent.unitClicked&&gameState.previousUnit!=unit)||gameState.previousEvent==PreviousEvent.cardClicked) {
+				if((gameState.previousEvent==PreviousEvent.unitClicked&&gameState.previousUnit==unit)==false) {
 					gameState.clear(out);
 				}
 				// highlight valid tile
@@ -96,11 +97,8 @@ public class TileClicked implements EventProcessor{
 							BasicCommands.addPlayer1Notification(out, "unitAction failure", 2);
 						}
 					}
-
 				}
-
 			}
-
 		}
 	}
 }

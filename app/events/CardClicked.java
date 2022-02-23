@@ -31,9 +31,9 @@ public class CardClicked implements EventProcessor{
 		BasicCommands.addPlayer1Notification(out, card.getCardname(), 2);
 		
 		// should be human's turn
-		if (gameState.gameInitalised==true&&gameState.player==gameState.humanPlayer&&gameState.previousEvent != PreviousEvent.block) {
+		if (gameState.gameInitalised==true&&gameState.player==gameState.humanPlayer&&gameState.previousEvent != PreviousEvent.block&&gameState.gameOver==false) {
 			// clear board and hand
-			if((gameState.previousEvent==PreviousEvent.cardClicked&&gameState.previousCard!=card)||gameState.previousEvent==PreviousEvent.unitClicked) {
+			if((gameState.previousEvent==PreviousEvent.cardClicked&&gameState.previousCard==card)==false) {
 				gameState.clear(out);
 			}
 			// highlight chosen card

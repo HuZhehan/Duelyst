@@ -60,6 +60,7 @@ public class HumanAvatar extends Unit{
 		if (this.health<=0) {
 			this.die(out, gameState);
 			// game end
+			gameState.gameEnd(out);
 		}
 	}
 	// @author Student Zhehan Hu

@@ -29,8 +29,12 @@ public class Unit implements UnitAction{
 	protected int maxHealth;
 	protected int health;
 	protected int attack;
-	protected boolean moveable;
-	protected boolean attackable;
+	
+	protected int maxMoveChance;
+	protected int maxAttackChance;
+	protected int moveChance;
+	protected int attackChance;
+	
 	protected boolean summoned;
 	protected boolean dead;
 	protected String unitname;
@@ -45,8 +49,10 @@ public class Unit implements UnitAction{
 	protected ImageCorrection correction;
 	
 	public Unit() {
-		moveable = false;
-		attackable = false;
+		maxMoveChance = 1;
+		maxAttackChance = 1;
+		moveChance = 0;
+		attackChance = 0;
 		summoned = false;
 		dead = false;
 	}
@@ -158,37 +164,41 @@ public class Unit implements UnitAction{
 			}
 		}
 		// attack
-		//while (gameState.previousEvent==PreviousEvent.block) {
-			try {Thread.sleep(2000);} catch (InterruptedException e) {e.printStackTrace();}
-		//}
 		this.attack(out, gameState, target);
 	}
 	// @author Student Zhehan Hu
 	public void move(ActorRef out, GameState gameState, Tile destination) {
-		// remove unit from old tile
+		// unit position
 		int x = this.getPosition().getTilex();
 		int y = this.getPosition().getTiley();
+		// destination position
+		int m = destination.getTilex();
+		int n = destination.getTiley();
+		// remove unit from old tile
 		Tile origin = gameState.tile[x][y];
 		origin.setUnit(null);
 		// add unit to destination tile
 		this.setPositionByTile(destination);
 		destination.setUnit(this);
+		// update states
+		this.moveChance --;
 		// play animation
 		BasicCommands.moveUnitToTile(out, this, destination);
-		try {Thread.sleep(10);} catch (InterruptedException e) {e.printStackTrace();}
-		// update states
-		this.moveable = false;
+		int delay = (Math.abs(x-m)+Math.abs(y-n))*800;
+		try {Thread.sleep(delay);} catch (InterruptedException e) {e.printStackTrace();}
+		
+		
 	}
 	// @author Student Zhehan Hu
 	public void attack(ActorRef out, GameState gameState, Unit target) {
 		// play animation
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.attack);
-		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+		try {Thread.sleep(800);} catch (InterruptedException e) {e.printStackTrace();}
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
 		// update states
 		target.takeDamage(out, gameState, this.attack);
-		this.moveable = false;
-		this.attackable = false;
+		this.moveChance --;
+		this.attackChance --;
 		// counter-attack
 		if (target.getHealth()>0) {
 			target.counterAttack(out, gameState, this);
@@ -199,7 +209,7 @@ public class Unit implements UnitAction{
 	public void counterAttack(ActorRef out, GameState gameState, Unit target) {
 		// play animation
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.attack);
-		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+		try {Thread.sleep(800);} catch (InterruptedException e) {e.printStackTrace();}
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
 		// update states
 		target.takeDamage(out, gameState, this.attack);
@@ -208,19 +218,19 @@ public class Unit implements UnitAction{
 
 	// @author Student Zhehan Hu
 	public void enableMoveAttack() {
-		this.moveable = true;
-		this.attackable = true;
+		this.moveChance = this.maxMoveChance;
+		this.attackChance = this.maxAttackChance;
 	}
 	// @author Student Zhehan Hu
 	public boolean check(ActorRef out, GameState gameState, Tile tile) {
-		if (this.attackable==false) {
+		if (this.attackChance<=0) {
 			return false;
 		}
-		if (this.moveable==true&&this.attackable==true){
+		else if (this.moveChance>0&&this.attackChance>0){
 			return this.checkMoveAttack(out, gameState, tile);
 
 		}
-		if (this.moveable==false&&this.attackable==true){
+		else if (this.moveChance<=0&&this.attackChance>0){
 			return this.checkAttack(out, gameState, tile);
 		}
 		return false; 
@@ -313,9 +323,20 @@ public class Unit implements UnitAction{
 		}
 		return false;
 	}
+	
+	// @author Student Reetu Varadhan
 	public void die(ActorRef out, GameState gameState) {
-		
+		// play animation
+		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.death);
+		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+		// destroy Unit & reset tile
+		this.dead = true;
+		BasicCommands.deleteUnit(out, this);
+		int x = getPosition().getTilex();
+		int y = getPosition().getTiley();
+		gameState.tile[x][y].setUnit(null);
 	}
+
 	
 	public int getId() {
 		return id;

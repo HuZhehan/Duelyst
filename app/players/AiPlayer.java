@@ -40,7 +40,7 @@ public class AiPlayer extends Player {
 	public void drawCard(ActorRef out, GameState gameState, int n, int mode) {
 		for (int i=0;i<n;i++) {
 			if (deck.size()==0) {
-				// placeholder
+				gameState.gameEnd(out);
 			}else {
 				Card card = deck.get(0);
 				deck.remove(0);
