@@ -16,8 +16,14 @@ import utils.BasicObjectBuilders;
 
 public class UnitCard extends Card{
 	
+	// not used
+	protected int attack;
+	protected int health;
+	
 	public UnitCard() {
 		super();
+		//attack = 0;
+		//health = 0;
 		type = "UnitCard";
 	}
 	
@@ -57,6 +63,6 @@ public class UnitCard extends Card{
 	 * @param tile - where to summon 
 	 */
 	public void content(ActorRef out, GameState gameState, Tile tile) {
-		gameState.humanPlayer.summon(out, gameState, id, tile);
+		gameState.player.summon(out, gameState, id, tile);
 	}
 }

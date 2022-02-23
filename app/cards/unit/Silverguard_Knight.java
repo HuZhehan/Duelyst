@@ -7,16 +7,21 @@ import structures.GameState;
 import structures.basic.*;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
-
-public class ComboCharger extends UnitCard{
+/** 
+ * @author Zhehan Hu,
+ */
+public class Silverguard_Knight extends UnitCard{
 	
-	public ComboCharger() {
+	public Silverguard_Knight() {
 		super();
-		manacost = 1;
+		manacost = 3;
+		attack = 1;
+		health = 5;
 		ownername = "HumanPlayer";
 	}
 	
-	public ComboCharger(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard) {
+	public Silverguard_Knight(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard) {
 		super(id, cardname, manacost, miniCard, bigCard);
 	}
 }
+

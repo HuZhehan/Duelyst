@@ -53,7 +53,7 @@ public class AiAvatar extends Unit{
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.hit);
 		BasicCommands.setUnitHealth(out, this, health);
 		BasicCommands.setPlayer2Health(out, gameState.aiPlayer);;
-		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+		try {Thread.sleep(800);} catch (InterruptedException e) {e.printStackTrace();}
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
 		// check death
 		if (this.health<=0) {
@@ -71,7 +71,7 @@ public class AiAvatar extends Unit{
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.channel);
 		BasicCommands.setUnitHealth(out, this, health);
 		BasicCommands.setPlayer2Health(out, gameState.aiPlayer);;
-		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+		try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
 	}
 	

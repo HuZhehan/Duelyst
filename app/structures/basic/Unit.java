@@ -140,7 +140,7 @@ public class Unit implements UnitAction{
 		// play animation
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.channel);
 		BasicCommands.setUnitHealth(out, this, health);
-		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+		try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
 	}
 	// @author Student Zhehan Hu
