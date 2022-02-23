@@ -7,16 +7,17 @@ import structures.GameState;
 import structures.basic.*;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
-	// @author Student Kanyaphat W. 
-public class SundropElixir extends SpellCard{
+// @author Student Kanyaphat W. 
+// @author Student Zhehan Hu
+public class Sundrop_Elixir extends SpellCard{
 	
-	public SundropElixir() {
+	public Sundrop_Elixir() {
 		super();
 		manacost = 1;
 		ownername = "HumanPlayer";
 	}
 	
-	public SundropElixir(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard) {
+	public Sundrop_Elixir(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard) {
 		super(id, cardname, manacost, miniCard, bigCard);
 	}
 	
@@ -32,24 +33,12 @@ public class SundropElixir extends SpellCard{
 		}
 		return false;
 	}
-	
-	
-	
 	public void content(ActorRef out, GameState gameState, Tile tile) {
+		// update states
 		Unit unit = tile.getUnit();
-		int hp = unit.getHealth();
-		if(unit.getHealth()<unit.getMaxHealth()) {
-			hp=unit.getHealth()+5;
-				/*	if(hp>unit.getMaxHealth()) {
-						hp=unit.getMaxHealth();
-						return;
-					} return;*/
-		}
+		// play animation
 		BasicCommands.playEffectAnimation(out, BasicObjectBuilders.loadEffect(StaticConfFiles.f1_buff), tile);
-		BasicCommands.playUnitAnimation(out, unit, UnitAnimationType.hit);
-		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
-		BasicCommands.playUnitAnimation(out, unit, UnitAnimationType.idle);
 		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
-		//unit.setHealth(out, gameState, hp);
+		unit.takeHeal(out, gameState, 5);
 	}
 }

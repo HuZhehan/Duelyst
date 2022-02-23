@@ -9,9 +9,8 @@ import structures.basic.MiniCard;
 import structures.basic.Tile;
 import utils.BasicObjectBuilders;
 
-
 /** 
- * a super class of spell card
+ * super class of spell card
  * @author Zhehan Hu,
  */
 

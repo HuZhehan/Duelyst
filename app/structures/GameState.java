@@ -44,7 +44,7 @@ public class GameState {
 			try {Thread.sleep(10);} catch (InterruptedException e) {e.printStackTrace();}
 		}
 	}
-	
+	// @author Student Zhehan Hu
 	public void clear(ActorRef out) {
 		// clear states
 		previousEvent = null;
@@ -59,7 +59,7 @@ public class GameState {
 		try {Thread.sleep(10);} catch (InterruptedException e) {e.printStackTrace();
 		}
 	}
-	
+	// @author Student Zhehan Hu
 	public void clearBoard(ActorRef out) {
 		// clear board
 		for (int i=0;i<9;i++) {
@@ -69,7 +69,7 @@ public class GameState {
 			try {Thread.sleep(10);} catch (InterruptedException e) {e.printStackTrace();}
 		}
 	}
-	
+	// @author Student Zhehan Hu
 	public void humanTurnStart(ActorRef out) {
 		BasicCommands.addPlayer1Notification(out, "Round"+Integer.toString(Round), 2);
 		player = humanPlayer;
@@ -79,14 +79,14 @@ public class GameState {
 			u.enableMoveAttack();
 		}
 	}
-	
+	// @author Student Zhehan Hu
 	public void humanTurnEnd(ActorRef out) {
 		clear(out);
 		humanPlayer.setMana(0);
 		BasicCommands.setPlayer1Mana(out, humanPlayer);			
 		humanPlayer.drawCard(out, this, 1, 0);
 	}
-
+	// @author Student Zhehan Hu
 	public void aiTurnStart(ActorRef out) {
 		BasicCommands.addPlayer1Notification(out, "ai's Round", 2);
 		player = aiPlayer;
@@ -106,6 +106,7 @@ public class GameState {
 	}
 	
 	// @author Student Reetu Varadhan
+	// @author Student Zhehan Hu
 	public void gameEnd(ActorRef out) {
 		if (humanPlayer.getHealth()<=0||humanPlayer.deck.size()==0) {
 			clear(out);

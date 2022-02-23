@@ -22,20 +22,12 @@ public class SpellCard extends Card{
 	public SpellCard(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard) {
 		super(id, cardname, manacost, miniCard, bigCard);
 	}
+	
 	/** 
 	 * @method prompt() check if this card play can affect on this tile, return true if tile is valid
 	 * @param tile - tile to check
 	 */
 	public boolean check(ActorRef out, GameState gameState, Tile tile) {
-		if (gameState.player.getMana()<manacost){
-			return false;
-		}
-		if (tile.getUnit()==null){
-			return false;
-		}
-		if (tile.getUnit().getOwner()!=this.getOwner()){
-			return true;
-		}
 		return false;
 	}
 	/** 

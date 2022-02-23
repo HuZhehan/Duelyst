@@ -325,6 +325,7 @@ public class Unit implements UnitAction{
 	}
 	
 	// @author Student Reetu Varadhan
+	// @author Student Zhehan Hu
 	public void die(ActorRef out, GameState gameState) {
 		// play animation
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.death);

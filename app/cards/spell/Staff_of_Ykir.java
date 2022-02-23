@@ -7,7 +7,8 @@ import structures.GameState;
 import structures.basic.*;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
-	//@author Student Kanyaphat W. 
+// @author Student Kanyaphat W. 
+// @author Student Zhehan Hu
 public class Staff_of_Ykir extends SpellCard{
 	
 	public Staff_of_Ykir() {
@@ -34,13 +35,13 @@ public class Staff_of_Ykir extends SpellCard{
 	}
 	
 	public void content(ActorRef out, GameState gameState, Tile tile) {
+		// update states
 		Unit unit = tile.getUnit();
-		int hp = unit.getAttack() + 2;
+		int attack = unit.getAttack() + 2;
+		unit.setAttack(attack);
+		// play animation
 		BasicCommands.playEffectAnimation(out, BasicObjectBuilders.loadEffect(StaticConfFiles.f1_buff), tile);
-		BasicCommands.playUnitAnimation(out, unit, UnitAnimationType.hit);
-		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
-		BasicCommands.playUnitAnimation(out, unit, UnitAnimationType.idle);
+		BasicCommands.setUnitAttack(out, unit, unit.getAttack());
 		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
-		//unit.setAttack(out, gameState, hp);
 	}
 }
