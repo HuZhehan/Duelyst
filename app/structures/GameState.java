@@ -84,11 +84,11 @@ public class GameState {
 		clear(out);
 		humanPlayer.setMana(0);
 		BasicCommands.setPlayer1Mana(out, humanPlayer);			
-		humanPlayer.drawCard(out, this, 1, 0);
+		humanPlayer.drawCard(out, this, 1);
 	}
 	// @author Student Zhehan Hu
 	public void aiTurnStart(ActorRef out) {
-		BasicCommands.addPlayer1Notification(out, "ai's Round", 2);
+		BasicCommands.addPlayer1Notification(out, "ai's turn", 2);
 		player = aiPlayer;
 		aiPlayer.setMana(Round + 1);
 		BasicCommands.setPlayer2Mana(out, aiPlayer);
@@ -102,7 +102,7 @@ public class GameState {
 	public void aiTurnEnd(ActorRef out) {
 		aiPlayer.setMana(0);
 		BasicCommands.setPlayer2Mana(out, aiPlayer);
-		aiPlayer.drawCard(out, this, 1, 0);
+		aiPlayer.drawCard(out, this, 1);
 	}
 	
 	// @author Student Reetu Varadhan

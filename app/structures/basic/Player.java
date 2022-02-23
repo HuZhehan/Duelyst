@@ -59,7 +59,7 @@ public class Player implements PlayerAction{
 	 * @param n - number of card to draw
 	 * @param mode - animation type
 	 */
-	public void drawCard(ActorRef out, GameState gameState, int n, int mode) {
+	public void drawCard(ActorRef out, GameState gameState, int n) {
 		for (int i=0;i<n;i++) {
 			if (deck.size()==0) {
 				gameState.gameEnd(out);
@@ -68,7 +68,7 @@ public class Player implements PlayerAction{
 				deck.remove(0);
 				hand.add(card);
 				card.setOwner(this.getName());
-				BasicCommands.drawCard(out, card, hand.size(), mode);
+				BasicCommands.drawCard(out, card, hand.size(), 0);
 				try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
 				// max 6 cards due to UI limitation, discard
 				if (hand.size()==7) {

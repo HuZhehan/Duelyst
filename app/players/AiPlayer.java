@@ -37,7 +37,7 @@ public class AiPlayer extends Player {
 	 * @param n - number of card to draw
 	 * @param mode - animation type
 	 */
-	public void drawCard(ActorRef out, GameState gameState, int n, int mode) {
+	public void drawCard(ActorRef out, GameState gameState, int n) {
 		for (int i=0;i<n;i++) {
 			if (deck.size()==0) {
 				gameState.gameEnd(out);

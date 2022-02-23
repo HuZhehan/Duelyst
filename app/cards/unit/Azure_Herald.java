@@ -28,7 +28,7 @@ public class Azure_Herald extends UnitCard{
 		gameState.player.summon(out, gameState, id, tile);
 		BasicCommands.playEffectAnimation(out, BasicObjectBuilders.loadEffect(StaticConfFiles.f1_buff), tile);
 		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
-		for (Unit u:gameState.humanPlayer.summoned) {
+		for (Unit u:gameState.player.summoned) {
 			if (u.getId()==100 || u.getId()==200) {
 				u.takeHeal(out, gameState, 3);
 				break;

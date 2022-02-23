@@ -10,17 +10,17 @@ import utils.StaticConfFiles;
 /** 
  * @author Zhehan Hu,
  */
-public class Ironcliff_Guardian extends UnitCard{
+public class Planar_Scout extends UnitCard{
 	
-	public Ironcliff_Guardian() {
+	public Planar_Scout() {
 		super();
-		manacost = 5;
-		attack = 3;
-		health = 10;
-		ownername = "HumanPlayer";
+		manacost = 1;
+		attack = 2;
+		health = 1;
+		ownername = "aiPlayer";
 	}
 	
-	public Ironcliff_Guardian(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard) {
+	public Planar_Scout(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard) {
 		super(id, cardname, manacost, miniCard, bigCard);
 	}
 	// Can be summoned anywhere on the board
@@ -34,3 +34,4 @@ public class Ironcliff_Guardian extends UnitCard{
 		return false;
 	}
 }
+
