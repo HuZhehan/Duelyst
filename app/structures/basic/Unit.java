@@ -7,6 +7,8 @@ import akka.actor.ActorRef;
 import commands.BasicCommands;
 import events.PreviousEvent;
 import structures.GameState;
+import structures.TriggerType;
+import units.Ai_Avatar;
 import units.UnitAction;
 import utils.BasicObjectBuilders;
 
@@ -42,6 +44,12 @@ public class Unit implements UnitAction{
 	
 	// skill tags
 	public boolean provoke;
+	public boolean onSummon;
+	public boolean death;
+	public boolean avatarDamaged;
+	public boolean spellThief;
+	
+	
 	
 	@JsonIgnore
 	protected static ObjectMapper mapper = new ObjectMapper(); // Jackson Java Object Serializer, is used to read java objects from a file
@@ -61,6 +69,10 @@ public class Unit implements UnitAction{
 		
 		// skills tags
 		provoke = false;
+		onSummon = false;
+		death = false;
+		avatarDamaged = false;
+		spellThief = false;
 	}
 	
 	public Unit(int id, UnitAnimationSet animations, ImageCorrection correction) {
@@ -124,6 +136,16 @@ public class Unit implements UnitAction{
 	public void setOwner(String ownername) {
 		this.ownername = ownername;
 	}
+	// 
+	public boolean checkSkill(ActorRef out, GameState gameState, Unit unit) {
+		return false;
+	}
+	public boolean checkSkill(ActorRef out, GameState gameState, Player player) {
+		return false;
+	}
+	public void useSkill(ActorRef out, GameState gameState) {
+	}
+	
 	// @author Student Zhehan Hu
 	public void takeDamage(ActorRef out, GameState gameState, int damage) {
 		// update states
@@ -357,7 +379,7 @@ public class Unit implements UnitAction{
 				Tile provokeTile = gameState.tile[i][j];
 				// we only check adjacent tiles, do not code 'if provokeTile.checkAttack(out,gameState, provokeTile)==true'
 				// because some units have ability "ranged"
-				if (provokeTile.getUnit()!=null&&provokeTile.getUnit().provoke==true) {
+				if (provokeTile.getUnit()!=null&&provokeTile.getUnit().provoke==true&&provokeTile.getUnit().getOwner()!=this.getOwner()) {
 					if (Math.pow((i-m),2)+Math.pow(j-n,2)<=2) {
 						return true;
 					}
@@ -427,4 +449,5 @@ public class Unit implements UnitAction{
 	public void setPositionByTile(Tile tile) {
 		position = new Position(tile.getXpos(),tile.getYpos(),tile.getTilex(),tile.getTiley());
 	}
+
 }

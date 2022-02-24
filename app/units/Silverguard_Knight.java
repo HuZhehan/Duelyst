@@ -4,11 +4,14 @@ import akka.actor.ActorRef;
 import commands.BasicCommands;
 import structures.GameState;
 import structures.basic.ImageCorrection;
+import structures.basic.Player;
 import structures.basic.Position;
 import structures.basic.Tile;
 import structures.basic.Unit;
 import structures.basic.UnitAnimationSet;
 import structures.basic.UnitAnimationType;
+import utils.BasicObjectBuilders;
+import utils.StaticConfFiles;
 
 /**
  * This is a representation of a Unit on the game board.
@@ -35,6 +38,7 @@ public class Silverguard_Knight extends Unit{
 		
 		// skills tags
 		provoke = true;
+		avatarDamaged = true;
 
 	}
 	public Silverguard_Knight(int id, UnitAnimationSet animations, ImageCorrection correction) {
@@ -47,4 +51,24 @@ public class Silverguard_Knight extends Unit{
 		super(id, animation, position, animations, correction);
 	}
 	
+	public boolean checkSkill(ActorRef out, GameState gameState, Unit unit) {
+		if (this.getOwner()==unit.getOwner()){
+			return true;
+		}
+		return false;
+	}
+	public void useSkill(ActorRef out, GameState gameState) {
+		BasicCommands.addPlayer1Notification(out, "Trigger: AvatarDamaged", 2);
+		int a = this.getAttack() + 2;
+		this.setAttack(a);
+		// 
+		int x = this.getPosition().getTilex();
+		int y = this.getPosition().getTiley();
+		Tile tile = gameState.tile[x][y];
+		
+		// play animation
+		BasicCommands.playEffectAnimation(out, BasicObjectBuilders.loadEffect(StaticConfFiles.f1_buff), tile);
+		BasicCommands.setUnitAttack(out, this, this.getAttack());
+		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+	}
 }

@@ -133,6 +133,22 @@ public class Player implements PlayerAction{
 				BasicCommands.setPlayer1Mana(out, this);
 				this.discard(out, gameState, index);
 				c.content(out, gameState, tile);
+				
+				// trigger spellThief
+				// If the enemy player casts a spell, this minion gains +1 attack and +1 health
+				if (c.getType()=="SpellCard") {
+					for (int i=0;i<9;i++) {
+						for (int j=0;j<5;j++) {
+							if (gameState.tile[i][j].getUnit()!=null) {
+								Unit unit = gameState.tile[i][j].getUnit();
+								if (unit.spellThief==true&&unit.checkSkill(out, gameState, this)==true) {
+									unit.useSkill(out, gameState);
+								}
+							}
+						}
+					}
+				}
+				
 				break;
 			}
 		}

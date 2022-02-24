@@ -35,15 +35,20 @@ public class Card implements CardAction{
 		this.miniCard = miniCard;
 		this.bigCard = bigCard;
 	}
-	public String getType() {
-		return type;
-	}
+	
 	public boolean check(ActorRef out, GameState gameState, Tile tile) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 	public void content(ActorRef out, GameState gameState, Tile tile) {
 		// TODO Auto-generated method stub
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+		
 	}
 	public String getOwner() {
 		return ownername;

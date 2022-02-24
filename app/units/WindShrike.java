@@ -19,8 +19,8 @@ import structures.basic.UnitAnimationType;
  * about the animation frames, while ImageCorrection has
  * information for centering the unit on the tile. 
  * 
- * @author Chinwekele Izuzu
- *
+ * @author Student Chinwekele Izuzu
+ * @author Student Zhehan Hu
  */
 
 public class Windshrike extends Unit{
@@ -50,5 +50,24 @@ public class Windshrike extends Unit{
 			return true;
 		}
 		return false;
+	}
+	
+	public void die(ActorRef out, GameState gameState) {
+		// When this unit dies, its owner draws a card
+		if (this.getOwner()=="HumanPlayer"){
+				gameState.humanPlayer.drawCard(out, gameState, 1);
+		}
+		else if (this.getOwner()=="HumanPlayer") {
+			gameState.aiPlayer.drawCard(out, gameState, 1);
+		}
+		// play animation
+		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.death);
+		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+		// destroy Unit & reset tile
+		this.dead = true;
+		BasicCommands.deleteUnit(out, this);
+		int x = getPosition().getTilex();
+		int y = getPosition().getTiley();
+		gameState.tile[x][y].setUnit(null);
 	}
 }

@@ -56,6 +56,23 @@ public class Human_Avatar extends Unit{
 		BasicCommands.setPlayer1Health(out, gameState.humanPlayer);;
 		try {Thread.sleep(800);} catch (InterruptedException e) {e.printStackTrace();}
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
+		
+		// trigger avatarDamaged
+		// If your avatar is dealt damage Silverguard Knight gains +2 attack
+		for (int i=0;i<9;i++) {
+			for (int j=0;j<5;j++) {
+				if (gameState.tile[i][j].getUnit()!=null) {
+					Unit unit = gameState.tile[i][j].getUnit();
+					if (unit.avatarDamaged==true&&unit.checkSkill(out, gameState, this)==true) {
+						unit.useSkill(out, gameState);
+					}
+				}
+			}
+		}
+		
+		
+		
+		
 		// check death
 		if (this.health<=0) {
 			this.die(out, gameState);
