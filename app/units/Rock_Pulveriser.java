@@ -32,6 +32,9 @@ public class Rock_Pulveriser extends Unit{
 		maxHealth = 4;
 		unitname = "Rock Pulveriser";
 		// ownername = "AiPlayer";
+		
+		// skills tags
+		provoke = true;
 
 	}
 	public Rock_Pulveriser(int id, UnitAnimationSet animations, ImageCorrection correction) {

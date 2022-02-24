@@ -32,6 +32,9 @@ public class Ironcliff_Guardian extends Unit{
 		maxHealth = 10;
 		unitname = "Ironcliff Guardian";
 		// ownername = "HumanPlayer";
+		
+		// skills tags
+		provoke = true;
 
 	}
 	public Ironcliff_Guardian(int id, UnitAnimationSet animations, ImageCorrection correction) {

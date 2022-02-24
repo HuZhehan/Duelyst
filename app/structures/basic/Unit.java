@@ -40,6 +40,9 @@ public class Unit implements UnitAction{
 	protected String unitname;
 	protected String ownername;
 	
+	// skill tags
+	public boolean provoke;
+	
 	@JsonIgnore
 	protected static ObjectMapper mapper = new ObjectMapper(); // Jackson Java Object Serializer, is used to read java objects from a file
 	protected int id;
@@ -55,6 +58,9 @@ public class Unit implements UnitAction{
 		attackChance = 0;
 		summoned = false;
 		dead = false;
+		
+		// skills tags
+		provoke = false;
 	}
 	
 	public Unit(int id, UnitAnimationSet animations, ImageCorrection correction) {
@@ -230,36 +236,40 @@ public class Unit implements UnitAction{
 		if (this.attackChance<=0) {
 			return false;
 		}
-		else if (this.moveChance>0&&this.attackChance>0){
-			return this.checkMoveAttack(out, gameState, tile);
-
+		if (this.moveChance<=0&&this.attackChance>0){
+			if (this.checkAttack(out, gameState, tile)==true){
+				return true;
+			}
 		}
-		else if (this.moveChance<=0&&this.attackChance>0){
-			return this.checkAttack(out, gameState, tile);
+		if (this.moveChance>0&&this.attackChance>0){
+			// check Attack first, provoked unit cannot Move-Attack
+			if (this.checkAttack(out, gameState, tile)==true){
+				return true;
+			}
+			if (this.checkMoveAttack(out, gameState, tile)==true){
+				return true;
+			}
 		}
 		return false; 
 	}
 	public boolean checkMoveAttack(ActorRef out, GameState gameState, Tile tile) {
 		// tile is empty, check if unit can move to
 		if(tile.getUnit()==null) {
-		 return this.checkMove(out, gameState, tile);
+			return this.checkMove(out, gameState, tile);
 		}
 		// tile has enemy check if unit can attack
 		if(tile.getUnit()!=null&&tile.getUnit().getOwner()!=this.getOwner()) {
-			// coordinate of tile to check
-			int x = tile.getTilex();
-			int y = tile.getTiley();
-			// for any springBoard tile where can attack, check if there exists springBoard unit can move to,  .
+			// for any springBoard tile where unit can move to , create a fake unit on it, 
+			// then check if fake unit can attack the target on this springBoard tile,.
+			// if so, this unit can move-attack target
 			for (int i=0;i<9;i++) {
 				for (int j=0;j<5;j++) {
-					Tile SpringBoard = gameState.tile[i][j];
-					//   o o o
-					//   o x o
-					//   o o o
-					if (Math.pow((x-i),2)+Math.pow(y-j,2)<=2) {
-						if (this.checkMove(out, gameState, SpringBoard)==true) {
-							return true;
-						}
+					Tile springBoard = gameState.tile[i][j];
+					Unit fake = new Unit();
+					fake.setOwner(this.getOwner());
+					fake.setPositionByTile(springBoard);
+					if (this.checkMove(out, gameState, springBoard)==true&&fake.checkAttack(out, gameState, tile)==true) {
+						return true;
 					}
 				}
 			}
@@ -270,8 +280,14 @@ public class Unit implements UnitAction{
 	public boolean checkMove(ActorRef out, GameState gameState, Tile tile) {
 		// tile is not empty, return false
 		if(tile.getUnit()!=null) {
-		 return false;
+			return false;
 		}
+		
+		// if target doesnt has provoke but another enemy in range has, return false
+		if(this.checkProvoked(out, gameState)==true) {
+			return false;
+		}
+		
 		// coordinate of tile to check
 		int x = tile.getTilex();
 		int y = tile.getTiley();
@@ -309,15 +325,20 @@ public class Unit implements UnitAction{
 	public boolean checkAttack(ActorRef out, GameState gameState, Tile tile) {
 		// tile is empty or is friend unit, return false
 		if(tile.getUnit()==null||tile.getUnit().getOwner()==this.getOwner()) {
-		 return false;
+			return false;
 		}
-		// coordinate of tile to check
+
+		// if target doesn't has provoke but another enemy in range has, return false
+		if(tile.getUnit().provoke==false && this.checkProvoked(out, gameState)==true) {
+			return false;
+		}
+		
+		// coordinate of target to check
 		int x = tile.getTilex();
 		int y = tile.getTiley();
 		// coordinate of unit tile
 		int m = this.getPosition().getTilex();
 		int n = this.getPosition().getTiley();
-
 		// if tile has enemy and is in unit's attack range, it may be valid to attack
 		//   o o o
 		//   o x o
@@ -327,7 +348,23 @@ public class Unit implements UnitAction{
 		}
 		return false;
 	}
-	
+	// if enemy unit in adjacent tile has provoke, return true
+	public boolean checkProvoked(ActorRef out, GameState gameState) {
+		int m = this.getPosition().getTilex();
+		int n = this.getPosition().getTiley();
+		for (int i=0;i<9;i++) {
+			for (int j=0;j<5;j++) {
+				Tile provokeTile = gameState.tile[i][j];
+				// we only check adjacent tiles, do not code 'if provokeTile.checkAttack(out,gameState, provokeTile)==true'
+				if (provokeTile.getUnit()!=null&&provokeTile.getUnit().provoke==true) {
+					if (Math.pow((i-m),2)+Math.pow(j-n,2)<=2) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
 	// @author Student Reetu Varadhan
 	// @author Student Zhehan Hu
 	public void die(ActorRef out, GameState gameState) {

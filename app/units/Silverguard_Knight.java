@@ -32,6 +32,9 @@ public class Silverguard_Knight extends Unit{
 		maxHealth = 5;
 		unitname = "Silverguard Knight";
 		// ownername = "HumanPlayer";
+		
+		// skills tags
+		provoke = true;
 
 	}
 	public Silverguard_Knight(int id, UnitAnimationSet animations, ImageCorrection correction) {
