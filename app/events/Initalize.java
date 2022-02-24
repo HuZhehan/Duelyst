@@ -12,7 +12,7 @@ import demo.CheckMoveLogic;
 import demo.CommandDemo;
 import structures.GameState;
 import structures.basic.*;
-import units.HumanAvatar;
+import units.Human_Avatar;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
 

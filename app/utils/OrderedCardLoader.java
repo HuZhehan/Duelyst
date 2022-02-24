@@ -2,20 +2,8 @@ package utils;
 
 import java.util.ArrayList;
 import java.util.List;
-import cards.*;
-import cards.spell.Entropic_Decay;
-//import cards.spell.Entropic_decay;
-import cards.spell.Staff_of_Ykir;
-import cards.spell.Sundrop_Elixir;
-import cards.spell.Truestrike;
-import cards.unit.Azure_Herald;
-import cards.unit.Azurite_Lion;
-import cards.unit.Combo_Charger;
-import cards.unit.Fire_Spitter;
-import cards.unit.Hailstone_Golem;
-import cards.unit.Ironcliff_Guardian;
-import cards.unit.Pureblade_Enforcer;
-import cards.unit.Silverguard_Knight;
+import cards.spell.*;
+import cards.unit.*;
 import structures.basic.Card;
 
 /**
@@ -68,26 +56,26 @@ public class OrderedCardLoader {
 	
 		List<Card> cardsInDeck = new ArrayList<Card>(20);
 		
-		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_rock_pulveriser, 20, Card.class));
-		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_bloodshard_golem, 21, Card.class));
+		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_rock_pulveriser, 20, Rock_Pulveriser.class));
+		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_bloodshard_golem, 21, Bloodshard_Golem.class));
 		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_staff_of_ykir, 22, Staff_of_Ykir.class));
-		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_blaze_hound, 23, Card.class));
-		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_windshrike, 24, Card.class));
-		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_pyromancer, 25, Card.class));
-		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_serpenti, 26, Card.class));
+		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_blaze_hound, 23, Blaze_Hound.class));
+		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_windshrike, 24, Windshrike.class));
+		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_pyromancer, 25, Pyromancer.class));
+		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_serpenti, 26, Serpenti.class));
 		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_entropic_decay, 27, Entropic_Decay.class));
-		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_planar_scout, 28, Card.class));
-		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_hailstone_golem, 29, Card.class));
-		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_rock_pulveriser, 30, Card.class));
-		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_bloodshard_golem, 31, Card.class));
+		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_planar_scout, 28, Planar_Scout.class));
+		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_hailstone_golem, 29, Hailstone_Golem.class));
+		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_rock_pulveriser, 30, Rock_Pulveriser.class));
+		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_bloodshard_golem, 31, Bloodshard_Golem.class));
 		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_staff_of_ykir, 32, Staff_of_Ykir.class));
-		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_blaze_hound, 33, Card.class));
-		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_windshrike, 34, Card.class));
-		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_pyromancer, 35, Card.class));
-		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_serpenti, 36, Card.class));
+		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_blaze_hound, 33, Blaze_Hound.class));
+		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_windshrike, 34, Windshrike.class));
+		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_pyromancer, 35, Pyromancer.class));
+		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_serpenti, 36, Serpenti.class));
 		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_entropic_decay, 37, Entropic_Decay.class));
-		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_planar_scout, 38, Card.class));
-		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_hailstone_golem, 39, Card.class));
+		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_planar_scout, 38, Planar_Scout.class));
+		cardsInDeck.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_hailstone_golem, 39, Hailstone_Golem.class));
 		
 		return cardsInDeck;
 	}

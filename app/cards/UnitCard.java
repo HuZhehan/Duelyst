@@ -16,14 +16,13 @@ import utils.BasicObjectBuilders;
 
 public class UnitCard extends Card{
 	
-	// not used
-	protected int attack;
-	protected int health;
+	// protected int attack;
+	// protected int health;
 	
 	public UnitCard() {
 		super();
-		//attack = 0;
-		//health = 0;
+		// attack = 0;
+		// health = 0;
 		type = "UnitCard";
 	}
 	

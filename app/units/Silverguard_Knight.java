@@ -23,24 +23,24 @@ import structures.basic.UnitAnimationType;
  *
  */
 
-public class ComboCharger extends Unit{
+public class Silverguard_Knight extends Unit{
 	
-	public ComboCharger() {
+	public Silverguard_Knight() {
 		super();
 		attack = 1;
-		health = 3;
-		maxHealth = 3;
-		unitname = "Combo Charger";
+		health = 5;
+		maxHealth = 5;
+		unitname = "Silverguard Knight";
 		// ownername = "HumanPlayer";
 
 	}
-	public ComboCharger(int id, UnitAnimationSet animations, ImageCorrection correction) {
+	public Silverguard_Knight(int id, UnitAnimationSet animations, ImageCorrection correction) {
 		super(id, animations, correction);
 	}
-	public ComboCharger(int id, UnitAnimationSet animations, ImageCorrection correction, Tile currentTile) {
+	public Silverguard_Knight(int id, UnitAnimationSet animations, ImageCorrection correction, Tile currentTile) {
 		super(id, animations, correction, currentTile);
 	}
-	public ComboCharger(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations, ImageCorrection correction) {
+	public Silverguard_Knight(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations, ImageCorrection correction) {
 		super(id, animation, position, animations, correction);
 	}
 	

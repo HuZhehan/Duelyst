@@ -23,24 +23,24 @@ import structures.basic.UnitAnimationType;
  *
  */
 
-public class ComboCharger extends Unit{
+public class Pureblade_Enforcer extends Unit{
 	
-	public ComboCharger() {
+	public Pureblade_Enforcer() {
 		super();
 		attack = 1;
-		health = 3;
-		maxHealth = 3;
-		unitname = "Combo Charger";
+		health = 4;
+		maxHealth = 4;
+		unitname = "Pureblade Enforcer";
 		// ownername = "HumanPlayer";
 
 	}
-	public ComboCharger(int id, UnitAnimationSet animations, ImageCorrection correction) {
+	public Pureblade_Enforcer(int id, UnitAnimationSet animations, ImageCorrection correction) {
 		super(id, animations, correction);
 	}
-	public ComboCharger(int id, UnitAnimationSet animations, ImageCorrection correction, Tile currentTile) {
+	public Pureblade_Enforcer(int id, UnitAnimationSet animations, ImageCorrection correction, Tile currentTile) {
 		super(id, animations, correction, currentTile);
 	}
-	public ComboCharger(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations, ImageCorrection correction) {
+	public Pureblade_Enforcer(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations, ImageCorrection correction) {
 		super(id, animation, position, animations, correction);
 	}
 	

@@ -7,7 +7,7 @@ import akka.actor.ActorRef;
 import commands.BasicCommands;
 import players.PlayerAction;
 import structures.GameState;
-import units.HumanAvatar;
+import units.Human_Avatar;
 import utils.BasicObjectBuilders;
 import utils.OrderedCardLoader;
 import utils.StaticConfFiles;
@@ -141,6 +141,9 @@ public class Player implements PlayerAction{
 		return health;
 	}
 	public void setHealth(int health) {
+		if (health>20) {
+			health = 20;
+		}
 		this.health = health;
 	}
 	public int getMana() {

@@ -23,24 +23,26 @@ import structures.basic.UnitAnimationType;
  *
  */
 
-public class ComboCharger extends Unit{
+public class Azurite_Lion extends Unit{
 	
-	public ComboCharger() {
+	public Azurite_Lion() {
 		super();
-		attack = 1;
+		attack = 2;
 		health = 3;
 		maxHealth = 3;
-		unitname = "Combo Charger";
+		unitname = "Azurite Lion";
 		// ownername = "HumanPlayer";
-
+		
+		// Can attack twice per turn
+		maxAttackChance = 2; 
 	}
-	public ComboCharger(int id, UnitAnimationSet animations, ImageCorrection correction) {
+	public Azurite_Lion(int id, UnitAnimationSet animations, ImageCorrection correction) {
 		super(id, animations, correction);
 	}
-	public ComboCharger(int id, UnitAnimationSet animations, ImageCorrection correction, Tile currentTile) {
+	public Azurite_Lion(int id, UnitAnimationSet animations, ImageCorrection correction, Tile currentTile) {
 		super(id, animations, correction, currentTile);
 	}
-	public ComboCharger(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations, ImageCorrection correction) {
+	public Azurite_Lion(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations, ImageCorrection correction) {
 		super(id, animation, position, animations, correction);
 	}
 	

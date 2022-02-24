@@ -23,24 +23,24 @@ import structures.basic.UnitAnimationType;
  *
  */
 
-public class ComboCharger extends Unit{
+public class Azure_Herald extends Unit{
 	
-	public ComboCharger() {
+	public Azure_Herald() {
 		super();
 		attack = 1;
-		health = 3;
-		maxHealth = 3;
-		unitname = "Combo Charger";
+		health = 4;
+		maxHealth = 4;
+		unitname = "Azure Herald";
 		// ownername = "HumanPlayer";
 
 	}
-	public ComboCharger(int id, UnitAnimationSet animations, ImageCorrection correction) {
+	public Azure_Herald(int id, UnitAnimationSet animations, ImageCorrection correction) {
 		super(id, animations, correction);
 	}
-	public ComboCharger(int id, UnitAnimationSet animations, ImageCorrection correction, Tile currentTile) {
+	public Azure_Herald(int id, UnitAnimationSet animations, ImageCorrection correction, Tile currentTile) {
 		super(id, animations, correction, currentTile);
 	}
-	public ComboCharger(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations, ImageCorrection correction) {
+	public Azure_Herald(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations, ImageCorrection correction) {
 		super(id, animation, position, animations, correction);
 	}
 	

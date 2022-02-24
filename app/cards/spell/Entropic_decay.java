@@ -14,7 +14,7 @@ public class Entropic_Decay extends SpellCard{
 	public Entropic_Decay() {
 		super();
 		manacost = 5;
-		ownername = "AiPlayer";
+		// ownername = "AiPlayer";
 	}
 	
 	public Entropic_Decay(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard) {

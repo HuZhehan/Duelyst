@@ -26,9 +26,9 @@ import utils.BasicObjectBuilders;
 public class Unit implements UnitAction{
 	
 	// @author Student Zhehan Hu
-	protected int maxHealth;
-	protected int health;
 	protected int attack;
+	protected int health;
+	protected int maxHealth;
 	
 	protected int maxMoveChance;
 	protected int maxAttackChance;
@@ -83,6 +83,7 @@ public class Unit implements UnitAction{
 		this.animations = animations;
 		this.correction = correction;
 	}
+
 	// @author Student Zhehan Hu
 	public String getName() {
 		return unitname;
@@ -149,6 +150,7 @@ public class Unit implements UnitAction{
 		// coordinate of target
 		int x = target.getPosition().getTilex();
 		int y = target.getPosition().getTiley();
+		//int delay = 0;
 		trytomove:
 		for (int i=0;i<9;i++) {
 			for (int j=0;j<5;j++) {
@@ -157,6 +159,7 @@ public class Unit implements UnitAction{
 					if (this.checkMove(out, gameState, SpringBoard)==true) {
 						// gameState.previousEvent=PreviousEvent.block;
 						this.move(out, gameState, SpringBoard);
+						// delay = (Math.abs(x-i)+Math.abs(y-j))*1000;
 						break trytomove;
 						// BasicCommands.addPlayer1Notification(out, "fail to find the path", 20);
 					}
@@ -164,6 +167,7 @@ public class Unit implements UnitAction{
 			}
 		}
 		// attack
+		//try {Thread.sleep(delay);} catch (InterruptedException e) {e.printStackTrace();}
 		this.attack(out, gameState, target);
 	}
 	// @author Student Zhehan Hu
@@ -193,7 +197,7 @@ public class Unit implements UnitAction{
 	public void attack(ActorRef out, GameState gameState, Unit target) {
 		// play animation
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.attack);
-		try {Thread.sleep(800);} catch (InterruptedException e) {e.printStackTrace();}
+		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
 		// update states
 		target.takeDamage(out, gameState, this.attack);
@@ -209,7 +213,7 @@ public class Unit implements UnitAction{
 	public void counterAttack(ActorRef out, GameState gameState, Unit target) {
 		// play animation
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.attack);
-		try {Thread.sleep(800);} catch (InterruptedException e) {e.printStackTrace();}
+		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
 		// update states
 		target.takeDamage(out, gameState, this.attack);

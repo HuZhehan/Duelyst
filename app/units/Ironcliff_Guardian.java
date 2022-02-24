@@ -23,24 +23,24 @@ import structures.basic.UnitAnimationType;
  *
  */
 
-public class ComboCharger extends Unit{
+public class Ironcliff_Guardian extends Unit{
 	
-	public ComboCharger() {
+	public Ironcliff_Guardian() {
 		super();
-		attack = 1;
-		health = 3;
-		maxHealth = 3;
-		unitname = "Combo Charger";
+		attack = 3;
+		health = 10;
+		maxHealth = 10;
+		unitname = "Ironcliff Guardian";
 		// ownername = "HumanPlayer";
 
 	}
-	public ComboCharger(int id, UnitAnimationSet animations, ImageCorrection correction) {
+	public Ironcliff_Guardian(int id, UnitAnimationSet animations, ImageCorrection correction) {
 		super(id, animations, correction);
 	}
-	public ComboCharger(int id, UnitAnimationSet animations, ImageCorrection correction, Tile currentTile) {
+	public Ironcliff_Guardian(int id, UnitAnimationSet animations, ImageCorrection correction, Tile currentTile) {
 		super(id, animations, correction, currentTile);
 	}
-	public ComboCharger(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations, ImageCorrection correction) {
+	public Ironcliff_Guardian(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations, ImageCorrection correction) {
 		super(id, animation, position, animations, correction);
 	}
 	

@@ -15,9 +15,9 @@ public class Azurite_Lion extends UnitCard{
 	public Azurite_Lion() {
 		super();
 		manacost = 3;
-		attack = 2;
-		health = 3;
-		ownername = "HumanPlayer";
+		// attack = 2;
+		// health = 3;
+		// ownername = "HumanPlayer";
 	}
 	
 	public Azurite_Lion(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard) {

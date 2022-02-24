@@ -19,29 +19,31 @@ import structures.basic.UnitAnimationType;
  * about the animation frames, while ImageCorrection has
  * information for centering the unit on the tile. 
  * 
- * @author Zhehan Hu
+ * @author Chinwekele Izuzu
  *
  */
 
-public class ComboCharger extends Unit{
-	
-	public ComboCharger() {
+public class Serpenti extends Unit{
+
+	public Serpenti() {
 		super();
-		attack = 1;
-		health = 3;
-		maxHealth = 3;
-		unitname = "Combo Charger";
-		// ownername = "HumanPlayer";
+		attack = 7;
+		health = 4;
+		maxHealth = 4;
+		unitname = "Serpenti";
+		// ownername = "AiPlayer";
+		
+		// Can attack twice per turn
+		maxAttackChance = 2; 
 
 	}
-	public ComboCharger(int id, UnitAnimationSet animations, ImageCorrection correction) {
+	public Serpenti(int id, UnitAnimationSet animations, ImageCorrection correction) {
 		super(id, animations, correction);
 	}
-	public ComboCharger(int id, UnitAnimationSet animations, ImageCorrection correction, Tile currentTile) {
+	public Serpenti(int id, UnitAnimationSet animations, ImageCorrection correction, Tile currentTile) {
 		super(id, animations, correction, currentTile);
 	}
-	public ComboCharger(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations, ImageCorrection correction) {
+	public Serpenti(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations, ImageCorrection correction) {
 		super(id, animation, position, animations, correction);
 	}
-	
 }

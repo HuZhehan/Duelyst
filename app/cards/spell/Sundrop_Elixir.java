@@ -14,7 +14,7 @@ public class Sundrop_Elixir extends SpellCard{
 	public Sundrop_Elixir() {
 		super();
 		manacost = 1;
-		ownername = "HumanPlayer";
+		// ownername = "HumanPlayer";
 	}
 	
 	public Sundrop_Elixir(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard) {

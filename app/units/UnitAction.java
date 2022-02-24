@@ -4,9 +4,9 @@ import akka.actor.ActorRef;
 import structures.GameState;
 import structures.basic.Tile;
 import structures.basic.Unit;
-
+// @author Student Zhehan Hu
 public interface UnitAction {
-	// @author Student Zhehan Hu
+
 	public String getName();
 	public String getOwner();
 	public int getMaxHealth();

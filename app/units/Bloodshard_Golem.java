@@ -19,28 +19,28 @@ import structures.basic.UnitAnimationType;
  * about the animation frames, while ImageCorrection has
  * information for centering the unit on the tile. 
  * 
- * @author Zhehan Hu
+ * @author Chinwekele Izuzu
  *
  */
 
-public class ComboCharger extends Unit{
-	
-	public ComboCharger() {
+public class Bloodshard_Golem extends Unit{
+
+	public Bloodshard_Golem() {
 		super();
-		attack = 1;
+		attack = 4;
 		health = 3;
 		maxHealth = 3;
-		unitname = "Combo Charger";
-		// ownername = "HumanPlayer";
+		unitname = "Bloodshard Golem";
+		// ownername = "AiPlayer";
 
 	}
-	public ComboCharger(int id, UnitAnimationSet animations, ImageCorrection correction) {
+	public Bloodshard_Golem(int id, UnitAnimationSet animations, ImageCorrection correction) {
 		super(id, animations, correction);
 	}
-	public ComboCharger(int id, UnitAnimationSet animations, ImageCorrection correction, Tile currentTile) {
+	public Bloodshard_Golem(int id, UnitAnimationSet animations, ImageCorrection correction, Tile currentTile) {
 		super(id, animations, correction, currentTile);
 	}
-	public ComboCharger(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations, ImageCorrection correction) {
+	public Bloodshard_Golem(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations, ImageCorrection correction) {
 		super(id, animation, position, animations, correction);
 	}
 	

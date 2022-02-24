@@ -23,24 +23,25 @@ import structures.basic.UnitAnimationType;
  *
  */
 
-public class ComboCharger extends Unit{
+public class Hailstone_Golem extends Unit{
 	
-	public ComboCharger() {
+	public Hailstone_Golem() {
 		super();
-		attack = 1;
-		health = 3;
-		maxHealth = 3;
-		unitname = "Combo Charger";
+		attack = 4;
+		health = 6;
+		maxHealth = 6;
+		unitname = "Hailstone Golem";
 		// ownername = "HumanPlayer";
+		// ownername = "AiPlayer";
 
 	}
-	public ComboCharger(int id, UnitAnimationSet animations, ImageCorrection correction) {
+	public Hailstone_Golem(int id, UnitAnimationSet animations, ImageCorrection correction) {
 		super(id, animations, correction);
 	}
-	public ComboCharger(int id, UnitAnimationSet animations, ImageCorrection correction, Tile currentTile) {
+	public Hailstone_Golem(int id, UnitAnimationSet animations, ImageCorrection correction, Tile currentTile) {
 		super(id, animations, correction, currentTile);
 	}
-	public ComboCharger(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations, ImageCorrection correction) {
+	public Hailstone_Golem(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations, ImageCorrection correction) {
 		super(id, animation, position, animations, correction);
 	}
 	

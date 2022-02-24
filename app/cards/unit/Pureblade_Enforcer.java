@@ -15,9 +15,9 @@ public class Pureblade_Enforcer extends UnitCard{
 	public Pureblade_Enforcer() {
 		super();
 		manacost = 2;
-		attack = 1;
-		health = 4;
-		ownername = "HumanPlayer";
+		// attack = 1;
+		// health = 4;
+		// ownername = "HumanPlayer";
 	}
 	
 	public Pureblade_Enforcer(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard) {

@@ -15,9 +15,9 @@ public class Ironcliff_Guardian extends UnitCard{
 	public Ironcliff_Guardian() {
 		super();
 		manacost = 5;
-		attack = 3;
-		health = 10;
-		ownername = "HumanPlayer";
+		// attack = 3;
+		// health = 10;
+		// ownername = "HumanPlayer";
 	}
 	
 	public Ironcliff_Guardian(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard) {

@@ -15,9 +15,9 @@ public class Planar_Scout extends UnitCard{
 	public Planar_Scout() {
 		super();
 		manacost = 1;
-		attack = 2;
-		health = 1;
-		ownername = "aiPlayer";
+		// attack = 2;
+		// health = 1;
+		// ownername = "aiPlayer";
 	}
 	
 	public Planar_Scout(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard) {

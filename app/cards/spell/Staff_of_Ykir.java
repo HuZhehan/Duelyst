@@ -14,7 +14,7 @@ public class Staff_of_Ykir extends SpellCard{
 	public Staff_of_Ykir() {
 		super();
 		manacost = 2;
-		ownername = "AiPlayer";
+		// ownername = "AiPlayer";
 	}
 	
 	public Staff_of_Ykir(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard) {

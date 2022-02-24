@@ -13,7 +13,7 @@ public class Truestrike extends SpellCard{
 	public Truestrike() {
 		super();
 		manacost = 1;
-		ownername = "HumanPlayer";
+		// ownername = "HumanPlayer";
 	}
 	
 	public Truestrike(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard) {

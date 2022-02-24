@@ -15,9 +15,9 @@ public class Azure_Herald extends UnitCard{
 	public Azure_Herald() {
 		super();
 		manacost = 2;
-		attack = 1;
-		health = 4;
-		ownername = "HumanPlayer";
+		// attack = 1;
+		// health = 4;
+		// ownername = "HumanPlayer";
 	}
 	
 	public Azure_Herald(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard) {

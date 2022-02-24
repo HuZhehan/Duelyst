@@ -23,24 +23,24 @@ import structures.basic.UnitAnimationType;
  *
  */
 
-public class HumanAvatar extends Unit{
-	// @author Student Zhehan Hu
+public class Ai_Avatar extends Unit{
 	
-	public HumanAvatar() {
+	public Ai_Avatar() {
 		super();
-		maxHealth = 20;
-		health = 20;
 		attack = 2;
-		unitname = "HumanAvatar";
-		ownername = "HumanPlayer";
+		health = 20;
+		maxHealth = 20;
+		unitname = "Ai Avatar";
+		// ownername = "AiPlayer";
+
 	}
-	public HumanAvatar(int id, UnitAnimationSet animations, ImageCorrection correction) {
+	public Ai_Avatar(int id, UnitAnimationSet animations, ImageCorrection correction) {
 		super(id, animations, correction);
 	}
-	public HumanAvatar(int id, UnitAnimationSet animations, ImageCorrection correction, Tile currentTile) {
+	public Ai_Avatar(int id, UnitAnimationSet animations, ImageCorrection correction, Tile currentTile) {
 		super(id, animations, correction, currentTile);
 	}
-	public HumanAvatar(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations, ImageCorrection correction) {
+	public Ai_Avatar(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations, ImageCorrection correction) {
 		super(id, animation, position, animations, correction);
 	}
 	
@@ -49,11 +49,11 @@ public class HumanAvatar extends Unit{
 		// update states
 		int hp = this.health - damage;
 		this.setHealth(hp);
-		gameState.humanPlayer.setHealth(hp);
+		gameState.aiPlayer.setHealth(hp);
 		// play animation
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.hit);
 		BasicCommands.setUnitHealth(out, this, health);
-		BasicCommands.setPlayer1Health(out, gameState.humanPlayer);;
+		BasicCommands.setPlayer2Health(out, gameState.aiPlayer);;
 		try {Thread.sleep(800);} catch (InterruptedException e) {e.printStackTrace();}
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
 		// check death
@@ -67,11 +67,11 @@ public class HumanAvatar extends Unit{
 	public void takeHeal(ActorRef out, GameState gameState, int heal) {
 		// update states
 		this.setHealth(this.health + heal);
-		gameState.humanPlayer.setHealth(this.health + heal);
+		gameState.aiPlayer.setHealth(this.health + heal);
 		// play animation
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.channel);
 		BasicCommands.setUnitHealth(out, this, health);
-		BasicCommands.setPlayer1Health(out, gameState.humanPlayer);;
+		BasicCommands.setPlayer2Health(out, gameState.aiPlayer);;
 		try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
 	}
