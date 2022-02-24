@@ -43,5 +43,24 @@ public class Fire_Spitter extends Unit{
 	public Fire_Spitter(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations, ImageCorrection correction) {
 		super(id, animation, position, animations, correction);
 	}
-	
+	public boolean checkAttack(ActorRef out, GameState gameState, Tile tile) {
+		// tile is empty or is friend unit, return false
+		if(tile.getUnit()==null||tile.getUnit().getOwner()==this.getOwner()) {
+			return false;
+		}
+		// if target doesn't has provoke but another enemy in range has, return false
+		if(tile.getUnit().provoke==false && this.checkProvoked(out, gameState)==true) {
+			return false;
+		}
+		// special situation, two enemy units with provoke
+		// one is on adjacent tile, but target is not
+		// then we cannot attack target
+		// Unit can only attack adjacent unit by default, so super() is called here;
+		if(tile.getUnit().provoke==true && this.checkProvoked(out, gameState)==true) {
+			if (super.checkAttack(out, gameState, tile)==false) {
+				return false;
+			}
+		}
+		return true;
+	}
 }

@@ -348,7 +348,7 @@ public class Unit implements UnitAction{
 		}
 		return false;
 	}
-	// if enemy unit in adjacent tile has provoke, return true
+	// if enemy unit with provoke in adjacent tile, return true
 	public boolean checkProvoked(ActorRef out, GameState gameState) {
 		int m = this.getPosition().getTilex();
 		int n = this.getPosition().getTiley();
@@ -356,6 +356,7 @@ public class Unit implements UnitAction{
 			for (int j=0;j<5;j++) {
 				Tile provokeTile = gameState.tile[i][j];
 				// we only check adjacent tiles, do not code 'if provokeTile.checkAttack(out,gameState, provokeTile)==true'
+				// because some units have ability "ranged"
 				if (provokeTile.getUnit()!=null&&provokeTile.getUnit().provoke==true) {
 					if (Math.pow((i-m),2)+Math.pow(j-n,2)<=2) {
 						return true;

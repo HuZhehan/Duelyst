@@ -19,7 +19,7 @@ import structures.basic.UnitAnimationType;
  * about the animation frames, while ImageCorrection has
  * information for centering the unit on the tile. 
  * 
- * @author Chinwekele Izuzu
+ * @author Student Zhehan Hu
  *
  */
 
