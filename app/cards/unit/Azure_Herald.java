@@ -28,13 +28,23 @@ public class Azure_Herald extends UnitCard{
 		gameState.player.summon(out, gameState, id, tile);
 		
 		BasicCommands.addPlayer1Notification(out, "Trigger: On-Summon", 2);
-		BasicCommands.playEffectAnimation(out, BasicObjectBuilders.loadEffect(StaticConfFiles.f1_buff), tile);
-		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
-		for (Unit u:gameState.player.summoned) {
-			if (u.getId()==100 || u.getId()==200) {
-				u.takeHeal(out, gameState, 3);
-				break;
+		
+		
+		
+		for (int i=0;i<9;i++) {
+			for (int j=0;j<5;j++) {
+				if (gameState.tile[i][j].getUnit()!=null) {
+					Unit u = gameState.tile[i][j].getUnit();
+					if ((u.getId()==100 || u.getId()==200)&&u.getOwner()==this.getOwner())  {
+						BasicCommands.playEffectAnimation(out, BasicObjectBuilders.loadEffect(StaticConfFiles.f1_buff), gameState.tile[i][j]);
+						// try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+						u.takeHeal(out, gameState, 3);
+						break;
+					}
+				}
 			}
 		}
+		
+
 	}
 }

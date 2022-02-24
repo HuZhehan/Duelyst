@@ -86,7 +86,7 @@ public class Human_Avatar extends Unit{
 		this.setHealth(this.health + heal);
 		gameState.humanPlayer.setHealth(this.health + heal);
 		// play animation
-		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.channel);
+		// BasicCommands.playUnitAnimation(out, this, UnitAnimationType.channel);
 		BasicCommands.setUnitHealth(out, this, health);
 		BasicCommands.setPlayer1Health(out, gameState.humanPlayer);;
 		try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}

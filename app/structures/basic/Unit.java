@@ -11,6 +11,7 @@ import structures.TriggerType;
 import units.Ai_Avatar;
 import units.UnitAction;
 import utils.BasicObjectBuilders;
+import utils.StaticConfFiles;
 
 /**
  * This is a representation of a Unit on the game board.
@@ -167,7 +168,7 @@ public class Unit implements UnitAction{
 		// update states
 		this.setHealth(this.health + heal);
 		// play animation
-		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.channel);
+		//BasicCommands.playUnitAnimation(out, this, UnitAnimationType.channel);
 		BasicCommands.setUnitHealth(out, this, health);
 		try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);

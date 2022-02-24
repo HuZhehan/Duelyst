@@ -89,7 +89,7 @@ public class Ai_Avatar extends Unit{
 		this.setHealth(this.health + heal);
 		gameState.aiPlayer.setHealth(this.health + heal);
 		// play animation
-		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.channel);
+		// BasicCommands.playUnitAnimation(out, this, UnitAnimationType.channel);
 		BasicCommands.setUnitHealth(out, this, health);
 		BasicCommands.setPlayer2Health(out, gameState.aiPlayer);;
 		try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
