@@ -54,6 +54,7 @@ public class Windshrike extends Unit{
 	
 	public void die(ActorRef out, GameState gameState) {
 		// When this unit dies, its owner draws a card
+		BasicCommands.addPlayer1Notification(out, "Trigger: Death", 2);
 		if (this.getOwner()=="HumanPlayer"){
 				gameState.humanPlayer.drawCard(out, gameState, 1);
 		}

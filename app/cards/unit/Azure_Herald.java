@@ -26,6 +26,8 @@ public class Azure_Herald extends UnitCard{
 	// When this unit is summoned give your avatar +3 health (maximum 20)
 	public void content(ActorRef out, GameState gameState, Tile tile) {
 		gameState.player.summon(out, gameState, id, tile);
+		
+		BasicCommands.addPlayer1Notification(out, "Trigger: On-Summon", 2);
 		BasicCommands.playEffectAnimation(out, BasicObjectBuilders.loadEffect(StaticConfFiles.f1_buff), tile);
 		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
 		for (Unit u:gameState.player.summoned) {

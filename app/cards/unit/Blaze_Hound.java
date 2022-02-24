@@ -26,6 +26,8 @@ public class Blaze_Hound extends UnitCard{
 	// When this unit is summoned, both players draw a card
 	public void content(ActorRef out, GameState gameState, Tile tile) {
 		gameState.player.summon(out, gameState, id, tile);
+		
+		BasicCommands.addPlayer1Notification(out, "Trigger: On-Summon", 2);
 		gameState.aiPlayer.drawCard(out, gameState, 1);
 		gameState.humanPlayer.drawCard(out, gameState, 1);
 	}

@@ -58,6 +58,7 @@ public class Pureblade_Enforcer extends Unit{
 	}
 	//  this minion gains +1 attack and +1 health
 	public void useSkill(ActorRef out, GameState gameState) {
+		BasicCommands.addPlayer1Notification(out, "Trigger: SpellThief", 2);
 		int a = this.getAttack() + 1;
 		this.setAttack(a);
 		
