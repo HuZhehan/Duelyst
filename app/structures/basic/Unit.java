@@ -1,5 +1,8 @@
 package structures.basic;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -155,7 +158,7 @@ public class Unit implements UnitAction{
 		// play animation
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.hit);
 		BasicCommands.setUnitHealth(out, this, health);
-		try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+		try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
 		// check death
 		if (this.health<=0) {
@@ -180,21 +183,45 @@ public class Unit implements UnitAction{
 		int x = target.getPosition().getTilex();
 		int y = target.getPosition().getTiley();
 		//int delay = 0;
-		trytomove:
+		
+		boolean nearest = false;
+		firstTry:
 		for (int i=0;i<9;i++) {
 			for (int j=0;j<5;j++) {
 				Tile SpringBoard = gameState.tile[i][j];
-				if (Math.pow((x-i),2)+Math.pow(y-j,2)<=2) {
+				if (Math.pow((x-i),2)+Math.pow(y-j,2)<=1) {
 					if (this.checkMove(out, gameState, SpringBoard)==true) {
 						// gameState.previousEvent=PreviousEvent.block;
 						this.move(out, gameState, SpringBoard);
+						nearest = true;
 						// delay = (Math.abs(x-i)+Math.abs(y-j))*1000;
-						break trytomove;
+						break firstTry;
 						// BasicCommands.addPlayer1Notification(out, "fail to find the path", 20);
 					}
 				}
 			}
 		}
+		if (nearest == false){
+			secondTry:
+			for (int i=0;i<9;i++) {
+				for (int j=0;j<5;j++) {
+					Tile SpringBoard = gameState.tile[i][j];
+					if (Math.pow((x-i),2)+Math.pow(y-j,2)<=2) {
+						if (this.checkMove(out, gameState, SpringBoard)==true) {
+							// gameState.previousEvent=PreviousEvent.block;
+							this.move(out, gameState, SpringBoard);
+							nearest = true;
+							// delay = (Math.abs(x-i)+Math.abs(y-j))*1000;
+							break secondTry;
+							// BasicCommands.addPlayer1Notification(out, "fail to find the path", 20);
+						}
+					}
+				}
+			}
+		}
+		
+		
+		
 		// attack
 		//try {Thread.sleep(delay);} catch (InterruptedException e) {e.printStackTrace();}
 		this.attack(out, gameState, target);
@@ -216,8 +243,13 @@ public class Unit implements UnitAction{
 		// update states
 		this.moveChance --;
 		// play animation
-		BasicCommands.moveUnitToTile(out, this, destination);
-		int delay = (Math.abs(x-m)+Math.abs(y-n))*800;
+		if(gameState.tile[m][y].getUnit()!=null&&gameState.tile[m][y].getUnit().getOwner()!=this.getOwner()) {
+			BasicCommands.moveUnitToTile(out, this, destination, true);
+		}
+		else {
+			BasicCommands.moveUnitToTile(out, this, destination);
+		}
+		int delay = (Math.abs(x-m)+Math.abs(y-n))*1000-800;
 		try {Thread.sleep(delay);} catch (InterruptedException e) {e.printStackTrace();}
 		
 		
@@ -230,7 +262,7 @@ public class Unit implements UnitAction{
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
 		// update states
 		target.takeDamage(out, gameState, this.attack);
-		this.moveChance --;
+		// this.moveChance --;
 		this.attackChance --;
 		// counter-attack
 		if (target.getHealth()>0) {
@@ -394,7 +426,7 @@ public class Unit implements UnitAction{
 	public void die(ActorRef out, GameState gameState) {
 		// play animation
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.death);
-		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+		try {Thread.sleep(2000);} catch (InterruptedException e) {e.printStackTrace();}
 		// destroy Unit & reset tile
 		this.dead = true;
 		BasicCommands.deleteUnit(out, this);

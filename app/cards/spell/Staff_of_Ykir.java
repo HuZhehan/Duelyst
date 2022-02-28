@@ -28,6 +28,9 @@ public class Staff_of_Ykir extends SpellCard{
 		if (tile.getUnit()==null){
 			return false;
 		}
+		if (tile.getUnit().getId()!=100 && tile.getUnit().getId()!=200){
+			return false;
+		}
 		if (tile.getUnit().getOwner()==this.getOwner()){
 			return true;
 		}

@@ -56,8 +56,7 @@ public class GameState {
 		for (Card c : humanPlayer.hand) {
 			BasicCommands.drawCard(out, c, humanPlayer.hand.indexOf(c)+1, 0);
 		}
-		try {Thread.sleep(10);} catch (InterruptedException e) {e.printStackTrace();
-		}
+		try {Thread.sleep(10);} catch (InterruptedException e) {e.printStackTrace();}
 	}
 	// @author Student Zhehan Hu
 	public void clearBoard(ActorRef out) {
@@ -71,7 +70,7 @@ public class GameState {
 	}
 	// @author Student Zhehan Hu
 	public void humanTurnStart(ActorRef out) {
-		BasicCommands.addPlayer1Notification(out, "Round"+Integer.toString(Round), 2);
+		BasicCommands.addPlayer1Notification(out, "Your turn "+Integer.toString(Round), 2);
 		player = humanPlayer;
 		humanPlayer.setMana(Round+1);
 		BasicCommands.setPlayer1Mana(out, humanPlayer);
@@ -88,7 +87,7 @@ public class GameState {
 	}
 	// @author Student Zhehan Hu
 	public void aiTurnStart(ActorRef out) {
-		BasicCommands.addPlayer1Notification(out, "ai's turn", 2);
+		BasicCommands.addPlayer1Notification(out, "Ai's turn "+Integer.toString(Round), 2);
 		player = aiPlayer;
 		aiPlayer.setMana(Round + 1);
 		BasicCommands.setPlayer2Mana(out, aiPlayer);
@@ -96,6 +95,13 @@ public class GameState {
 			u.enableMoveAttack();
 		}
 		//try {Thread.sleep(2000);} catch (InterruptedException e) {e.printStackTrace();}
+		
+	}
+	
+	public void aiTurnUse(ActorRef out) {
+		Ai.useSpellCard(out, this);	
+		Ai.useUnitCard(out, this);
+		Ai.unitAction(out, this);
 		
 	}
 	

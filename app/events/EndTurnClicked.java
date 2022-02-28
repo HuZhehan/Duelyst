@@ -32,7 +32,10 @@ public class EndTurnClicked implements EventProcessor{
 			gameState.humanTurnEnd(out);
 
 			// ai's turn start
-			gameState.humanTurnStart(out);
+			gameState.aiTurnStart(out);
+			
+			// ai uses cards
+			gameState.aiTurnUse(out);
 
 			//ai's turn end
 			gameState.aiTurnEnd(out);
