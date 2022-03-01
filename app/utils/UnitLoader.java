@@ -6,7 +6,7 @@ import structures.basic.Unit;
 import units.*;
 
 /**
- * @author Student Zhehan Hu
+ * @author Student. Zhehan Hu
  */
 
 public class UnitLoader {

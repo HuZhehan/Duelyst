@@ -13,19 +13,10 @@ import structures.basic.UnitAnimationType;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
 
-/**
- * This is a representation of a Unit on the game board.
- * A unit has a unique id (this is used by the front-end.
- * Each unit has a current UnitAnimationType, e.g. move,
- * or attack. The position is the physical position on the
- * board. UnitAnimationSet contains the underlying information
- * about the animation frames, while ImageCorrection has
- * information for centering the unit on the tile. 
- * 
- * @author Zhehan Hu
- *
+/** 
+ * Unit class of Silverguard_Knight
+ * @author Student. Zhehan Hu
  */
-
 public class Silverguard_Knight extends Unit{
 	
 	public Silverguard_Knight() {
@@ -36,7 +27,7 @@ public class Silverguard_Knight extends Unit{
 		unitname = "Silverguard Knight";
 		// ownername = "HumanPlayer";
 		
-		// skills tags
+		// Ability tags
 		provoke = true;
 		avatarDamaged = true;
 
@@ -57,8 +48,9 @@ public class Silverguard_Knight extends Unit{
 		}
 		return false;
 	}
+	// Ability: If your avatar is dealt damage this unit gains +2 attack
 	public void useSkill(ActorRef out, GameState gameState) {
-		BasicCommands.addPlayer1Notification(out, "Trigger: AvatarDamaged", 2);
+		//BasicCommands.addPlayer1Notification(out, "Trigger: AvatarDamaged", 2);
 		int a = this.getAttack() + 2;
 		this.setAttack(a);
 		// 

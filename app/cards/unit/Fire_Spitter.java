@@ -7,8 +7,10 @@ import structures.GameState;
 import structures.basic.*;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
+
 /** 
- * @author Zhehan Hu,
+ * UnitCard class of Fire_Spitter
+ * @author Student. Zhehan Hu
  */
 public class Fire_Spitter extends UnitCard{
 	

@@ -7,8 +7,10 @@ import structures.GameState;
 import structures.basic.*;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
+
 /** 
- * @author Zhehan Hu,
+ * UnitCard class of Azurite_Lion
+ * @author Student. Zhehan Hu
  */
 public class Azurite_Lion extends UnitCard{
 	

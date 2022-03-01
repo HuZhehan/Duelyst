@@ -7,8 +7,10 @@ import structures.GameState;
 import structures.basic.*;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
+
 /** 
- * @author Zhehan Hu,
+ * UnitCard class of Hailstone_Golem
+ * @author Student. Zhehan Hu
  */
 public class Hailstone_Golem extends UnitCard{
 	

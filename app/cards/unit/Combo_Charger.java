@@ -7,8 +7,10 @@ import structures.GameState;
 import structures.basic.*;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
+
 /** 
- * @author Zhehan Hu,
+ * UnitCard class of Combo_Charger
+ * @author Student. Zhehan Hu
  */
 public class Combo_Charger extends UnitCard{
 	

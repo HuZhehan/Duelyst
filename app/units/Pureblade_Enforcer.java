@@ -13,19 +13,10 @@ import structures.basic.UnitAnimationType;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
 
-/**
- * This is a representation of a Unit on the game board.
- * A unit has a unique id (this is used by the front-end.
- * Each unit has a current UnitAnimationType, e.g. move,
- * or attack. The position is the physical position on the
- * board. UnitAnimationSet contains the underlying information
- * about the animation frames, while ImageCorrection has
- * information for centering the unit on the tile. 
- * 
- * @author Student Zhehan Hu
- *
+/** 
+ * Unit class of Pureblade_Enforcer
+ * @author Student. Zhehan Hu
  */
-
 public class Pureblade_Enforcer extends Unit{
 	
 	public Pureblade_Enforcer() {
@@ -49,7 +40,8 @@ public class Pureblade_Enforcer extends Unit{
 	public Pureblade_Enforcer(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations, ImageCorrection correction) {
 		super(id, animation, position, animations, correction);
 	}
-	// If the enemy player casts a spell,
+
+	// Ability: If the enemy player casts a spell,
 	public boolean checkSkill(ActorRef out, GameState gameState, Player player) {
 		if (this.getOwner()!=player.getName()){
 			return true;
@@ -58,7 +50,7 @@ public class Pureblade_Enforcer extends Unit{
 	}
 	//  this minion gains +1 attack and +1 health
 	public void useSkill(ActorRef out, GameState gameState) {
-		BasicCommands.addPlayer1Notification(out, "Trigger: SpellThief", 2);
+		//BasicCommands.addPlayer1Notification(out, "Trigger: SpellThief", 2);
 		int a = this.getAttack() + 1;
 		this.setAttack(a);
 		

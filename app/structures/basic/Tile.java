@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * that point to the different renderable textures that a tile might have.
  * 
  * @author Dr. Richard McCreadie
+ * @author Student. Zhehan Hu
  *
  */
 public class Tile {
@@ -20,7 +21,6 @@ public class Tile {
 	@JsonIgnore
 	private static ObjectMapper mapper = new ObjectMapper(); // Jackson Java Object Serializer, is used to read java objects from a file
 	
-	// @author Student Zhehan Hu
 	Unit unit;
 	
 	List<String> tileTextures;
@@ -55,7 +55,7 @@ public class Tile {
 		this.tilex = tilex;
 		this.tiley = tiley;
 	}
-	// @author Student Zhehan Hu
+
 	public Unit getUnit() {
 		return unit;
 	}

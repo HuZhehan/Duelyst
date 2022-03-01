@@ -26,15 +26,14 @@ import utils.StaticConfFiles;
  * }
  * 
  * @author Dr. Richard McCreadie
- *
+ * @author Student. Zhehan Hu
+ * 
  */
 public class Initalize implements EventProcessor{
+	
 	@Override
-	// edited by @Zhehan Hu
 	public void processEvent(ActorRef out, GameState gameState, JsonNode message) {
 		BasicCommands.addPlayer1Notification(out, "initalization", 2);
-		
-		// 
 		gameState.createBoard(out);
 		
 		// set player
@@ -47,28 +46,13 @@ public class Initalize implements EventProcessor{
 		BasicCommands.setPlayer2Mana(out, gameState.aiPlayer);
 		BasicCommands.setPlayer2Health(out, gameState.aiPlayer);
 		
-		
 		// draw card
 		gameState.humanPlayer.drawCard(out, gameState, 3);
 		gameState.aiPlayer.drawCard(out, gameState, 3);
-				
-		//test	
-		//gameState.humanPlayer.summon(out, gameState, 13, gameState.tile[6][1]);
-		//gameState.aiPlayer.useCard(out, gameState, 22, gameState.tile[7][2]);
-		//gameState.aiPlayer.summon(out, gameState, 30, gameState.tile[6][1]);
-		//gameState.aiPlayer.summon(out, gameState, 20, gameState.tile[4][1]);
-		//humanAvatar.move(out, gameState, gameState.tile[5][4]);
-		//humanAvatar.attack(out, gameState, aiAvatar);
-		//Card card1 = BasicObjectBuilders.loadCard(StaticConfFiles.c_truestrike, 14, Truestrike.class);
-		//card1.act(out,gameState, gameState.tile[7][2]);
-		//Card card2 = BasicObjectBuilders.loadCard(StaticConfFiles.c_comodo_charger, 0, ComboCharger.class);
-		//card2.act(out,gameState, gameState.tile[7][1]);
-		
-		
-		//gameState.something = true;
+						
+		//update game state
 		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 		gameState.gameInitalised = true;
-		
 
 		//player start new turn
 		gameState.Round++;
@@ -76,8 +60,6 @@ public class Initalize implements EventProcessor{
 		//CommandDemo.executeDemo(out); // this executes the command demo, comment out this when implementing your solution
 		//CheckMoveLogic.executeDemo(out);
 	}
-	
-
 }
 
 

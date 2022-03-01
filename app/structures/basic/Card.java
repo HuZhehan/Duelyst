@@ -1,7 +1,6 @@
 package structures.basic;
 
 import akka.actor.ActorRef;
-import cards.CardAction;
 import structures.GameState;
 
 /**
@@ -11,11 +10,11 @@ import structures.GameState;
  * version is what is rendered when the player clicks on a card in their hand.
  * 
  * @author Dr. Richard McCreadie
+ * @author Student. Zhehan Hu
  *
  */
 public class Card implements CardAction{
 	
-	// @author Student Zhehan Hu
 	protected String type;
 	protected String ownername;
 	

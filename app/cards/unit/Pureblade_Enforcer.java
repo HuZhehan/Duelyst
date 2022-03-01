@@ -7,8 +7,10 @@ import structures.GameState;
 import structures.basic.*;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
+
 /** 
- * @author Zhehan Hu,
+ * UnitCard class of Pureblade_Enforcer
+ * @author Student. Zhehan Hu
  */
 public class Pureblade_Enforcer extends UnitCard{
 	

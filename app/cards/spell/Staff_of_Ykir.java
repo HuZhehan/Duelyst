@@ -7,8 +7,11 @@ import structures.GameState;
 import structures.basic.*;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
-// @author Student Kanyaphat W. 
-// @author Student Zhehan Hu
+
+/** 
+ * SpellCard class of Staff_of_Ykir. 
+ * @author Student. Kanyaphat W.
+ */
 public class Staff_of_Ykir extends SpellCard{
 	
 	public Staff_of_Ykir() {
@@ -20,7 +23,8 @@ public class Staff_of_Ykir extends SpellCard{
 	public Staff_of_Ykir(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard) {
 		super(id, cardname, manacost, miniCard, bigCard);
 	}
-	
+
+	// Check ability: Add +2 attack to your avatar.
 	public boolean check(ActorRef out, GameState gameState, Tile tile) {
 		if (gameState.player.getMana()<manacost){
 			return false;
@@ -28,15 +32,17 @@ public class Staff_of_Ykir extends SpellCard{
 		if (tile.getUnit()==null){
 			return false;
 		}
+		// must be avatar
 		if (tile.getUnit().getId()!=100 && tile.getUnit().getId()!=200){
 			return false;
 		}
+		// must be this player's avatar
 		if (tile.getUnit().getOwner()==this.getOwner()){
 			return true;
 		}
 		return false;
 	}
-	
+	// Apply ability: Add +2 attack to your avatar.
 	public void content(ActorRef out, GameState gameState, Tile tile) {
 		// update states
 		Unit unit = tile.getUnit();

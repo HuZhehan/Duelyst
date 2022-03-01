@@ -10,19 +10,10 @@ import structures.basic.Unit;
 import structures.basic.UnitAnimationSet;
 import structures.basic.UnitAnimationType;
 
-/**
- * This is a representation of a Unit on the game board.
- * A unit has a unique id (this is used by the front-end.
- * Each unit has a current UnitAnimationType, e.g. move,
- * or attack. The position is the physical position on the
- * board. UnitAnimationSet contains the underlying information
- * about the animation frames, while ImageCorrection has
- * information for centering the unit on the tile. 
- * 
- * @author Student Zhehan Hu
- *
+/** 
+ * Unit class of Ai_Avatar
+ * @author Student. Zhehan Hu
  */
-
 public class Ai_Avatar extends Unit{
 	
 	public Ai_Avatar() {
@@ -44,20 +35,7 @@ public class Ai_Avatar extends Unit{
 		super(id, animation, position, animations, correction);
 	}
 	
-	// @author Student Zhehan Hu
 	public void takeDamage(ActorRef out, GameState gameState, int damage) {
-		// update states
-		int hp = this.health - damage;
-		this.setHealth(hp);
-		gameState.aiPlayer.setHealth(hp);
-		// play animation
-		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.hit);
-		BasicCommands.setUnitHealth(out, this, health);
-		BasicCommands.setPlayer2Health(out, gameState.aiPlayer);;
-		try {Thread.sleep(800);} catch (InterruptedException e) {e.printStackTrace();}
-		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
-		
-		
 		// trigger avatarDamaged
 		// If your avatar is dealt damage Silverguard Knight gains +2 attack
 		for (int i=0;i<9;i++) {
@@ -70,11 +48,16 @@ public class Ai_Avatar extends Unit{
 				}
 			}
 		}
-
-		
-		
-		
-		
+		// update states
+		int hp = this.health - damage;
+		this.setHealth(hp);
+		gameState.aiPlayer.setHealth(hp);
+		// play animation
+		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.hit);
+		BasicCommands.setUnitHealth(out, this, health);
+		BasicCommands.setPlayer2Health(out, gameState.aiPlayer);;
+		try {Thread.sleep(800);} catch (InterruptedException e) {e.printStackTrace();}
+		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);		
 		
 		// check death
 		if (this.health<=0) {
@@ -83,7 +66,6 @@ public class Ai_Avatar extends Unit{
 			gameState.gameEnd(out);
 		}
 	}
-	// @author Student Zhehan Hu
 	public void takeHeal(ActorRef out, GameState gameState, int heal) {
 		// update states
 		this.setHealth(this.health + heal);

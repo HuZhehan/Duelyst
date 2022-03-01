@@ -10,19 +10,10 @@ import structures.basic.Unit;
 import structures.basic.UnitAnimationSet;
 import structures.basic.UnitAnimationType;
 
-/**
- * This is a representation of a Unit on the game board.
- * A unit has a unique id (this is used by the front-end.
- * Each unit has a current UnitAnimationType, e.g. move,
- * or attack. The position is the physical position on the
- * board. UnitAnimationSet contains the underlying information
- * about the animation frames, while ImageCorrection has
- * information for centering the unit on the tile. 
- * 
- * @author Student Zhehan Hu
- *
+/** 
+ * Unit class of Serpenti
+ * @author Student. Zhehan Hu
  */
-
 public class Serpenti extends Unit{
 
 	public Serpenti() {
@@ -33,7 +24,7 @@ public class Serpenti extends Unit{
 		unitname = "Serpenti";
 		// ownername = "AiPlayer";
 		
-		// Can attack twice per turn
+		// Ability tag: Can attack twice per turn
 		maxAttackChance = 2; 
 
 	}

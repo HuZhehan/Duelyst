@@ -10,19 +10,14 @@ import structures.basic.Tile;
 import utils.BasicObjectBuilders;
 
 /** 
- * super class of spell card
- * @author Zhehan Hu,
+ * Super class of unit card, 
+ * can summon a unit on tile. 
+ * @author Student. Zhehan Hu
  */
-
 public class UnitCard extends Card{
-	
-	// protected int attack;
-	// protected int health;
 	
 	public UnitCard() {
 		super();
-		// attack = 0;
-		// health = 0;
 		type = "UnitCard";
 	}
 	
@@ -30,10 +25,6 @@ public class UnitCard extends Card{
 		super(id, cardname, manacost, miniCard, bigCard);
 	}
 	
-	/** 
-	 * @method prompt() check if this card can summon unit on this tile, return true if tile is valid
-	 * @param tile - tile to check
-	 */
 	public boolean check(ActorRef out, GameState gameState, Tile tile) {
 		if (gameState.player.getMana()<manacost){
 			return false;
@@ -46,7 +37,7 @@ public class UnitCard extends Card{
 		int y = tile.getTiley();
 		for (int i=0;i<9;i++) {
 			for (int j=0;j<5;j++) {
-				// if tile has friend tile in range, its valid to summon unit
+				// if tile has friend tile in range, it's valid to summon unit
 				if (Math.pow((x-i),2)+Math.pow(y-j,2)<=2) {
 					Tile friendTile = gameState.tile[i][j];
 					if(friendTile.getUnit()!=null && friendTile.getUnit().getOwner()==this.getOwner()) {
@@ -57,10 +48,6 @@ public class UnitCard extends Card{
 		}
 		return false;
 	}
-	/** 
-	 * @method content()- summon a unit (whose id = this card's id) on a tile
-	 * @param tile - where to summon 
-	 */
 	public void content(ActorRef out, GameState gameState, Tile tile) {
 		gameState.player.summon(out, gameState, id, tile);
 	}

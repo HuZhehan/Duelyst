@@ -7,8 +7,10 @@ import structures.GameState;
 import structures.basic.*;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
+
 /** 
- * @author Zhehan Hu,
+ * UnitCard class of Serpenti
+ * @author Student. Zhehan Hu
  */
 public class Serpenti extends UnitCard{
 	
@@ -23,6 +25,4 @@ public class Serpenti extends UnitCard{
 	public Serpenti(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard) {
 		super(id, cardname, manacost, miniCard, bigCard);
 	}
-	
 }
-

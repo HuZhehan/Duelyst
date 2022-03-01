@@ -10,19 +10,10 @@ import structures.basic.Unit;
 import structures.basic.UnitAnimationSet;
 import structures.basic.UnitAnimationType;
 
-/**
- * This is a representation of a Unit on the game board.
- * A unit has a unique id (this is used by the front-end.
- * Each unit has a current UnitAnimationType, e.g. move,
- * or attack. The position is the physical position on the
- * board. UnitAnimationSet contains the underlying information
- * about the animation frames, while ImageCorrection has
- * information for centering the unit on the tile. 
- * 
- * @author Student Chinwekele Izuzu
- * @author Student Zhehan Hu
+/** 
+ * Unit class of Windshrike
+ * @author Student. Chinwekele Izuzu
  */
-
 public class Windshrike extends Unit{
 
 	public Windshrike() {
@@ -44,17 +35,17 @@ public class Windshrike extends Unit{
 		super(id, animation, position, animations, correction);
 	}
 	
-	// move to anywhere on the board.
+	// Ability: can move to anywhere on the board.
 	public boolean checkMove(ActorRef out, GameState gameState, Tile tile) {
 		if (tile.getUnit() == null) {
 			return true;
 		}
 		return false;
 	}
-	
+	// Ability: When this unit dies, its owner draws a card
 	public void die(ActorRef out, GameState gameState) {
 		// When this unit dies, its owner draws a card
-		BasicCommands.addPlayer1Notification(out, "Trigger: Death", 2);
+		//BasicCommands.addPlayer1Notification(out, "Trigger: Death", 2);
 		if (this.getOwner()=="HumanPlayer"){
 				gameState.humanPlayer.drawCard(out, gameState, 1);
 		}

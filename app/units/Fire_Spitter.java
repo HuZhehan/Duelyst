@@ -13,19 +13,10 @@ import structures.basic.UnitAnimationType;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
 
-/**
- * This is a representation of a Unit on the game board.
- * A unit has a unique id (this is used by the front-end.
- * Each unit has a current UnitAnimationType, e.g. move,
- * or attack. The position is the physical position on the
- * board. UnitAnimationSet contains the underlying information
- * about the animation frames, while ImageCorrection has
- * information for centering the unit on the tile. 
- * 
- * @author Zhehan Hu
- *
+/** 
+ * Unit class of Fire_Spitter
+ * @author Student. Zhehan Hu
  */
-
 public class Fire_Spitter extends Unit{
 	
 	public Fire_Spitter() {
@@ -35,6 +26,9 @@ public class Fire_Spitter extends Unit{
 		maxHealth = 2;
 		unitname = "Fire Spitter";
 		// ownername = "HumanPlayer";
+		
+		// ability tags
+		ranged = true;
 
 	}
 	public Fire_Spitter(int id, UnitAnimationSet animations, ImageCorrection correction) {
@@ -46,6 +40,8 @@ public class Fire_Spitter extends Unit{
 	public Fire_Spitter(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations, ImageCorrection correction) {
 		super(id, animation, position, animations, correction);
 	}
+	
+	// Ability: Ranged: Can attack any enemy on the board
 	public boolean checkAttack(ActorRef out, GameState gameState, Tile tile) {
 		// tile is empty or is friend unit, return false
 		if(tile.getUnit()==null||tile.getUnit().getOwner()==this.getOwner()) {
@@ -57,7 +53,7 @@ public class Fire_Spitter extends Unit{
 		}
 		// special situation, two enemy units with provoke
 		// one is on adjacent tile, but target is not
-		// then we cannot attack target
+		// then we cannot attack target though it has provoke too
 		// Unit can only attack adjacent unit by default, so super() is called here;
 		if(tile.getUnit().provoke==true && this.checkProvoked(out, gameState)==true) {
 			if (super.checkAttack(out, gameState, tile)==false) {
@@ -66,6 +62,7 @@ public class Fire_Spitter extends Unit{
 		}
 		return true;
 	}
+	// This unit plays projectile animation when attacks, and can counter-attack regardless of range.
 	public void attack(ActorRef out, GameState gameState, Unit target) {
 		int x = this.getPosition().getTilex();
 		int y = this.getPosition().getTiley();
@@ -76,7 +73,7 @@ public class Fire_Spitter extends Unit{
 		
 		// play animation
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.attack);
-		try {Thread.sleep(200);} catch (InterruptedException e) {e.printStackTrace();}
+		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 		EffectAnimation projectile = BasicObjectBuilders.loadEffect(StaticConfFiles.f1_projectiles);
 		BasicCommands.playProjectileAnimation(out, projectile, 0, originT, targetT);		
 		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
@@ -87,7 +84,13 @@ public class Fire_Spitter extends Unit{
 		this.attackChance --;
 		// counter-attack
 		if (target.getHealth()>0) {
-			target.counterAttack(out, gameState, this);
+			//int x = this.getPosition().getTilex();
+			//int y = this.getPosition().getTiley();
+			//int m = target.getPosition().getTilex();
+			//int n = target.getPosition().getTiley();
+			if (Math.pow(x-m,2)+Math.pow(y-n,2)<=2||target.ranged==true) {
+				target.counterAttack(out, gameState, this);
+			}
 		}
 		
 	}

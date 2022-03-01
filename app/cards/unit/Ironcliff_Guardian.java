@@ -7,8 +7,10 @@ import structures.GameState;
 import structures.basic.*;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
+
 /** 
- * @author Zhehan Hu,
+ * UnitCard class of Ironcliff_Guardian. 
+ * @author Student. Zhehan Hu
  */
 public class Ironcliff_Guardian extends UnitCard{
 	
@@ -23,7 +25,8 @@ public class Ironcliff_Guardian extends UnitCard{
 	public Ironcliff_Guardian(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard) {
 		super(id, cardname, manacost, miniCard, bigCard);
 	}
-	// Can be summoned anywhere on the board
+	
+	// Check ability: Air drop: Can be summoned anywhere on the board.
 	public boolean check(ActorRef out, GameState gameState, Tile tile) {
 		if (gameState.player.getMana()<manacost){
 			return false;

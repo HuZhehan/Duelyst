@@ -7,8 +7,10 @@ import structures.GameState;
 import structures.basic.*;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
+
 /** 
- * @author Zhehan Hu,
+ * UnitCard class of Windshrike
+ * @author Student. Zhehan Hu
  */
 public class Windshrike extends UnitCard{
 	
@@ -23,6 +25,5 @@ public class Windshrike extends UnitCard{
 	public Windshrike(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard) {
 		super(id, cardname, manacost, miniCard, bigCard);
 	}
-	
 }
 

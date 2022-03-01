@@ -15,13 +15,14 @@ import structures.GameState;
  * }
  * 
  * @author Dr. Richard McCreadie
+ * @author Student. Zhehan Hu
  *
  */
 public class UnitMoving implements EventProcessor{
 
 	@Override
 	public void processEvent(ActorRef out, GameState gameState, JsonNode message) {
-		
+		// when unit is moving, block palyer's click
 		int unitid = message.get("id").asInt();
 		gameState.previousEvent = PreviousEvent.block;
 		

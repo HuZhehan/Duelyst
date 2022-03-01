@@ -7,8 +7,10 @@ import structures.GameState;
 import structures.basic.*;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
+
 /** 
- * @author Zhehan Hu,
+ * UnitCard class of Silverguard_Knight
+ * @author Student. Zhehan Hu
  */
 public class Silverguard_Knight extends UnitCard{
 	

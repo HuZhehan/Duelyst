@@ -13,19 +13,10 @@ import structures.basic.UnitAnimationType;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
 
-/**
- * This is a representation of a Unit on the game board.
- * A unit has a unique id (this is used by the front-end.
- * Each unit has a current UnitAnimationType, e.g. move,
- * or attack. The position is the physical position on the
- * board. UnitAnimationSet contains the underlying information
- * about the animation frames, while ImageCorrection has
- * information for centering the unit on the tile. 
- * 
- * @author Student Zhehan Hu
- *
+/** 
+ * Unit class of Pyromancer
+ * @author Student. Zhehan Hu
  */
-
 public class Pyromancer extends Unit{
 
 	public Pyromancer() {
@@ -35,6 +26,9 @@ public class Pyromancer extends Unit{
 		maxHealth = 1;
 		unitname = "Pyromancer";
 		// ownername = "AiPlayer";
+		
+		// skill tags
+		ranged = true;
 
 	}
 	public Pyromancer(int id, UnitAnimationSet animations, ImageCorrection correction) {
@@ -46,6 +40,8 @@ public class Pyromancer extends Unit{
 	public Pyromancer(int id, UnitAnimationType animation, Position position, UnitAnimationSet animations, ImageCorrection correction) {
 		super(id, animation, position, animations, correction);
 	}
+	
+	// Ability: Ranged: Can attack any enemy on the board
 	public boolean checkAttack(ActorRef out, GameState gameState, Tile tile) {
 		// tile is empty or is friend unit, return false
 		if(tile.getUnit()==null||tile.getUnit().getOwner()==this.getOwner()) {
@@ -66,6 +62,8 @@ public class Pyromancer extends Unit{
 		}
 		return true;
 	}
+	
+	// This unit plays projectile animation when attacks, and can counter-attack regardless of range.
 	public void attack(ActorRef out, GameState gameState, Unit target) {
 		int x = this.getPosition().getTilex();
 		int y = this.getPosition().getTiley();
@@ -76,7 +74,7 @@ public class Pyromancer extends Unit{
 		
 		// play animation
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.attack);
-		try {Thread.sleep(200);} catch (InterruptedException e) {e.printStackTrace();}
+		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 		EffectAnimation projectile = BasicObjectBuilders.loadEffect(StaticConfFiles.f1_projectiles);
 		BasicCommands.playProjectileAnimation(out, projectile, 0, originT, targetT);		
 		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
@@ -87,7 +85,13 @@ public class Pyromancer extends Unit{
 		this.attackChance --;
 		// counter-attack
 		if (target.getHealth()>0) {
-			target.counterAttack(out, gameState, this);
+			//int x = this.getPosition().getTilex();
+			//int y = this.getPosition().getTiley();
+			//int m = target.getPosition().getTilex();
+			//int n = target.getPosition().getTiley();
+			if (Math.pow(x-m,2)+Math.pow(y-n,2)<=2||target.ranged==true) {
+				target.counterAttack(out, gameState, this);
+			}
 		}
 		
 	}

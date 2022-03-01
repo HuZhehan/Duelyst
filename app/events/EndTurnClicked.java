@@ -17,17 +17,19 @@ import structures.basic.Unit;
  * }
  * 
  * @author Dr. Richard McCreadie
- *
+ * @author Student. Zhehan Hu
  */
 public class EndTurnClicked implements EventProcessor{
 
 	@Override
 	public void processEvent(ActorRef out, GameState gameState, JsonNode message) {
 		// should be human's turn
-		if (gameState.gameInitalised==true&&gameState.player==gameState.humanPlayer&&gameState.previousEvent != PreviousEvent.block&&gameState.gameOver==false) {
+		if (gameState.gameInitalised==true && gameState.player==gameState.humanPlayer && gameState.previousEvent!=PreviousEvent.block) {
 			// block player's click
 			gameState.previousEvent = PreviousEvent.block;
-			do {
+			// game may be end to break the process
+			// check gameOver after every turn phase
+			while(gameState.gameOver == false) {
 				//player end turn
 				gameState.humanTurnEnd(out);
 				if (gameState.gameOver == true){break;}
@@ -49,9 +51,7 @@ public class EndTurnClicked implements EventProcessor{
 				gameState.humanTurnStart(out);
 				if (gameState.gameOver == true){break;}
 				break;
-			}while(gameState.gameOver == false);
-
-			
+			}
 			// active player's click
 			gameState.previousEvent = null;
 		}

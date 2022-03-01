@@ -8,10 +8,10 @@ import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
 
 /** 
- * super class of spell card
- * @author Zhehan Hu,
+ * Super class of spell card
+ * can apply affect on tile
+ * @author Student. Zhehan Hu
  */
-
 public class SpellCard extends Card{
 	
 	public SpellCard() {
@@ -22,18 +22,10 @@ public class SpellCard extends Card{
 	public SpellCard(int id, String cardname, int manacost, MiniCard miniCard, BigCard bigCard) {
 		super(id, cardname, manacost, miniCard, bigCard);
 	}
-	
-	/** 
-	 * @method prompt() check if this card play can affect on this tile, return true if tile is valid
-	 * @param tile - tile to check
-	 */
+
 	public boolean check(ActorRef out, GameState gameState, Tile tile) {
 		return false;
 	}
-	/** 
-	 * @method content()- play spell affect, should code different content() in subClasses
-	 * @param tile - where to play affect
-	 */
 	public void content(ActorRef out, GameState gameState, Tile tile) {
 		
 	}

@@ -7,8 +7,10 @@ import structures.GameState;
 import structures.basic.*;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
+
 /** 
- * @author Zhehan Hu,
+ * UnitCard class of Pyromancer
+ * @author Student. Zhehan Hu
  */
 public class Pyromancer extends UnitCard{
 	
@@ -24,4 +26,3 @@ public class Pyromancer extends UnitCard{
 		super(id, cardname, manacost, miniCard, bigCard);
 	}
 }
-

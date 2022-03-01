@@ -8,13 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import akka.actor.ActorRef;
 import commands.BasicCommands;
-import events.PreviousEvent;
 import structures.GameState;
-import structures.TriggerType;
-import units.Ai_Avatar;
-import units.UnitAction;
-import utils.BasicObjectBuilders;
-import utils.StaticConfFiles;
 
 /**
  * This is a representation of a Unit on the game board.
@@ -26,12 +20,12 @@ import utils.StaticConfFiles;
  * information for centering the unit on the tile. 
  * 
  * @author Dr. Richard McCreadie
- * @editor Student Zhehan Hu
+ * @editor Student. Zhehan Hu
+ * @author Student. Reetu Varadhan
  * 
  */
 public class Unit implements UnitAction{
 	
-	// @author Student Zhehan Hu
 	protected int attack;
 	protected int health;
 	protected int maxHealth;
@@ -48,6 +42,7 @@ public class Unit implements UnitAction{
 	
 	// skill tags
 	public boolean provoke;
+	public boolean ranged;
 	public boolean onSummon;
 	public boolean death;
 	public boolean avatarDamaged;
@@ -73,6 +68,7 @@ public class Unit implements UnitAction{
 		
 		// skills tags
 		provoke = false;
+		ranged = false;
 		onSummon = false;
 		death = false;
 		avatarDamaged = false;
@@ -105,58 +101,7 @@ public class Unit implements UnitAction{
 		this.animations = animations;
 		this.correction = correction;
 	}
-
-	// @author Student Zhehan Hu
-	public String getName() {
-		return unitname;
-	}
-	public void setName(String unitname) {
-		this.unitname = unitname;
-	}
-	public int getMaxHealth(){
-		return maxHealth;
-	}
-	public void setMaxHealth(int maxHealth){
-		this.maxHealth = maxHealth;
-	}
-	public int getHealth(){
-		return health;
-	}
-	public void setHealth(int health) {
-		if (health>this.maxHealth){
-			health = this.maxHealth;
-		}
-		this.health = health;
-	}
-	public int getAttack() {
-		return attack;
-	}
-	public void setAttack(int attack) {
-		this.attack = attack;
-	}
-	public String getOwner() {
-		return ownername;
-	}
-	public void setOwner(String ownername) {
-		this.ownername = ownername;
-	}
-	public boolean getDead() {
-		return dead;
-	}
-	public void setDead(boolean dead) {
-		this.dead = dead;
-	}
-	// 
-	public boolean checkSkill(ActorRef out, GameState gameState, Unit unit) {
-		return false;
-	}
-	public boolean checkSkill(ActorRef out, GameState gameState, Player player) {
-		return false;
-	}
-	public void useSkill(ActorRef out, GameState gameState) {
-	}
 	
-	// @author Student Zhehan Hu
 	public void takeDamage(ActorRef out, GameState gameState, int damage) {
 		// update states
 		int hp = this.health - damage;
@@ -170,9 +115,7 @@ public class Unit implements UnitAction{
 		if (this.health<=0) {
 			this.die(out, gameState);
 		}
-		
 	}
-	// @author Student Zhehan Hu
 	public void takeHeal(ActorRef out, GameState gameState, int heal) {
 		// update states
 		this.setHealth(this.health + heal);
@@ -182,16 +125,15 @@ public class Unit implements UnitAction{
 		try {Thread.sleep(400);} catch (InterruptedException e) {e.printStackTrace();}
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
 	}
-	// @author Student Zhehan Hu
 	public void moveAttack(ActorRef out, GameState gameState, Unit target) {
+		int delay = 1;
+		
 		// coordinate of this
 		int x = this.getPosition().getTilex();
 		int y = this.getPosition().getTiley();
 		// coordinate of target
 		int m = target.getPosition().getTilex();
 		int n = target.getPosition().getTiley();
-		//int delay = 0;
-		
 		// move to a nearest tile
 		// step1: list all valid tile
 		List<Tile> validTile = new ArrayList<Tile>();
@@ -216,6 +158,7 @@ public class Unit implements UnitAction{
 				if (distance<smallest){
 					smallest = distance;
 					best = validTile.get(b);
+					delay = Math.abs(x-i)+Math.abs(y-j);
 				}
 			}
 			// step3: unit move to chosen tile
@@ -224,14 +167,10 @@ public class Unit implements UnitAction{
 				this.move(out, gameState, best);
 			}
 		}
-		
-		
-		
 		// attack
-		//try {Thread.sleep(delay);} catch (InterruptedException e) {e.printStackTrace();}
+		try {Thread.sleep(delay*800);} catch (InterruptedException e) {e.printStackTrace();}
 		this.attack(out, gameState, target);
 	}
-	// @author Student Zhehan Hu
 	public void move(ActorRef out, GameState gameState, Tile destination) {
 		// unit position
 		int x = this.getPosition().getTilex();
@@ -256,10 +195,7 @@ public class Unit implements UnitAction{
 		}
 		int delay = (Math.abs(x-m)+Math.abs(y-n))*1000-800;
 		try {Thread.sleep(delay);} catch (InterruptedException e) {e.printStackTrace();}
-		
-		
 	}
-	// @author Student Zhehan Hu
 	public void attack(ActorRef out, GameState gameState, Unit target) {
 		// play animation
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.attack);
@@ -275,13 +211,11 @@ public class Unit implements UnitAction{
 			int y = this.getPosition().getTiley();
 			int m = target.getPosition().getTilex();
 			int n = target.getPosition().getTiley();
-			if (Math.abs(x-m)+Math.abs(y-n)<=2) {
+			if (Math.pow(x-m,2)+Math.pow(y-n,2)<=2||target.ranged==true) {
 				target.counterAttack(out, gameState, this);
 			}
 		}
-		
 	}
-	// @author Student Zhehan Hu
 	public void counterAttack(ActorRef out, GameState gameState, Unit target) {
 		// play animation
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.attack);
@@ -289,15 +223,11 @@ public class Unit implements UnitAction{
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
 		// update states
 		target.takeDamage(out, gameState, this.attack);
-		
 	}
-
-	// @author Student Zhehan Hu
 	public void enableMoveAttack() {
 		this.moveChance = this.maxMoveChance;
 		this.attackChance = this.maxAttackChance;
 	}
-	// @author Student Zhehan Hu
 	public boolean check(ActorRef out, GameState gameState, Tile tile) {
 		if (this.attackChance<=0) {
 			return false;
@@ -342,25 +272,21 @@ public class Unit implements UnitAction{
 		}
 		return false; 
 	}
-	//
 	public boolean checkMove(ActorRef out, GameState gameState, Tile tile) {
 		// tile is not empty, return false
 		if(tile.getUnit()!=null) {
 			return false;
 		}
-		
 		// if target doesnt has provoke but another enemy in range has, return false
 		if(this.checkProvoked(out, gameState)==true) {
 			return false;
 		}
-		
 		// coordinate of tile to check
 		int x = tile.getTilex();
 		int y = tile.getTiley();
 		// coordinate of unit position
 		int m = this.getPosition().getTilex();
 		int n = this.getPosition().getTiley();
-
 		// if tile is empty and is in unit's move range, it may be valid to move
 		//   o o o
 		//   o x o
@@ -393,12 +319,10 @@ public class Unit implements UnitAction{
 		if(tile.getUnit()==null||tile.getUnit().getOwner()==this.getOwner()) {
 			return false;
 		}
-
 		// if target doesn't has provoke but another enemy in range has, return false
 		if(tile.getUnit().provoke==false && this.checkProvoked(out, gameState)==true) {
 			return false;
 		}
-		
 		// coordinate of target to check
 		int x = tile.getTilex();
 		int y = tile.getTiley();
@@ -432,8 +356,6 @@ public class Unit implements UnitAction{
 		}
 		return false;
 	}
-	// @author Student Reetu Varadhan
-	// @author Student Zhehan Hu
 	public void die(ActorRef out, GameState gameState) {
 		// play animation
 		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.death);
@@ -445,8 +367,55 @@ public class Unit implements UnitAction{
 		int y = getPosition().getTiley();
 		gameState.tile[x][y].setUnit(null);
 	}
-
 	
+	public String getName() {
+		return unitname;
+	}
+	public void setName(String unitname) {
+		this.unitname = unitname;
+	}
+	public int getMaxHealth(){
+		return maxHealth;
+	}
+	public void setMaxHealth(int maxHealth){
+		this.maxHealth = maxHealth;
+	}
+	public int getHealth(){
+		return health;
+	}
+	public void setHealth(int health) {
+		if (health>this.maxHealth){
+			health = this.maxHealth;
+		}
+		this.health = health;
+	}
+	public int getAttack() {
+		return attack;
+	}
+	public void setAttack(int attack) {
+		this.attack = attack;
+	}
+	public String getOwner() {
+		return ownername;
+	}
+	public void setOwner(String ownername) {
+		this.ownername = ownername;
+	}
+	public boolean getDead() {
+		return dead;
+	}
+	public void setDead(boolean dead) {
+		this.dead = dead;
+	}
+	public boolean checkSkill(ActorRef out, GameState gameState, Unit unit) {
+		return false;
+	}
+	public boolean checkSkill(ActorRef out, GameState gameState, Player player) {
+		return false;
+	}
+	public void useSkill(ActorRef out, GameState gameState) {
+		
+	}
 	public int getId() {
 		return id;
 	}

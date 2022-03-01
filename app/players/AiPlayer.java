@@ -15,10 +15,11 @@ import utils.OrderedCardLoader;
 import utils.StaticConfFiles;
 import utils.UnitLoader;
 
-/**
- * @author Zhehan Hu, 
+/** 
+ * Player class of AiPlayer,
+ * it overrides methods from super Player class to remove animations.
+ * @author Student. Zhehan Hu
  */
-
 public class AiPlayer extends Player {
 	
 	public AiPlayer() {
@@ -31,17 +32,13 @@ public class AiPlayer extends Player {
 		super(health, mana);
 	}
 
-	/**
-	 * draw card method
-	 * @author Zhehan Hu, 
-	 * @param n - number of card to draw
-	 * @param mode - animation type
-	 */
 	public void drawCard(ActorRef out, GameState gameState, int n) {
 		for (int i=0;i<n;i++) {
+			// game end if no card to draw
 			if (deck.size()==0) {
 				gameState.gameEnd(out);
 			}else {
+				// move card from deck to hand
 				Card card = deck.get(0);
 				deck.remove(0);
 				hand.add(card);
@@ -53,31 +50,23 @@ public class AiPlayer extends Player {
 			}
 		}
 	}
-	/**
-	 *
-	 * @author Student Zhehan Hu
-	 * @param
-	 */
 	public void discard(ActorRef out, GameState gameState, int index) {
 		hand.remove(index);
 	}
-	/**
-	 *
-	 * @author Student Zhehan Hu
-	 * @param
-	 */
 	public void useCard(ActorRef out, GameState gameState, int id, Tile tile) {
 		for (Card c : hand) {
 			if (c.getId()==id) {
 				int index = this.hand.indexOf(c);
+				// decrease mana
 				int mana = this.getMana() - c.getManacost();
 				this.setMana(mana);
 				BasicCommands.setPlayer2Mana(out, this);
 				this.discard(out, gameState, index);
+				// play action
 				c.content(out, gameState, tile);
 				
 				// trigger spellThief
-				// If the enemy player casts a spell, this minion gains +1 attack and +1 health
+				// Ability: If the enemy player casts a spell, this minion gains +1 attack and +1 health
 				if (c.getType()=="SpellCard") {
 					for (int i=0;i<9;i++) {
 						for (int j=0;j<5;j++) {
@@ -90,7 +79,6 @@ public class AiPlayer extends Player {
 						}
 					}
 				}
-				
 				break;
 			}
 		}

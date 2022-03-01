@@ -15,9 +15,10 @@ import utils.StaticConfFiles;
 import utils.UnitLoader;
 
 /** 
- * @author Zhehan Hu, 
+ * Player class of HumanPlayer, 
+ * it only overloads constructors.
+ * @author Student. Zhehan Hu
  */
-
 public class HumanPlayer extends Player {
 		
 	public HumanPlayer() {

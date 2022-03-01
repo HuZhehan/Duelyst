@@ -7,8 +7,10 @@ import structures.GameState;
 import structures.basic.*;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
+
 /** 
- * @author Zhehan Hu,
+ * UnitCard class of Rock_Pulveriser
+ * @author Student. Zhehan Hu
  */
 public class Rock_Pulveriser extends UnitCard{
 	
@@ -24,4 +26,3 @@ public class Rock_Pulveriser extends UnitCard{
 		super(id, cardname, manacost, miniCard, bigCard);
 	}
 }
-
