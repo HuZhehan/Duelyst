@@ -3,12 +3,15 @@ package units;
 import akka.actor.ActorRef;
 import commands.BasicCommands;
 import structures.GameState;
+import structures.basic.EffectAnimation;
 import structures.basic.ImageCorrection;
 import structures.basic.Position;
 import structures.basic.Tile;
 import structures.basic.Unit;
 import structures.basic.UnitAnimationSet;
 import structures.basic.UnitAnimationType;
+import utils.BasicObjectBuilders;
+import utils.StaticConfFiles;
 
 /**
  * This is a representation of a Unit on the game board.
@@ -62,5 +65,30 @@ public class Pyromancer extends Unit{
 			}
 		}
 		return true;
+	}
+	public void attack(ActorRef out, GameState gameState, Unit target) {
+		int x = this.getPosition().getTilex();
+		int y = this.getPosition().getTiley();
+		Tile originT = gameState.tile[x][y];
+		int m = target.getPosition().getTilex();
+		int n = target.getPosition().getTiley();
+		Tile targetT = gameState.tile[m][n];
+		
+		// play animation
+		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.attack);
+		try {Thread.sleep(200);} catch (InterruptedException e) {e.printStackTrace();}
+		EffectAnimation projectile = BasicObjectBuilders.loadEffect(StaticConfFiles.f1_projectiles);
+		BasicCommands.playProjectileAnimation(out, projectile, 0, originT, targetT);		
+		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+		BasicCommands.playUnitAnimation(out, this, UnitAnimationType.idle);
+		// update states
+		target.takeDamage(out, gameState, this.attack);
+		// this.moveChance --;
+		this.attackChance --;
+		// counter-attack
+		if (target.getHealth()>0) {
+			target.counterAttack(out, gameState, this);
+		}
+		
 	}
 }

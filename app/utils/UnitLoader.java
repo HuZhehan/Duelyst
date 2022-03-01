@@ -52,7 +52,7 @@ public class UnitLoader {
 		army.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_serpenti, 26, Serpenti.class));
 		//unitlist.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_entropic_decay, 27, Unit.class));
 		army.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_planar_scout, 28, Planar_Scout.class));
-		army.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_hailstone_golem, 29, Hailstone_Golem.class));
+		army.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_hailstone_golemR, 29, Hailstone_Golem.class));
 		army.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_rock_pulveriser, 30, Rock_Pulveriser.class));
 		army.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_bloodshard_golem, 31, Bloodshard_Golem.class));
 		//unitlist.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_staff_of_ykir, 32, Unit.class));
@@ -62,7 +62,7 @@ public class UnitLoader {
 		army.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_serpenti, 36, Serpenti.class));
 		//unitlist.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_entropic_decay, 37, Unit.class));
 		army.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_planar_scout, 38, Planar_Scout.class));
-		army.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_hailstone_golem, 39, Hailstone_Golem.class));
+		army.add(BasicObjectBuilders.loadUnit(StaticConfFiles.u_hailstone_golemR, 39, Hailstone_Golem.class));
 	
 		return army;
 	}

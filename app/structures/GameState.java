@@ -97,12 +97,12 @@ public class GameState {
 		//try {Thread.sleep(2000);} catch (InterruptedException e) {e.printStackTrace();}
 		
 	}
-	
+	// @author Student Zhehan Hu
 	public void aiTurnUse(ActorRef out) {
+		Ai.unitAction(out, this);
 		Ai.useSpellCard(out, this);	
 		Ai.useUnitCard(out, this);
 		Ai.unitAction(out, this);
-		
 	}
 	
 	public void aiTurnEnd(ActorRef out) {

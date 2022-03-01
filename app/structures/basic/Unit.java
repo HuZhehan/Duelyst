@@ -140,6 +140,12 @@ public class Unit implements UnitAction{
 	public void setOwner(String ownername) {
 		this.ownername = ownername;
 	}
+	public boolean getDead() {
+		return dead;
+	}
+	public void setDead(boolean dead) {
+		this.dead = dead;
+	}
 	// 
 	public boolean checkSkill(ActorRef out, GameState gameState, Unit unit) {
 		return false;
@@ -178,45 +184,44 @@ public class Unit implements UnitAction{
 	}
 	// @author Student Zhehan Hu
 	public void moveAttack(ActorRef out, GameState gameState, Unit target) {
-		// move to a nearest tile
+		// coordinate of this
+		int x = this.getPosition().getTilex();
+		int y = this.getPosition().getTiley();
 		// coordinate of target
-		int x = target.getPosition().getTilex();
-		int y = target.getPosition().getTiley();
+		int m = target.getPosition().getTilex();
+		int n = target.getPosition().getTiley();
 		//int delay = 0;
 		
-		boolean nearest = false;
-		firstTry:
+		// move to a nearest tile
+		// step1: list all valid tile
+		List<Tile> validTile = new ArrayList<Tile>();
 		for (int i=0;i<9;i++) {
 			for (int j=0;j<5;j++) {
 				Tile SpringBoard = gameState.tile[i][j];
-				if (Math.pow((x-i),2)+Math.pow(y-j,2)<=1) {
+				if (Math.pow((m-i),2)+Math.pow(n-j,2)<=2) {
 					if (this.checkMove(out, gameState, SpringBoard)==true) {
-						// gameState.previousEvent=PreviousEvent.block;
-						this.move(out, gameState, SpringBoard);
-						nearest = true;
-						// delay = (Math.abs(x-i)+Math.abs(y-j))*1000;
-						break firstTry;
-						// BasicCommands.addPlayer1Notification(out, "fail to find the path", 20);
+						validTile.add(SpringBoard);
 					}
 				}
 			}
 		}
-		if (nearest == false){
-			secondTry:
-			for (int i=0;i<9;i++) {
-				for (int j=0;j<5;j++) {
-					Tile SpringBoard = gameState.tile[i][j];
-					if (Math.pow((x-i),2)+Math.pow(y-j,2)<=2) {
-						if (this.checkMove(out, gameState, SpringBoard)==true) {
-							// gameState.previousEvent=PreviousEvent.block;
-							this.move(out, gameState, SpringBoard);
-							nearest = true;
-							// delay = (Math.abs(x-i)+Math.abs(y-j))*1000;
-							break secondTry;
-							// BasicCommands.addPlayer1Notification(out, "fail to find the path", 20);
-						}
-					}
+		// step2: choose a nearest tile
+		if (validTile.size()>0) {
+			Tile best = validTile.get(0);
+			int smallest = 1000;
+			for (int b=0;b<validTile.size();b++) {
+				int i = validTile.get(b).getTilex();
+				int j = validTile.get(b).getTiley();
+				int distance = (int) (Math.pow(x-i,2)+Math.pow(y-j,2));
+				if (distance<smallest){
+					smallest = distance;
+					best = validTile.get(b);
 				}
+			}
+			// step3: unit move to chosen tile
+			if (best.getUnit()==null) {
+				// move
+				this.move(out, gameState, best);
 			}
 		}
 		
@@ -264,9 +269,15 @@ public class Unit implements UnitAction{
 		target.takeDamage(out, gameState, this.attack);
 		// this.moveChance --;
 		this.attackChance --;
-		// counter-attack
+		// counter-attack, must in range, can ignore provoke
 		if (target.getHealth()>0) {
-			target.counterAttack(out, gameState, this);
+			int x = this.getPosition().getTilex();
+			int y = this.getPosition().getTiley();
+			int m = target.getPosition().getTilex();
+			int n = target.getPosition().getTiley();
+			if (Math.abs(x-m)+Math.abs(y-n)<=2) {
+				target.counterAttack(out, gameState, this);
+			}
 		}
 		
 	}

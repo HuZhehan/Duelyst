@@ -27,22 +27,30 @@ public class EndTurnClicked implements EventProcessor{
 		if (gameState.gameInitalised==true&&gameState.player==gameState.humanPlayer&&gameState.previousEvent != PreviousEvent.block&&gameState.gameOver==false) {
 			// block player's click
 			gameState.previousEvent = PreviousEvent.block;
-			
-			//player end turn
-			gameState.humanTurnEnd(out);
+			do {
+				//player end turn
+				gameState.humanTurnEnd(out);
+				if (gameState.gameOver == true){break;}
 
-			// ai's turn start
-			gameState.aiTurnStart(out);
-			
-			// ai uses cards
-			gameState.aiTurnUse(out);
+				// ai's turn start
+				gameState.aiTurnStart(out);
+				if (gameState.gameOver == true){break;}
+				
+				// ai uses cards
+				gameState.aiTurnUse(out);
+				if (gameState.gameOver == true){break;}
 
-			//ai's turn end
-			gameState.aiTurnEnd(out);
+				//ai's turn end
+				gameState.aiTurnEnd(out);
+				if (gameState.gameOver == true){break;}
 
-			//player start new turn
-			gameState.Round++;
-			gameState.humanTurnStart(out);
+				//player start new turn
+				gameState.Round++;
+				gameState.humanTurnStart(out);
+				if (gameState.gameOver == true){break;}
+				break;
+			}while(gameState.gameOver == false);
+
 			
 			// active player's click
 			gameState.previousEvent = null;
