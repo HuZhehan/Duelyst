@@ -35,6 +35,8 @@ public class Initalize implements EventProcessor{
 	public void processEvent(ActorRef out, GameState gameState, JsonNode message) {
 		BasicCommands.addPlayer1Notification(out, "initalization", 2);
 		gameState.createBoard(out);
+		gameState.Round = 0;
+		gameState.gameOver = false;
 		
 		// set player
 		gameState.humanPlayer.summon(out, gameState, 100, gameState.tile[1][2]);

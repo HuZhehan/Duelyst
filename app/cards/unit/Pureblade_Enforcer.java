@@ -1,12 +1,7 @@
 package cards.unit;
 
-import akka.actor.ActorRef;
 import cards.UnitCard;
-import commands.BasicCommands;
-import structures.GameState;
 import structures.basic.*;
-import utils.BasicObjectBuilders;
-import utils.StaticConfFiles;
 
 /** 
  * UnitCard class of Pureblade_Enforcer
