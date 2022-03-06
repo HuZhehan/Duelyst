@@ -26,7 +26,7 @@ public class Ai {
 	public static void useUnitCard(ActorRef out, GameState gameState) {
 		out:
 		while(gameState.gameOver == false) {
-			for (int a=0;a<gameState.aiPlayer.hand.size()-1;a++) {
+			for (int a=0;a<gameState.aiPlayer.hand.size();a++) {
 				// step1: list all valid tile
 				Card c = gameState.aiPlayer.hand.get(a);
 				if (c.getType()=="UnitCard") {
@@ -81,7 +81,7 @@ public class Ai {
 	public static void useSpellCard(ActorRef out, GameState gameState) {
 		out:
 		while(gameState.gameOver == false) {
-			for (int a=0;a<gameState.aiPlayer.hand.size()-1;a++) {
+			for (int a=0;a<gameState.aiPlayer.hand.size();a++) {
 				// step1: list all valid tile
 				Card c = gameState.aiPlayer.hand.get(a);
 				if (c.getType()=="SpellCard") {
@@ -132,7 +132,7 @@ public class Ai {
 	public static void unitAction(ActorRef out, GameState gameState) {
 		out:
 		while(gameState.gameOver == false) {
-			for (int a=0;a<gameState.aiPlayer.summoned.size()-1;a++) {
+			for (int a=0;a<gameState.aiPlayer.summoned.size();a++) {
 				// step1: list all valid tile
 				Unit u = gameState.aiPlayer.summoned.get(a);
 				if (u.getDead()==false) {
