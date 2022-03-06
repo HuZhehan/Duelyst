@@ -12,6 +12,7 @@ import structures.basic.Player;
 import structures.basic.Unit;
 
 /**
+ * This class is about checking the functionality of different card abilities.
  * 
  * @author Student. Zhehan Hu
  * @author Student. Yuhao Huang
@@ -21,7 +22,8 @@ import structures.basic.Unit;
 public class CardAbilityTest {
 	
 	/**
-	 * 
+	 * This is to check when playing Truestrike, the damage dealt equals the specified value
+	 *  on the card.
 	 */
 	@Test
 	public void checkTruestrike() {
@@ -47,6 +49,10 @@ public class CardAbilityTest {
 		assertTrue(aiAvatar.getHealth()==18);
 	}
 	
+	/**
+	 * This is to check  if the target has lost health before and if so the card will add health 
+	 * value accordingly.
+	 */
 	@Test
 	public void checkSundropElixir() {
 		// Initialization
@@ -72,7 +78,10 @@ public class CardAbilityTest {
 		assertTrue(humanPlayer.getMana()==8); 
 		assertTrue(humanAvatar.getHealth()==20);
 	}
-	
+	/**
+	 * This is to check if the unit's attack and health will be added according to the card when
+	 * the card was triggered.
+	 */
 	@Test
 	public void checkStaffofYKir() {
 		// Initialization
@@ -97,6 +106,10 @@ public class CardAbilityTest {
 		assertTrue(aiAvatar.getAttack()==4);
 	}
 	
+	/**
+	 * This is to check if the target die immediately once the destroy effect card was triggered.
+	 * 
+	 */
 	@Test
 	public void checkEntropicDecay() {
 		// Initialization

@@ -16,13 +16,17 @@ import structures.basic.Player;
 import structures.basic.Unit;
 
 /**
- * 
+ * This class is about checking a variety of unit abilities such as heal, provoke, etc.
  * @author Student. Zhehan Hu
  * @author Student. Yuhao Huang
  */
 
 public class UnitAbilityTest {
 	
+	/**
+	 * This is is to check Unit Ability: Heal that when it is triggered, the unit will
+	 * regain its health accordingly if lost before.
+	*/
 	@Test
 	public void checkHeal() {
 		// Initialization
@@ -48,7 +52,10 @@ public class UnitAbilityTest {
 		assertTrue(humanAvatar.getHealth()==20);
 	}
 	
-	
+	/**
+	 * This is to check the Unit Ability: Provoke that if it's triggered, the adjacent units can't
+	 * move and can only attack units in range with provoke.
+	*/
 	@Test
 	public void checkProvoke() {
 		// Initialization
@@ -76,6 +83,11 @@ public class UnitAbilityTest {
 		assertTrue(humanAvatar.checkAttack(null, gameState, gameState.tile[6][1]));// can attack Rock Pulveriser 
 	}
 	
+	/**
+	 * This is to check the Unit Ability: Attack Twice that if a unit which can only attack twice, 
+	 * with the example of Serpenti.
+	 * 
+	*/
 	@Test
 	public void checkAttackTwice() {
 		// Initialization
@@ -104,6 +116,10 @@ public class UnitAbilityTest {
 		assertFalse(serpenti.check(null, gameState, gameState.tile[1][2]));// cannot attack human avatar	
 	}
 	
+	/**
+	 * This is to test the Unit Ability: Airdrop that when using a unit card with Airdrop, it should be
+	 * able to summon the available unit in the surrounding space. Here we use the example of Planar Scout
+	*/
 	@Test
 	public void checkAirdrop() {
 		// Initialization
@@ -130,6 +146,10 @@ public class UnitAbilityTest {
 		assertTrue(planarScout.check(null, gameState, gameState.tile[8][0]));// check right top	
 	}
 	
+	/**
+	 * This is to check the Unit Ability: Flying that when using a unit card with Flying,
+	 * it should be able to fly to any surrounding space. Here we use the example of Windshrike.
+	*/
 	@Test
 	public void checkFlying() {
 		// Initialization
@@ -153,6 +173,10 @@ public class UnitAbilityTest {
 		assertTrue(windshrike.checkMove(null, gameState, gameState.tile[8][0]));// check right top	
 	}
 	
+	/**
+	 * This is to check the Unit Ability: Rnaged Attack that when the player has a unit that
+	 * can attack with ranged, it can attack an non-adjacent enemy. 
+	*/
 	@Test
 	public void checkRanged() {
 		// Initialization
@@ -179,6 +203,10 @@ public class UnitAbilityTest {
 		assertTrue(fireSpitter.checkAttack(null, gameState, gameState.tile[6][1]));// can attack Rock Pulveriser out of range
 	}
 	
+	/**
+	 * This is to check the Unit Ability: Provoke that when the player has such a unit, it can only 
+	 * attack a unit within range.
+	*/
 	@Test
 	public void checkRangedProvoke() {
 		// Initialization

@@ -11,12 +11,18 @@ import structures.GameState;
 import structures.basic.Player;
 
 /**
+ * This class is to check the functionality of player's actions such as drawing cards, overdrawing cards,
+ * using unit cards, and using spell cards.
  * 
  * @author Student. Zhehan Hu
  * @author Student. Yuhao Huang
  */
 
 public class PlayerActionTest {
+
+	/**
+ 	* This is to check if the human player could draw the right amount of cards in each turn.
+ 	*/
 	@Test
 	public void checkDrawCard() {
 		// Initialization
@@ -30,7 +36,11 @@ public class PlayerActionTest {
 		humanPlayer.drawCard(null, gameState, 1);
 		assertTrue(humanPlayer.hand.size()==4); // check this after action	
 	}
-	
+
+	/**
+	* This is to test when the player overdraw (more than 6 cards in hand), the top card will 
+	* be deleted.
+	**/
 	@Test
 	public void checkOverDraw() {
 		// Initialization
@@ -45,6 +55,10 @@ public class PlayerActionTest {
 		assertTrue(humanPlayer.hand.size()==6); // check this after action	
 	}
 	
+	/**
+	 * This is to check if the unit's on-summon effects are triggered and it is activated 
+	 * when using a unit card such as combo charger
+	*/
 	@Test
 	public void checkUseUnitCard() {
 		// Initialization
@@ -67,6 +81,9 @@ public class PlayerActionTest {
 		assertTrue(gameState.tile[0][0].getUnit()!=null&&gameState.tile[0][0].getUnit().getName()=="Combo Charger");
 	}
 	
+	/**
+	 * This is to check if there is enough mana in hand when using a spell card such as Truestrike.
+	*/
 	@Test
 	public void checkUseSpellCard() {
 		// Initialization

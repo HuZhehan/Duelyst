@@ -17,13 +17,15 @@ import structures.basic.Unit;
 import utils.BasicObjectBuilders;
 
 /**
+ * This class is about checking the basic game logic such as end turn, wining and losing.
  * 
  * @author Student. Zhehan Hu
  * @author Student. Yuhao Huang
  */
 public class GameLogicTest {
 	/**
-	 * 
+	 * This is to check when the player click on the end turn button, the top card will moved to
+	 * the player's hand and start a new turn.
 	 */
 	@Test
 	public void checkTurnEnd() {
@@ -42,7 +44,7 @@ public class GameLogicTest {
 	}
 	
 	/**
-	 * .
+	 * This is to check if the game result (win) will be shown when  the enemy's health reaches 0 or less.
 	 */
 	@Test
 	public void checkGameWin() {
@@ -76,7 +78,7 @@ public class GameLogicTest {
 		
 	}
 	/**
-	 * .
+	 * This is to check if the game result (lose) will be shown when  the player's health reaches 0 or less.
 	 */
 	@Test
 	public void checkGameLose() {

@@ -16,12 +16,15 @@ import structures.basic.Unit;
 import utils.BasicObjectBuilders;
 
 /**
- * 
+ * This is the class to check a series of Unit Actions such as move, attack, etc.
  * @author Student. Zhehan Hu
  * @author Student. Yuhao Huang
  */
 
 public class UnitActionTest {
+	/**
+	 * This is to check if the unit can move correctly to the clicked tile.
+	*/
 	@Test
 	public void checkUnitMove() {
 		// Initialization
@@ -36,6 +39,9 @@ public class UnitActionTest {
 		assertTrue(gameState.tile[4][2].getUnit()!=null&&gameState.tile[4][2].getUnit().getName()=="Human Avatar"); // check this after action
 	}
 	
+	/**
+	 * This is to check if the unit's health get decreased when clicking on a unit to attack.
+	*/
 	@Test
 	public void checkUnitAttack() {
 		// Initialization
@@ -52,6 +58,9 @@ public class UnitActionTest {
 		assertTrue(aiAvatar.getHealth()==18); // check this after action	
 	}
 	
+	/**
+	 * This is to check if the on-death effects will be shown when a unit dies.
+	*/
 	@Test
 	public void checkUnitDie() {
 		// Initialization
@@ -68,6 +77,9 @@ public class UnitActionTest {
 		assertTrue(humanAvatar.getDead()==true); // check this after action
 	}
 	
+	/**
+	 * This is to check if the attacked unit will counter attack when the human player has a unit attack 
+	*/
 	@Test
 	public void checkUnitCounterAttack() {
 		// Initialization
