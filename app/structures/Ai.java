@@ -136,26 +136,50 @@ public class Ai {
 				// step1: list all valid tile
 				Unit u = gameState.aiPlayer.summoned.get(a);
 				if (u.getDead()==false) {
-					List<Tile> validTile = new ArrayList<Tile>();
+					List<Tile> validAttackTile = new ArrayList<Tile>();
+					List<Tile> validMoveTile = new ArrayList<Tile>();
 					for (int i=0;i<9;i++) {
 						for (int j=0;j<5;j++) {
 							Tile tile = gameState.tile[i][j];
 							if (u.check(out, gameState, tile)==true && tile.getUnit()!=null) {
-								validTile.add(tile);
-							};
+								validAttackTile.add(tile);
+							}
+							else if (u.check(out, gameState, tile)==true && tile.getUnit()==null) {
+								validMoveTile.add(tile);
+							}
 						}
 					}
 					// step2: choose a best tile
-					// unit only or attack or move-attack
-					// attack human avatar or unit with lowest hp
-					if (validTile.size()>0) {
-						Tile best = validTile.get(0);
-						int lowest = 1000;
-						for (int b=0;b<validTile.size();b++) {
-							int hp = validTile.get(b).getUnit().getHealth();
-							if (hp<lowest || (validTile.get(b).getUnit()!=null&&validTile.get(b).getUnit().getId()==100)){
-								lowest = Math.min(hp,lowest);
-								best = validTile.get(b);
+					// action priority: attack > move
+					if (validAttackTile.size()>0 || validMoveTile.size()>0) {
+						Tile best;
+						// attack target priority: human avatar > normal unit, low hp > high hp
+						if (validAttackTile.size()>0) {
+							best = validAttackTile.get(0);
+							int lowest = 1000;
+							for (int b=0;b<validAttackTile.size();b++) {
+								int hp = validAttackTile.get(b).getUnit().getHealth();
+								if (hp<lowest || (validAttackTile.get(b).getUnit()!=null&&validAttackTile.get(b).getUnit().getId()==100)){
+									lowest = Math.min(hp,lowest);
+									best = validAttackTile.get(b);
+								}
+							}
+						} 
+						// move to tile priority: close to human avatar > far from human avatar
+						// best tile is valid tile nearest to human avatar
+						else {
+							best = validMoveTile.get(0);
+							int m = gameState.humanPlayer.summoned.get(0).getPosition().getTilex();
+							int n = gameState.humanPlayer.summoned.get(0).getPosition().getTiley();
+							int lowest = 1000;
+							for (int b=0;b<validMoveTile.size();b++) {
+								int x = u.getPosition().getTilex();
+								int y = u.getPosition().getTiley();
+								int distance = Math.abs(m-x)+Math.abs(n-y);
+								if (distance<lowest){
+									lowest = distance;
+									best = validMoveTile.get(b);
+								}
 							}
 						}
 						// step3: unit acts on chosen tile

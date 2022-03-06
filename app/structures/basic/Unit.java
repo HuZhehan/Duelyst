@@ -193,7 +193,8 @@ public class Unit implements UnitAction{
 		else {
 			BasicCommands.moveUnitToTile(out, this, destination);
 		}
-		int delay = (Math.abs(x-m)+Math.abs(y-n))*1000-800;
+		//int delay = (Math.abs(x-m)+Math.abs(y-n))*1000-800;
+		int delay = (Math.abs(x-m)+Math.abs(y-n))*800;
 		try {Thread.sleep(delay);} catch (InterruptedException e) {e.printStackTrace();}
 	}
 	public void attack(ActorRef out, GameState gameState, Unit target) {

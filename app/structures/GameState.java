@@ -140,10 +140,10 @@ public class GameState {
 	 * @param out
 	 */
 	public void aiTurnUse(ActorRef out) {
-		//Ai.unitAction(out, this);
+		Ai.unitAction(out, this);
 		Ai.useSpellCard(out, this);	
 		Ai.useUnitCard(out, this);
-		Ai.unitAction(out, this);
+		Ai.unitAction(out, this); // attack twice
 	}
 	
 	/**
