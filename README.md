@@ -1,6 +1,8 @@
 ### What is the Game 
 * Browser Game: Played via interaction with a Web browser (e.g Chrome, Firefox, Edge, etc.) 
 * 1 Player: A human player plays against an AI opponent 
+* 20 Cards: 16 Unit Cards, 4 Spell Cards
+* 16 Units: with different skills
 * Tactical Card Game 
   * Each Player starts with a deck of cards, a heath pool and resource pool 
   * Players take turns, each turn:
