@@ -8,6 +8,9 @@
     * Uses resources to play one or more cards (to summon units, or affect the board)
     * Activate units on the board (to have them move and attack)
   * The first player to reach 0 heath loses 
+
+[](https://github.com/HuZhehan/Duelyst/blob/main/image/2022-02-GameRules-16.png)
+
 ### How to use
 Download the latest release and unzip it. cd to the path in command line, then use the command:
 ```
